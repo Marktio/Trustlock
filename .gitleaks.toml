@@ -1,0 +1,11 @@
+# Extends the default Gitleaks rules. Nothing is switched off.
+# Only the one fake test value below is allowed, so real keys still fail the scan.
+title = "TrustLock gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Fake bearer secret used as a fixture in the scheduler endpoint test (not a real credential)"
+paths = ['''src/server/ops\.test\.ts''']
+regexes = ['''a-long-enough-secret-123''']
