@@ -1,0 +1,632 @@
+[
+ {
+  "id": "FR-1.1",
+  "text": "Users self-register as either Client or Freelancer. Arbitrator, Auditor and Administrator accounts can only be created by an Administrator.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.2",
+  "text": "Registration requires full name, unique email, password, role choice and acceptance of a clear \u201csimulation only \u2013 no real money\u201d notice.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.3",
+  "text": "Email ownership is verified through a single-use link that expires after 24 hours; unverified accounts cannot log in.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.4",
+  "text": "Passwords must be at least 12 characters and are rejected if found in a list of common or breached passwords.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.5",
+  "text": "Passwords are stored only as Argon2id (or bcrypt, cost 12+) hashes and are never written to logs or responses.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.6",
+  "text": "Login errors are generic (\u201cinvalid email or password\u201d) so attackers cannot discover which emails are registered.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.7",
+  "text": "After 5 consecutive failed logins the account is locked for 15 minutes and further attempts are rate-limited per IP and per account.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.8",
+  "text": "TOTP multi-factor authentication is optional for Clients and Freelancers, mandatory for Arbitrators, Auditors and Administrators, and required for any release, refund or withdrawal above the configured threshold (default 50,000 SC).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.9",
+  "text": "Access tokens expire after 15 minutes; refresh tokens rotate on every use, last at most 7 days, and are revoked on logout or password change.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.10",
+  "text": "Sessions time out after 30 minutes of inactivity.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-1.11",
+  "text": "Password reset uses a single-use token that expires after 15 minutes; all active sessions are revoked after a reset.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.12",
+  "text": "Role-based access control (Client, Freelancer, Arbitrator, Auditor, Administrator) is enforced on the server for every endpoint; hiding a button in the UI is never treated as authorization.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-1.13",
+  "text": "Users can update display name and notification preferences but can never change their own role.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-2.1",
+  "text": "Every user has a simulated wallet holding an Available balance and a Held (escrowed) balance in Simulation Credits (SC), stored as integer minor units (no floating point).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.2",
+  "text": "Clients can top up their wallet through the Simulated Payment Gateway (minimum 10 SC, maximum 100,000 SC per top-up, 500,000 SC per day).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.3",
+  "text": "The system never collects or stores real card, bank or mobile-money credentials; the top-up form uses simulated instruments only.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.4",
+  "text": "Freelancers can withdraw Available balance to a simulated bank or mobile-money destination; each withdrawal is logged.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.5",
+  "text": "All money movements are recorded in a double-entry ledger: every transaction has balanced debit and credit entries, so the sum of all ledger entries is always zero.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.6",
+  "text": "Wallet balances can never go negative; any operation that would cause an overdraft is rejected with no partial effect.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.7",
+  "text": "Every money-moving request carries an idempotency key; a repeated request with the same key returns the original result and moves no additional funds.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-2.8",
+  "text": "Users can view and filter transaction history (date, type, contract) and export it to CSV or PDF.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-2.9",
+  "text": "The Simulated Payment Gateway can be configured (in test/demo mode) to return success, failure, timeout or a delayed callback so error paths can be tested.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-3.1",
+  "text": "A Client creates a contract with title, description, freelancer (by email or username), total amount in SC, deadline, review period (default 3 days) and revision limit (default 2).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.2",
+  "text": "A contract has at least one milestone; optionally up to 10 milestones, each with its own amount, deliverable description and due date. Milestone amounts must add up to the contract total.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.3",
+  "text": "The Freelancer can accept, reject (with reason) or counter-propose. A counter- proposal creates a new contract version that the Client must accept.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.4",
+  "text": "Contract terms become immutable once funded. Later amendments require approval from both parties and are stored as a new version.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.5",
+  "text": "Every contract has a unique ID and changes state only through the escrow state machine defined in Section 7.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.6",
+  "text": "Illegal state transitions (for example releasing an unfunded contract) are rejected with a clear error and recorded in the audit log.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.7",
+  "text": "Before funding, either party may cancel without penalty. After funding, cancellation needs mutual consent or must go through a dispute.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.8",
+  "text": "Proposals not answered within 7 days (configurable) automatically expire.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-3.9",
+  "text": "Both parties see a contract timeline showing every event with a UTC timestamp and the acting user.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.10",
+  "text": "A user can only see contracts they are a party to. An Arbitrator can only see contracts of disputes assigned to them; an Auditor has read-only access; an Administrator sees metadata but not deliverable contents.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-3.11",
+  "text": "Contracts can be searched and filtered by status, date range and counterparty.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-3.12",
+  "text": "All free-text contract fields are length-limited, validated and output-encoded to prevent injection and XSS.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.1",
+  "text": "A Client can fund an Accepted contract from their Available balance; the amount moves to Held balance in one atomic transaction.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.2",
+  "text": "Funding is rejected if the balance is insufficient, the contract is not in the Accepted state, or the amount does not match the contract total.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.3",
+  "text": "On successful funding the contract moves to Funded and the Freelancer is notified to start work.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.4",
+  "text": "Held funds cannot be spent, withdrawn or transferred by either party; they only move through release, refund or dispute resolution.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.5",
+  "text": "Funding uses database transactions with row-level locking (or optimistic version checks) so two simultaneous requests can never fund the same contract twice.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-4.6",
+  "text": "The platform fee (default 2% of the contract value, configurable by an Administrator) is shown to both parties before acceptance and deducted at release.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-4.7",
+  "text": "Accepted contracts that are not funded within 7 days automatically expire.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-5.1",
+  "text": "The Freelancer marks a milestone as Delivered by uploading a deliverable (allow- listed types: zip, pdf, png, jpg, docx, txt; maximum 25 MB) with an optional note.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.2",
+  "text": "Uploaded files are stored encrypted, validated by content type as well as file extension, and their SHA-256 hash is recorded at upload and shown to both parties.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.3",
+  "text": "Delivery starts the review period (default 3 days) with a visible countdown.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.4",
+  "text": "During the review period the Client can approve, request a revision (with reason) or raise a dispute.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.5",
+  "text": "Funds are released only when BOTH parties have confirmed: the Freelancer\u2019s delivery confirmation and the Client\u2019s approval (or automatic approval when the review period expires).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.6",
+  "text": "A revision request returns the contract to In Progress and increments the revision counter. Once the limit is reached, the Client can only approve or dispute.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.7",
+  "text": "If the Client takes no action, the scheduler auto-approves when the review period ends, after a reminder 24 hours before.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.8",
+  "text": "Release calculates the fee, debits Held, credits the Freelancer and the fee account, and writes ledger and audit entries in a single atomic transaction.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.9",
+  "text": "Release is idempotent: repeated or concurrent release requests can never pay out twice.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-5.10",
+  "text": "Both parties receive a receipt (in-app and simulated email) for every release, refund or split.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-5.11",
+  "text": "Deliverables are downloaded only by the two parties (and the assigned Arbitrator during a dispute) through short-lived signed links.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.1",
+  "text": "Either party may raise a dispute while the contract is Funded, In Progress or Delivered, choosing a reason category and giving a description.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.2",
+  "text": "Raising a dispute freezes the Held funds: release, refund and withdrawal are blocked until the dispute is resolved.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.3",
+  "text": "Both parties can submit evidence (text and up to 5 files each) during an evidence window (default 5 days). Evidence is hashed and cannot be edited or deleted after submission.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.4",
+  "text": "An Administrator assigns an Arbitrator who is not a party to the contract (automatic assignment is also supported).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.5",
+  "text": "The Arbitrator can view the contract, timeline, deliverables and both parties\u2019 evidence, and can request additional information from either party.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.6",
+  "text": "The Arbitrator decides one of: Release to Freelancer, Refund to Client, or Split (percentage), and must record a written rationale.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.7",
+  "text": "The decision executes the matching ledger movements atomically, moves the contract to a terminal state, and notifies both parties.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-6.8",
+  "text": "Both parties can withdraw a dispute by mutual consent, returning the contract to its previous state.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-6.9",
+  "text": "Arbitrators must decide within 7 days (configurable); overdue disputes escalate to an Administrator.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-6.10",
+  "text": "An Arbitrator with a relationship to either party (same contract history) is blocked from assignment.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-6.11",
+  "text": "A single appeal to a second Arbitrator is possible within 48 hours of a decision.",
+  "priority": "Could"
+ },
+ {
+  "id": "FR-7.1",
+  "text": "An in-app notification is created for every contract state change that affects a user.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-7.2",
+  "text": "Simulated email notifications (captured by a development mail catcher) are sent for: invitation, funding, delivery, revision request, approval, release, dispute, resolution and security alerts.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-7.3",
+  "text": "Security notifications (new-device login, password change, MFA change) cannot",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-7.4",
+  "text": "Users can choose which non-critical notifications they receive per channel.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-7.5",
+  "text": "Notifications never contain sensitive content such as passwords, tokens or",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-7.6",
+  "text": "Notification delivery status is tracked (queued, sent, failed).",
+  "priority": "Could"
+ },
+ {
+  "id": "FR-8.1",
+  "text": "Every security-relevant or financial event is appended to an audit log recording",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.2",
+  "text": "Each audit entry stores the SHA-256 hash of its own content plus the hash of the",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.3",
+  "text": "The audit log is append-only: no API endpoint edits or deletes entries and the",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.4",
+  "text": "An Auditor or Administrator can run an integrity check that recomputes the chain",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.5",
+  "text": "The audit entry is written in the same database transaction as the change it",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.6",
+  "text": "Secrets (passwords, tokens, file contents) are never written to the audit log.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.7",
+  "text": "Administrator actions are audited exactly like user actions and are visible to",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-8.8",
+  "text": "The audit log can be searched by user, contract, action and date range and",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-9.1",
+  "text": "The admin dashboard shows users by role, contracts by state, total Held funds,",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.2",
+  "text": "Administrators can search, view, suspend and reactivate users and force a",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.3",
+  "text": "Administrators create Arbitrator and Auditor accounts (MFA enrolment forced on",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.4",
+  "text": "Administrators configure the platform fee, default review period, evidence window,",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.5",
+  "text": "Administrators can assign and reassign Arbitrators to disputes.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.6",
+  "text": "Suspended users cannot log in or trigger transitions; their funded contracts are frozen and flagged for review.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-9.7",
+  "text": "A reconciliation report proves that wallets + Held + fee account = total credits issued (ledger invariant).",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-9.8",
+  "text": "Administrators can never edit or delete ledger or audit records; corrections are made with compensating entries.",
+  "priority": "Must"
+ },
+ {
+  "id": "FR-10.1",
+  "text": "Client and Freelancer dashboards show active contracts, Held funds, completed contracts and open disputes.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-10.2",
+  "text": "Users can export statements and contract summaries to PDF or CSV.",
+  "priority": "Should"
+ },
+ {
+  "id": "FR-10.3",
+  "text": "Administrators can export a simulation summary (volumes, dispute rate, average time-to-release).",
+  "priority": "Could"
+ },
+ {
+  "id": "FR-10.4",
+  "text": "Dashboards refresh at least every 30 seconds.",
+  "priority": "Could"
+ },
+ {
+  "id": "FR-10.5",
+  "text": "The interface supports English, with Swahili as an optional second language.",
+  "priority": "Could"
+ },
+ {
+  "id": "NFR-1.1",
+  "text": "All traffic uses TLS 1.2+ (HTTPS only, HSTS enabled).",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.2",
+  "text": "Deliverables and sensitive fields are encrypted at rest with AES-256; keys are held outside the codebase.",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.3",
+  "text": "All inputs are validated on the server with allow-lists; database access uses parameterized queries or an ORM only (no string-built SQL).",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.4",
+  "text": "All output is context-encoded and a strict Content-Security-Policy is set; cookies are HttpOnly, Secure and SameSite.",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.5",
+  "text": "State-changing requests are protected against CSRF; authorization is checked per object to prevent IDOR (a user cannot fetch another user\u2019s contract by changing an ID).",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.6",
+  "text": "API rate limiting: 100 requests per minute per user and stricter limits on login, reset and money-moving endpoints.",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.7",
+  "text": "Secrets (JWT keys, DB passwords) are supplied through environment variables or a secret manager and are never committed to Git; secret scanning runs in CI.",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.8",
+  "text": "Dependencies are scanned for known vulnerabilities on every build and critical findings block the merge.",
+  "priority": null
+ },
+ {
+  "id": "NFR-1.9",
+  "text": "The system is designed against the OWASP Top 10 and verified against selected OWASP ASVS Level 2 controls.",
+  "priority": null
+ },
+ {
+  "id": "NFR-2.1",
+  "text": "Money is represented as integers; rounding rules are defined once and unit-tested.",
+  "priority": null
+ },
+ {
+  "id": "NFR-2.2",
+  "text": "Every multi-step financial operation is atomic (all-or-nothing) with rollback on failure.",
+  "priority": null
+ },
+ {
+  "id": "NFR-2.3",
+  "text": "The ledger invariant (sum of all entries = 0, no negative balances) is checked automatically after every test run and by the reconciliation job.",
+  "priority": null
+ },
+ {
+  "id": "NFR-2.4",
+  "text": "Concurrent requests on the same contract are serialized (locking or version checks) so no double funding, double release or lost update is possible.",
+  "priority": null
+ },
+ {
+  "id": "NFR-2.5",
+  "text": "Time-based rules (auto-approve, expiry) use server UTC time only; client clocks are never trusted.",
+  "priority": null
+ },
+ {
+  "id": "NFR-3.1",
+  "text": "95% of API requests respond in under 500 ms under a load of 200 concurrent users.",
+  "priority": null
+ },
+ {
+  "id": "NFR-3.2",
+  "text": "Pages load within 2 seconds on a typical 4G connection.",
+  "priority": null
+ },
+ {
+  "id": "NFR-3.3",
+  "text": "A release or refund completes within 2 seconds including ledger and audit writes.",
+  "priority": null
+ },
+ {
+  "id": "NFR-3.4",
+  "text": "Audit chain verification handles 100,000 entries within 60 seconds.",
+  "priority": null
+ },
+ {
+  "id": "NFR-4.1",
+  "text": "Target availability of 99% during the demo/assessment period.",
+  "priority": null
+ },
+ {
+  "id": "NFR-4.2",
+  "text": "Database backups run at least daily and a restore has been tested at least once.",
+  "priority": null
+ },
+ {
+  "id": "NFR-4.3",
+  "text": "The scheduler is restart-safe: jobs missed during downtime run on recovery and each job is idempotent.",
+  "priority": null
+ },
+ {
+  "id": "NFR-4.4",
+  "text": "Health-check endpoints exist for the API, database and scheduler.",
+  "priority": null
+ },
+ {
+  "id": "NFR-5.1",
+  "text": "A new Client can create and fund a contract within 5 minutes without training.",
+  "priority": null
+ },
+ {
+  "id": "NFR-5.2",
+  "text": "Every screen makes the escrow state, held amount and next required action obvious.",
+  "priority": null
+ },
+ {
+  "id": "NFR-5.3",
+  "text": "The interface is responsive from 320 px to 1920 px and aims at WCAG 2.1 AA (contrast 4.5:1, keyboard navigation, labelled inputs).",
+  "priority": null
+ },
+ {
+  "id": "NFR-5.4",
+  "text": "Destructive or irreversible actions (release, refund, dispute) require an explicit confirmation step summarising the consequence.",
+  "priority": null
+ },
+ {
+  "id": "NFR-5.5",
+  "text": "Error messages are specific and tell the user what to do next.",
+  "priority": null
+ },
+ {
+  "id": "NFR-6.1",
+  "text": "The codebase follows SOLID principles with separate modules for authentication, contracts, ledger, escrow state machine, disputes, audit and notifications (see Section 11).",
+  "priority": null
+ },
+ {
+  "id": "NFR-6.2",
+  "text": "Automated unit-test coverage of at least 80% overall and 95% for the ledger, state machine and audit modules.",
+  "priority": null
+ },
+ {
+  "id": "NFR-6.3",
+  "text": "Every push triggers the CI pipeline (lint, unit tests, integration tests, dependency and static- analysis scans); merges to main require a passing pipeline and one code review.",
+  "priority": null
+ },
+ {
+  "id": "NFR-6.4",
+  "text": "All work is tracked as Jira issues linked to commits and pull requests.",
+  "priority": null
+ },
+ {
+  "id": "NFR-6.5",
+  "text": "The external payment dependency is behind an interface so the simulated gateway can be replaced without changing business logic.",
+  "priority": null
+ },
+ {
+  "id": "NFR-7.1",
+  "text": "Only the minimum personal data is collected (name, email, role); no real financial credentials are ever collected.",
+  "priority": null
+ },
+ {
+  "id": "NFR-7.2",
+  "text": "Data-handling follows the principles of the Kenya Data Protection Act, 2019 and GDPR (purpose limitation, minimization, right to access and erasure by anonymization where financial history must be kept).",
+  "priority": null
+ },
+ {
+  "id": "NFR-7.3",
+  "text": "Audit and ledger records are designed to be retained for a long period (assumed 7 years, as in real financial systems) even though this is a simulation.",
+  "priority": null
+ },
+ {
+  "id": "NFR-7.4",
+  "text": "A visible notice on every money screen states that no real money is used.",
+  "priority": null
+ }
+]

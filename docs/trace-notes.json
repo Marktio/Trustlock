@@ -1,0 +1,102 @@
+{
+ "FR-1.2": {
+  "status": "Provided by Clerk",
+  "note": "Sign-up is a Clerk component; the role is stored in publicMetadata.role. The simulation notice is shown in the app shell (tested in security.spec.ts). Not exercised in demo mode."
+ },
+ "FR-1.3": {
+  "status": "Provided by Clerk",
+  "note": "Configured in the Clerk dashboard (email verification, password policy and breach check, generic errors, reset). Not code in this repo and not testable without Clerk keys."
+ },
+ "FR-1.4": {
+  "status": "Provided by Clerk",
+  "note": "Configured in the Clerk dashboard (email verification, password policy and breach check, generic errors, reset). Not code in this repo and not testable without Clerk keys."
+ },
+ "FR-1.6": {
+  "status": "Provided by Clerk",
+  "note": "Configured in the Clerk dashboard (email verification, password policy and breach check, generic errors, reset). Not code in this repo and not testable without Clerk keys."
+ },
+ "FR-1.11": {
+  "status": "Provided by Clerk",
+  "note": "Configured in the Clerk dashboard (email verification, password policy and breach check, generic errors, reset). Not code in this repo and not testable without Clerk keys."
+ },
+ "FR-1.7": {
+  "status": "Provided by Clerk",
+  "note": "Account lockout after repeated failures is a Clerk setting. Our own per-address limit on the sign-in and sign-up pages is tested (z-hardening.spec.ts)."
+ },
+ "FR-1.8": {
+  "status": "Provided by Clerk",
+  "note": "TOTP is a Clerk feature; mandatory-for-staff enforcement and step-up MFA for large releases are Planned."
+ },
+ "FR-1.9": {
+  "status": "Provided by Clerk",
+  "note": "Session and token lifetimes are Clerk settings."
+ },
+ "FR-5.11": {
+  "status": "Planned",
+  "note": "Evidence is stored as text and file names plus a SHA-256 digest only. Real file upload with signed, short-lived download links is not built."
+ },
+ "NFR-1.1": {
+  "status": "Manual",
+  "note": "Provided by the hosting platform (HTTPS, uptime). Checked at deployment."
+ },
+ "NFR-4.1": {
+  "status": "Manual",
+  "note": "Provided by the hosting platform (HTTPS, uptime). Checked at deployment."
+ },
+ "NFR-1.2": {
+  "status": "Planned",
+  "note": "Database encryption at rest is a Supabase platform feature; field-level encryption of deliverables is not built."
+ },
+ "NFR-1.7": {
+  "status": "Manual",
+  "note": "Secrets come from environment variables; the secret-scan job in CI checks the repository."
+ },
+ "NFR-1.8": {
+  "status": "Manual",
+  "note": "Enforced by the CI pipeline (npm audit, CodeQL, OWASP ZAP baseline, gitleaks); see .github/workflows."
+ },
+ "NFR-1.9": {
+  "status": "Manual",
+  "note": "Enforced by the CI pipeline (npm audit, CodeQL, OWASP ZAP baseline, gitleaks); see .github/workflows."
+ },
+ "NFR-6.3": {
+  "status": "Manual",
+  "note": "Enforced by the CI pipeline (npm audit, CodeQL, OWASP ZAP baseline, gitleaks); see .github/workflows."
+ },
+ "NFR-6.2": {
+  "status": "Manual",
+  "note": "Enforced by coverage thresholds in vitest.config.mts; results are in docs/TEST-RESULTS.md."
+ },
+ "NFR-3.1": {
+  "status": "Planned",
+  "note": "No load test has been run. Only single-request timings are measured (performance.test.ts)."
+ },
+ "NFR-3.2": {
+  "status": "Planned",
+  "note": "No load test has been run. Only single-request timings are measured (performance.test.ts)."
+ },
+ "NFR-4.2": {
+  "status": "Planned",
+  "note": "Relies on Supabase backups; a restore has not been tested yet."
+ },
+ "NFR-5.1": {
+  "status": "Manual",
+  "note": "Needs a usability session with a new user."
+ },
+ "NFR-6.1": {
+  "status": "Manual",
+  "note": "Layered modules (domain, server, app); reviewed in code review. Complexity is reported by ESLint."
+ },
+ "NFR-6.4": {
+  "status": "Manual",
+  "note": "Process requirement, checked in Jira, not in the code."
+ },
+ "NFR-7.2": {
+  "status": "Manual",
+  "note": "Design review: data minimisation is tested; consent and subject-access processes are documented, not built."
+ },
+ "NFR-7.3": {
+  "status": "Manual",
+  "note": "The audit and ledger are append-only by design; the retention period is a policy, not enforced by code."
+ }
+}

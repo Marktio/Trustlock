@@ -1,0 +1,80 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:report
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Unit and integration tests with coverage gate
+        run: npm run test:unit
+      - name: Requirement-to-test table (fails if a Must has no test and no explanation)
+        run: npm run trace:strict
+      - run: npm run build
+        env:
+          TRUSTLOCK_SEED_DEMO: "true"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-reports-${{ github.run_number }}
+          path: |
+            coverage/
+            reports/
+            docs/TRACEABILITY.md
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: End-to-end and accessibility tests
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-reports-${{ github.run_number }}
+          path: |
+            playwright-report/
+            test-results/
+
+  evidence:
+    runs-on: ubuntu-latest
+    needs: [test, e2e]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloaded
+      - name: Build test results file
+        run: |
+          mkdir -p test-results coverage
+          cp -r downloaded/unit-reports-*/coverage/* coverage/ || true
+          mkdir -p reports; cp downloaded/unit-reports-*/reports/* reports/ || true
+          cp downloaded/e2e-reports-*/test-results/* test-results/ || true
+          node scripts/test-results.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEST-RESULTS-${{ github.run_number }}
+          path: docs/TEST-RESULTS.md
