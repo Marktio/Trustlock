@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import type { User } from "@/domain/types";
-import { demoLogout } from "@/app/actions";
+import { AccountSwitcher } from "@/components/account-switcher";
 import { clerkEnabled, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
 
@@ -53,27 +53,20 @@ export async function Shell({ viewer, active, children }: { viewer: User; active
             </Link>
           ))}
         </nav>
-        <div className="who">
-          <span>
-            <strong>{viewer.name}</strong>
-            <br />
-            {ROLE_LABEL[viewer.role]}
-          </span>
-          {clerkEnabled ? (
-            <UserButton />
-          ) : (
-            <>
-              <Link href="/demo" className="linklike">
-                Switch demo user
-              </Link>
-              <form action={demoLogout}>
-                <button type="submit" className="linklike">
-                  Sign out
-                </button>
-              </form>
-            </>
-          )}
-        </div>
+        {clerkEnabled ? (
+          <div className="who">
+            <span>
+              <strong>{viewer.name}</strong>
+              <br />
+              {ROLE_LABEL[viewer.role]}
+            </span>
+            <UserButton afterSwitchSessionUrl="/dashboard" />
+          </div>
+        ) : (
+          <div className="who">
+            <AccountSwitcher viewer={viewer} users={await (await getContainer()).repo.listUsers()} />
+          </div>
+        )}
       </aside>
       <main id="main" className="main">
         {children}

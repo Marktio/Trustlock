@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { setRegion } from "@/app/actions";
 import { clerkAppearance } from "@/components/clerk-theme";
@@ -11,6 +11,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "TrustLock", template: "%s · TrustLock" },
   description: "A practice escrow for freelance jobs. Funds are locked until both sides confirm. Simulation only.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#111b33",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

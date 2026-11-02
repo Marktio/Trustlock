@@ -157,7 +157,7 @@ textarea { min-height: 88px; resize: vertical; }
 
 /* State rail (mirrors the escrow state machine) */
 .rail { display: flex; align-items: flex-start; min-width: 640px; }
-.rail-wrap { overflow-x: auto; }
+.rail-wrap { overflow-x: auto; min-width: 0; max-width: 100%; }
 .rail-step { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); flex: 0 0 auto; width: 76px; font-size: 0.8125rem; color: var(--muted); text-align: center; }
 .rail-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #8a92a8; background: #fff; }
 .rail-step.done .rail-dot { background: var(--navy-900); border-color: var(--navy-900); }
@@ -186,10 +186,12 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .hero > .copy { flex: 1 1 380px; display: flex; flex-direction: column; gap: var(--space-6); }
 .hero h1 { font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem); letter-spacing: -0.01em; }
 .hero p.lead { font-size: 1.125rem; max-width: 52ch; color: #2e3550; }
-.vault { flex: 1 1 380px; background: var(--navy-900); color: #fff; border-radius: 20px; padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); }
+.vault { flex: 1 1 380px; min-width: 0; background: var(--navy-900); color: #fff; border-radius: 20px; padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); }
 .vault h2, .vault .big { color: #fff; }
 .vault .held-box { background: var(--navy-700); border-radius: var(--radius-md); padding: var(--space-4); border-left: 6px solid var(--amber-400); }
-.vault .rail-step { color: var(--navy-300); }
+.vault .rail { min-width: 0; width: 100%; }
+.vault .rail-step { color: var(--navy-300); width: 60px; }
+.vault .rail-line { min-width: 4px; }
 .vault .rail-step.now { color: #fff; }
 .vault .rail-dot { background: var(--navy-900); border-color: var(--navy-300); }
 .vault .rail-step.done .rail-dot { background: var(--amber-400); border-color: var(--amber-400); }
@@ -206,7 +208,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   @keyframes lock-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .table.stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .table.stack, .table.stack tbody, .table.stack tr, .table.stack td { display: block; width: 100%; }
   .table.stack tr { background: var(--surface, #fff); border: 1px solid var(--line); border-radius: var(--radius-md, 12px); padding: var(--space-3); margin-bottom: var(--space-3); }
@@ -266,3 +268,69 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .how-grid > * { min-width: 0; }
 .how-dialog { overflow-x: hidden; box-sizing: border-box; }
 @media (max-width: 760px) { .how-wallets { grid-template-columns: 1fr; } .how-rail { font-size: 0.62rem; } .how-tabs button { padding: 0 var(--space-4); } }
+
+/* Account menu (demo mode), like the account switcher in Gmail */
+.switcher { position: relative; }
+.switcher > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2); border-radius: var(--radius-md); min-height: 48px; color: #fff; }
+.switcher > summary::-webkit-details-marker { display: none; }
+.switcher > summary:hover, .switcher[open] > summary { background: var(--navy-700); }
+.switcher .avatar { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--amber-400); color: var(--navy-900); font-weight: 700; display: grid; place-items: center; }
+.switcher .who-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; text-align: left; }
+.switcher .who-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.switcher .who-role { font-size: 0.8125rem; color: var(--navy-300); }
+.switcher .chev { margin-left: auto; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); flex: none; }
+.switcher[open] .chev { transform: rotate(-135deg); }
+.switcher-menu { position: absolute; left: 0; bottom: calc(100% + 8px); width: 280px; max-width: 92vw; background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgb(17 27 51 / 0.28); padding: var(--space-2); z-index: 40; }
+.switcher-title { font-size: 0.8125rem; color: var(--muted); padding: var(--space-2) var(--space-3); }
+.switcher-menu ul { list-style: none; margin: 0; padding: 0; max-height: 55vh; overflow-y: auto; }
+.switcher-menu button { all: unset; box-sizing: border-box; display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 48px; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); cursor: pointer; color: var(--ink); }
+.switcher-menu button:hover { background: var(--paper); }
+.switcher-menu button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.switcher-menu button[aria-current="true"] { background: var(--amber-100); }
+.switcher-menu .who-role { color: var(--muted); }
+.switcher-menu .here { margin-left: auto; font-size: 0.75rem; font-weight: 700; color: var(--amber-700); }
+.switcher-menu .switcher-out { border-top: 1px solid var(--line); border-radius: 0 0 var(--radius-sm) var(--radius-sm); margin-top: var(--space-2); color: var(--red-700); font-weight: 600; }
+
+/* Wide screens: keep the account menu pinned to the bottom of the window, however long the page is. */
+@media (min-width: 761px) {
+  .side .who:has(.switcher) { position: sticky; bottom: 0; background: var(--navy-900); padding: var(--space-3) 0; margin-bottom: calc(var(--space-6) * -1); }
+}
+
+/* Small screens (phones). Everything below only applies at or under the stated width. */
+@media (max-width: 640px) {
+  html { -webkit-text-size-adjust: 100%; }
+  .sim { font-size: 0.75rem; padding: 6px var(--space-3); gap: var(--space-1) var(--space-3); text-align: left; }
+  .region-picker select { min-height: 32px; font-size: 0.8125rem; }
+
+  .landing { padding: 0 var(--space-4) var(--space-8); }
+  .landing-nav { flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+  .landing-nav > span { flex: 1 1 auto; }
+  .landing-nav nav { order: 3; flex: 1 0 100%; margin-right: 0 !important; gap: var(--space-4) !important; }
+  .landing-nav a, .landing-nav button { white-space: nowrap; }
+  .hero { gap: var(--space-6); padding: var(--space-4) 0; }
+  .hero > .copy { flex-basis: 100%; gap: var(--space-4); }
+  .hero .btn-row { flex-direction: column; align-items: stretch; }
+  .hero .btn-row .btn { justify-content: center; text-align: center; }
+  .vault { flex-basis: 100%; padding: var(--space-4); border-radius: 16px; }
+  .vault .rail-step { width: 44px; font-size: 0.6875rem; }
+}
+
+/* Signed-in pages on a phone: a slim top bar (logo and user) with one swipeable row of links, so content starts near the top. */
+@media (max-width: 760px) {
+  .app { min-height: 0; }
+  .side { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand who" "nav nav"; align-items: center; gap: var(--space-2) var(--space-3); padding: var(--space-3) var(--space-4); position: sticky; top: 0; z-index: 20; }
+  .side .brand { grid-area: brand; font-size: 1.25rem; }
+  .side .who { grid-area: who; margin-top: 0; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0 var(--space-3); font-size: 0.8125rem; text-align: right; max-width: 60vw; }
+  .side .who br { display: none; }
+  .side .who span { line-height: 1.25; }
+  .side .who strong::after { content: "\00a0\00b7\00a0"; font-weight: 400; }
+  .side nav { grid-area: nav; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; gap: var(--space-1); margin: 0 calc(var(--space-4) * -1); padding: 0 var(--space-4) var(--space-1); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .side nav::-webkit-scrollbar { display: none; }
+  .side nav a { flex: 0 0 auto; white-space: nowrap; min-height: 44px; padding: 0 var(--space-3); }
+}
+@media (max-width: 760px) {
+  .side .who:has(.switcher) { max-width: none; }
+  .switcher > summary { padding: var(--space-1) var(--space-2); }
+  .switcher .who-role { font-size: 0.75rem; }
+  .switcher-menu { bottom: auto; top: calc(100% + 8px); left: auto; right: 0; }
+}
