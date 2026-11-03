@@ -29,10 +29,13 @@
   --space-6: 24px;
   --space-8: 32px;
   --space-12: 48px;
+  /* Spacing scale from the landing page skill (the only values allowed on the landing top). */
+  --space-50: 4px; --space-75: 8px; --space-100: 12px; --space-200: 16px; --space-300: 24px; --space-400: 32px; --space-500: 40px; --space-600: 48px; --space-700: 64px; --space-800: 80px; --space-900: 96px;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-pill: 999px;
   --shadow-1: 0 1px 2px rgb(17 27 51 / 0.08);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -177,33 +180,12 @@ dialog.dialog::backdrop { background: rgb(17 27 51 / 0.55); }
 dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4); }
 .hash { font-family: var(--font-mono); font-size: 0.8125rem; background: var(--paper); border: 1px dashed #8a92a8; border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3); overflow-wrap: anywhere; }
 
-/* Landing */
+/* Landing: container and the three step cards. The top of the page (header, hero) lives in the "Landing top" block at the end of this file. */
 .landing { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-6) var(--space-12); }
-.landing-nav { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; }
-.hero { display: flex; flex-wrap: wrap; gap: var(--space-12); align-items: center; padding: var(--space-8) 0; }
-.hero > .copy { flex: 1 1 380px; display: flex; flex-direction: column; gap: var(--space-6); }
-.hero h1 { font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem); letter-spacing: -0.01em; }
-.hero p.lead { font-size: 1.125rem; max-width: 52ch; color: #2e3550; }
-.vault { flex: 1 1 380px; min-width: 0; background: var(--navy-900); color: #fff; border-radius: 20px; padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); }
-.vault h2, .vault .big { color: #fff; }
-.vault .held-box { background: var(--navy-700); border-radius: var(--radius-md); padding: var(--space-4); border-left: 6px solid var(--amber-400); }
-.vault .rail { min-width: 0; width: 100%; }
-.vault .rail-step { color: var(--navy-300); width: 60px; }
-.vault .rail-line { min-width: 4px; }
-.vault .rail-step.now { color: #fff; }
-.vault .rail-dot { background: var(--navy-900); border-color: var(--navy-300); }
-.vault .rail-step.done .rail-dot { background: var(--amber-400); border-color: var(--amber-400); }
-.vault .rail-step.now .rail-dot { border-color: var(--amber-400); }
-.vault .rail-line { background: var(--navy-300); }
-.vault .rail-line.done { background: var(--amber-400); }
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .vault .held-box { animation: lock-in 600ms cubic-bezier(0.23, 1, 0.32, 1) 1; }
-  @keyframes lock-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 }
 
 @media (max-width: 900px) {
@@ -300,14 +282,6 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .sim { font-size: 0.8125rem; }
 
   .landing { padding: 0 var(--space-4) var(--space-8); }
-  .landing-nav { flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
-  .landing-nav a, .landing-nav button { white-space: nowrap; }
-  .hero { gap: var(--space-6); padding: var(--space-4) 0; }
-  .hero > .copy { flex-basis: 100%; gap: var(--space-4); }
-  .hero .btn-row { flex-direction: column; align-items: stretch; }
-  .hero .btn-row .btn { justify-content: center; text-align: center; }
-  .vault { flex-basis: 100%; padding: var(--space-4); border-radius: 16px; }
-  .vault .rail-step { width: 44px; font-size: 0.6875rem; }
 }
 
 /* Signed-in pages on a phone: a slim top bar (logo and user) with one swipeable row of links, so content starts near the top. */
@@ -351,13 +325,6 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .sim-pop .here { font-size: 0.75rem; font-weight: 700; color: var(--amber-700); }
 .sim-pop form:first-child button { border-bottom: 1px solid var(--line); border-radius: var(--radius-sm) var(--radius-sm) 0 0; margin-bottom: var(--space-1); }
 
-/* ---- Landing header: brand left, quiet links, one button ---- */
-.landing-brand { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy-900); text-decoration: none; flex-grow: 1; }
-.landing-links { display: flex; align-items: center; gap: var(--space-2); margin-right: var(--space-2); }
-.nav-link { font: inherit; background: none; border: 0; padding: 0 var(--space-3); min-height: 44px; display: inline-flex; align-items: center; color: var(--navy-900); text-decoration: none; cursor: pointer; border-radius: var(--radius-sm); }
-.nav-link:hover { background: rgb(17 27 51 / 0.07); }
-.nav-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-
 /* ---- Sign-in and sign-up: the idea on the left, the form on the right ---- */
 .auth { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: calc(100vh - 53px); }
 .auth-aside { background: radial-gradient(120% 90% at 0% 0%, #243a6b 0%, var(--navy-900) 55%); color: #fff; padding: var(--space-12) var(--space-12) var(--space-8); display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8); }
@@ -385,6 +352,129 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .sim { padding: 6px var(--space-3); gap: var(--space-2); }
   .sim-long { display: none; }
   .sim-region-name { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; }
-  .landing-brand { flex: 1 1 auto; }
-  .landing-links { order: 3; flex: 1 0 100%; margin-right: 0; gap: var(--space-2); }
+}
+
+/* ================= Landing top: header and hero =================
+   Rules applied (from the landing page and taste skills): one typeface (Geist, with tabular figures for amounts),
+   Tailwind type steps, spacing from the 2/4/8/12/16/24/32/40/48/64/80/96 table, Tailwind radii with the
+   nested radius formula, flat backgrounds, borders only all the way round, one accent (amber) used for the
+   escrow moment, motion on transform and opacity only with the base curve, and a reduced motion fallback.
+
+   Geist is loaded in the root layout but only switched on when the landing page is showing. To use it across
+   the whole app later, move these two variables to :root and delete the :has() selector. */
+body:has(.landing) {
+  --font-ui: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-ui);
+}
+
+/* Named text styles (sizes are Tailwind steps: xs 12/16, sm 14/20, base 16/24, lg 18/28, xl 20/28, 3xl 30/36, 4xl 36/40). */
+.landing { font-family: var(--font-ui); }
+.landing .heading-4 { font-size: 1.875rem; line-height: 2.25rem; font-weight: 600; }
+.landing .heading-3 { font-size: 2.25rem; line-height: 2.5rem; font-weight: 600; }
+.landing .heading-6 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; }
+.landing .title-2 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 500; }
+.landing .title-3 { font-size: 1rem; line-height: 1.5rem; font-weight: 500; }
+.landing .body-5 { font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
+.landing .body-7 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 400; } /* next number in the Body group: base step up, regular */
+.landing .caption-1 { font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
+.landing .caption-2 { font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+.landing .caption-3 { font-size: 0.75rem; line-height: 1rem; font-weight: 600; }
+.landing .caption-4 { font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
+.landing .steps h3 { font-family: var(--font-ui); font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; }
+.landing .lp-muted { color: var(--muted); }
+
+/* Header: a compact bar that floats off the top edge. Radius 16 with 8 of padding gives the button inside a radius of 8. */
+.lp-header { position: sticky; top: var(--space-2); z-index: 20; padding-top: var(--space-2); }
+.lp-nav { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); border: 1px solid var(--line); border-radius: 16px; background: rgb(244 245 249 / 0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.lp-brand { display: inline-flex; align-items: center; gap: var(--space-2); flex-grow: 1; color: var(--navy-900); text-decoration: none; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; letter-spacing: -0.01em; }
+.lp-brand img { border-radius: 6px; }
+.lp-links { display: flex; align-items: center; gap: var(--space-1); }
+.lp-link { white-space: nowrap; font: inherit; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; background: none; border: 0; padding: 0 var(--space-3); min-height: 44px; display: inline-flex; align-items: center; color: var(--navy-900); text-decoration: none; cursor: pointer; border-radius: 8px; transition: background-color 300ms var(--ease-out); }
+.lp-link:hover { background: rgb(17 27 51 / 0.07); }
+
+/* Buttons. 8px by 12px padding as the skill asks, with a 44px minimum height kept for touch targets. */
+.lp-btn { font: inherit; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid transparent; border-radius: 8px; text-decoration: none; white-space: nowrap; cursor: pointer; font-weight: 600; transition: background-color 300ms var(--ease-out), border-color 300ms var(--ease-out), transform 200ms var(--ease-out); }
+.lp-btn:active { transform: scale(0.98); }
+.lp-btn-md { font-size: 1rem; line-height: 1.5rem; padding-inline: var(--space-4); }
+.lp-btn-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.lp-btn-solid { background: var(--navy-900); color: #fff; }
+.lp-btn-solid:hover { background: var(--navy-700); }
+.lp-btn-quiet { background: transparent; color: var(--navy-900); border-color: #6b7389; }
+.lp-btn-quiet:hover { background: rgb(17 27 51 / 0.06); border-color: var(--navy-900); }
+.lp-btn-text { background: transparent; color: var(--navy-900); }
+.lp-btn-text svg { transition: transform 300ms var(--ease-out); }
+.lp-btn-text:hover svg { transform: translateX(4px); }
+.lp-btn-text:hover { background: rgb(17 27 51 / 0.06); }
+
+/* Hero: copy left, one real component right. */
+.landing main > section { scroll-margin-top: 88px; }
+.lp-hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-700); align-items: center; padding: var(--space-700) 0 var(--space-800); }
+.lp-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.lp-eyebrow { color: var(--muted); margin-bottom: var(--space-3); }
+.lp-title { font-size: 2.25rem; line-height: 2.5rem; font-weight: 600; letter-spacing: -0.02em; color: var(--navy-900); max-width: 680px; font-family: var(--font-ui); }
+.lp-title span { display: block; text-wrap: balance; }
+.lp-lead { max-width: 480px; margin-top: var(--space-300); color: #2e3550; text-wrap: pretty; }
+.lp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-400); }
+.lp-note { margin-top: var(--space-3); color: var(--muted); max-width: 480px; text-wrap: pretty; }
+
+/* The example contract is a real StateRail with real seeded numbers. Radius 16, no border (the tinted shadow lifts it), sections are full width so there are no nested shapes. */
+.lp-contract { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgb(17 27 51 / 0.06), 0 24px 48px -24px rgb(17 27 51 / 0.28); min-width: 0; }
+.lp-contract-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); padding: var(--space-300) var(--space-300) var(--space-200); }
+.lp-contract-head h2 { color: var(--navy-900); font-family: var(--font-ui); }
+.lp-badge { background: var(--amber-100); color: #4a3200; padding: var(--space-50) var(--space-75); white-space: nowrap; }
+.lp-parties { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-200); padding: 0 var(--space-300) var(--space-300); }
+.lp-parties dd { color: var(--navy-900); }
+.lp-rail { padding: var(--space-300); border-top: 1px solid var(--line); }
+.lp-rail .rail-wrap { overflow: visible; }
+.lp-rail .rail { min-width: 0; width: 100%; }
+.lp-rail .rail-step { width: 18px; white-space: nowrap; font-size: 0.75rem; line-height: 1rem; font-weight: 500; color: var(--muted); } /* labels are centred under the dot and may be wider than it, so the lines get the space */
+.lp-rail .rail-step.now { color: var(--navy-900); font-weight: 600; }
+.lp-rail .rail-line { min-width: 2px; background: #b4bbcc; }
+.lp-rail .rail-line.done { background: var(--navy-900); }
+.lp-rail .rail-dot { border-color: #8a92a8; }
+.lp-rail .rail-step.done .rail-dot { background: var(--navy-900); border-color: var(--navy-900); }
+.lp-rail .rail-step.now .rail-dot { border: 5px solid var(--amber-400); background: #fff; }
+.lp-held { background: var(--amber-100); padding: var(--space-300); display: flex; flex-direction: column; gap: var(--space-1); }
+.lp-held-label { display: flex; align-items: center; gap: var(--space-2); color: #4a3200; }
+.lp-held-label svg { color: var(--amber-700); }
+.lp-amount { font-variant-numeric: tabular-nums; font-size: 1.875rem; line-height: 2.25rem; font-weight: 600; letter-spacing: -0.02em; color: var(--navy-900); }
+.lp-held-note { color: #4a3200; text-wrap: pretty; }
+
+/* Entrance: the contract is built up in the order the escrow works (accepted, funded, locked). Transform and opacity only. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.landing) { scroll-behavior: smooth; }
+  .lp-copy > * { animation: lp-rise 700ms var(--ease-out) both; }
+  .lp-copy > :nth-child(2) { animation-delay: 80ms; }
+  .lp-copy > :nth-child(3) { animation-delay: 160ms; }
+  .lp-copy > :nth-child(4) { animation-delay: 240ms; }
+  .lp-copy > :nth-child(5) { animation-delay: 320ms; }
+  .lp-contract { animation: lp-rise 700ms var(--ease-out) 160ms both; }
+  .lp-rail .rail-line.done { transform-origin: left center; animation: lp-fill 600ms var(--ease-out) both; }
+  .lp-rail li:nth-child(4) .rail-line.done { animation-delay: 520ms; }
+  .lp-rail li:nth-child(6) .rail-line.done { animation-delay: 680ms; }
+  .lp-rail li:nth-child(8) .rail-line.done { animation-delay: 840ms; }
+  .lp-held { animation: lp-rise 600ms var(--ease-out) 1000ms both; }
+  @keyframes lp-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes lp-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+@media (min-width: 640px) {
+  .lp-btn-md { padding-inline: var(--space-200); }
+}
+@media (max-width: 900px) {
+  .lp-hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-500); padding: var(--space-400) 0 var(--space-600); }
+  .lp-contract { max-width: 560px; }
+}
+@media (max-width: 640px) {
+  .lp-title { font-size: 1.875rem; line-height: 2.25rem; }
+  .lp-actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .lp-actions .lp-btn { width: 100%; }
+  .lp-contract-head, .lp-parties, .lp-rail, .lp-held { padding-inline: var(--space-200); }
+  .lp-link { padding: 0 var(--space-2); }
+}
+@media (max-width: 400px) {
+  .lp-brand img { display: none; }
+}
+@media (max-width: 380px) {
+  .lp-links a.lp-link { display: none; } /* "Roles" is a below the fold anchor; "How it works" and "Log in" stay on one line */
 }
