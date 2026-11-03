@@ -1,9 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import type { User } from "@/domain/types";
 import { AccountSwitcher } from "@/components/account-switcher";
 import { clerkEnabled, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
+import brandMark from "@/app/icon.svg";
 
 const ROLE_LABEL: Record<User["role"], string> = {
   client: "Client",
@@ -35,10 +37,7 @@ export async function Shell({ viewer, active, children }: { viewer: User; active
     <div className="app">
       <aside className="side">
         <Link href="/" className="brand">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber-400)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="4" y="10.5" width="16" height="10.5" rx="2.5" />
-            <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
-          </svg>
+          <Image src={brandMark} alt="" width={24} height={24} />
           TrustLock
         </Link>
         <nav aria-label="Main">

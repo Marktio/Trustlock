@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, LockKey } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { HowItWorks } from "@/components/how-it-works";
-import { StateRail } from "@/components/ui";
-import { formatSC } from "@/domain/money";
+import { ExampleContract } from "@/components/example-contract";
+import { TaglineReveal } from "@/components/tagline-reveal";
+import { Pill } from "@/components/ui";
 import { getViewer, clerkEnabled } from "@/server/auth";
 import { getRegion } from "@/server/region";
 import brandMark from "./icon.svg";
@@ -59,78 +60,66 @@ export default async function Landing() {
             {!clerkEnabled && <p className="caption-2 lp-note">Demo mode: choose a ready account. You do not need to sign up.</p>}
           </div>
 
-          <aside className="lp-contract" aria-label="Example contract">
-            <div className="lp-contract-head">
-              <div>
-                <p className="caption-4 lp-muted">Example contract</p>
-                <h2 className="heading-6">Brand identity refresh</h2>
-              </div>
-              <span className="lp-badge caption-3">Funded</span>
-            </div>
-            <dl className="lp-parties">
-              <div>
-                <dt className="caption-4 lp-muted">Client</dt>
-                <dd className="title-3">Amina W.</dd>
-              </div>
-              <div>
-                <dt className="caption-4 lp-muted">Freelancer</dt>
-                <dd className="title-3">Brian O.</dd>
-              </div>
-            </dl>
-            <div className="lp-rail">
-              <StateRail
-                state="funded"
-                steps={[
-                  { state: "draft", label: "Draft" },
-                  { state: "proposed", label: "Proposed" },
-                  { state: "accepted", label: "Accepted" },
-                  { state: "funded", label: "Funded" },
-                  { state: "delivered", label: "Delivered" },
-                  { state: "completed", label: "Done" },
-                ]}
-              />
-            </div>
-            <div className="lp-held">
-              <p className="body-5 lp-held-label">
-                <LockKey size={20} weight="bold" aria-hidden="true" />
-                Held in escrow
-              </p>
-              <p className="lp-amount">{formatSC(4_500_000, true, currency)}</p>
-              <p className="caption-2 lp-held-note">Released only after both sides confirm delivery.</p>
-            </div>
-          </aside>
+          <ExampleContract currency={currency} />
         </section>
 
-        <section id="how" className="steps" aria-label="How it works">
-          <div className="card">
-            <h3>1. Lock the funds</h3>
-            <p className="muted">The client funds the contract. The money moves from Available to Held, and nobody can spend it.</p>
-          </div>
-          <div className="card">
-            <h3>2. Deliver the work</h3>
-            <p className="muted">The freelancer uploads the file. Its SHA-256 fingerprint is recorded as proof of what was delivered.</p>
-          </div>
-          <div className="card">
-            <h3>3. Approve and release</h3>
-            <p className="muted">The client approves, or the review period ends. Payment is released exactly once.</p>
-          </div>
+        <section id="how" className="lp-how" aria-labelledby="how-h">
+          <h2 id="how-h" className="heading-4 lp-section-title">
+            How the money moves
+          </h2>
+          <ol className="lp-how-list">
+            <li>
+              <div>
+                <h3 className="heading-6">Lock the funds</h3>
+                <p className="body-3 lp-muted">The client funds the contract. The money moves from Available to Held, and nobody can spend it.</p>
+              </div>
+              <Pill state="funded" />
+            </li>
+            <li>
+              <div>
+                <h3 className="heading-6">Deliver the work</h3>
+                <p className="body-3 lp-muted">The freelancer uploads the file. Its SHA-256 fingerprint is recorded as proof of what was delivered.</p>
+              </div>
+              <Pill state="delivered" />
+            </li>
+            <li>
+              <div>
+                <h3 className="heading-6">Approve and release</h3>
+                <p className="body-3 lp-muted">The client approves, or the review period ends. Payment is released exactly once.</p>
+              </div>
+              <Pill state="completed" />
+            </li>
+          </ol>
         </section>
 
-        <section id="roles" className="steps" aria-label="Roles" style={{ marginTop: "var(--space-8)" }}>
-          <div className="card">
-            <h3>Client</h3>
-            <p className="muted">Creates the contract, funds the escrow, reviews the delivery and approves the payment.</p>
-          </div>
-          <div className="card">
-            <h3>Freelancer</h3>
-            <p className="muted">Accepts the contract, does the work, uploads the delivery and receives the payment.</p>
-          </div>
-          <div className="card">
-            <h3>Arbitrator, admin and auditor</h3>
-            <p className="muted">Assigned by an administrator. They resolve disputes and verify the audit log.</p>
+        <section className="lp-tagline-wrap" aria-label="In short">
+          <TaglineReveal text="Held money cannot be spent by anyone. It is released once, when the client approves or the review period ends." />
+        </section>
+
+        <section id="roles" className="lp-roles" aria-labelledby="roles-h">
+          <h2 id="roles-h" className="heading-4 lp-section-title">
+            Who does what
+          </h2>
+          <div className="lp-roles-body">
+            <div className="lp-role">
+              <h3 className="heading-6">Client</h3>
+              <p className="body-3 lp-muted">Creates the contract, funds the escrow, reviews the delivery and approves the payment.</p>
+            </div>
+            <div className="lp-role">
+              <h3 className="heading-6">Freelancer</h3>
+              <p className="body-3 lp-muted">Accepts the contract, does the work, uploads the delivery and receives the payment.</p>
+            </div>
+            <div className="lp-role lp-role-wide">
+              <h3 className="heading-6">Arbitrator, admin and auditor</h3>
+              <p className="body-3 lp-muted">Assigned by an administrator. They resolve disputes and verify the audit log.</p>
+            </div>
           </div>
         </section>
       </main>
+
+      <footer className="lp-footer caption-2">
+        <p>Practice credits only. No real money is used. Built by Group 11 for SWE3020B.</p>
+      </footer>
     </div>
   );
 }

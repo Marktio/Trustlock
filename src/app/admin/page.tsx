@@ -40,7 +40,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
       <section aria-labelledby="ov-h" style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
         <h2 id="ov-h">Overview</h2>
-        <div className="grid-3">
+        <div className="ov-grid">
           <div className="card">
             <span className="small muted">Held in escrow</span>
             <div className="big">{money(o.held)}</div>

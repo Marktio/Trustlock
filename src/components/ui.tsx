@@ -27,12 +27,12 @@ export function Notices({ error, ok }: { error?: string; ok?: string }) {
 }
 
 /** The happy path from the state machine. Off-path end states (refunded, rejected...) show as a banner instead. */
-export function StateRail({ state, steps }: { state: ContractState; steps?: { state: ContractState; label: string }[] }) {
+export function StateRail({ state, steps, scrollable = true }: { state: ContractState; steps?: { state: ContractState; label: string }[]; scrollable?: boolean }) {
   const rail = steps ?? STATE_RAIL.map((st) => ({ state: st, label: STATE_LABEL[st] }));
   const idx = rail.findIndex((r) => r.state === state);
   const onRail = idx >= 0;
   return (
-    <div className="rail-wrap">
+    <div className="rail-wrap" {...(scrollable ? { tabIndex: 0, role: "region", "aria-label": "Contract progress, scrolls sideways on small screens" } : {})}>
       <ol className="rail" aria-label="Contract progress" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {rail.map((r, i) => {
           const s = r.state;

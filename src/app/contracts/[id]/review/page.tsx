@@ -68,7 +68,7 @@ export default async function ReviewPage({
           <div className="card" style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <div className="small muted">Review time left</div>
-              <div className="big">{c.reviewEndsAt ? timeLeftLong(c.reviewEndsAt) : "—"}</div>
+              <div className="big">{c.reviewEndsAt ? timeLeftLong(c.reviewEndsAt) : "Not started"}</div>
             </div>
             <p className="small muted" style={{ maxWidth: 260 }}>
               The fingerprint below was recorded when {first} uploaded the file. If you do nothing, payment is released when the time runs out.

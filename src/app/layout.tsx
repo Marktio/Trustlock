@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { clerkAppearance } from "@/components/clerk-theme";
 import { PopoverDismiss } from "@/components/popover-dismiss";
@@ -23,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const region = await getRegion();
   const countries = PICKER_COUNTRIES.includes(region.country) ? PICKER_COUNTRIES : [region.country, ...PICKER_COUNTRIES];
   const page = (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content
