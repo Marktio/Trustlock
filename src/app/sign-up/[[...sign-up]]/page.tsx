@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { SignUp } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { AuthShell } from "@/components/auth-shell";
 import { clerkEnabled } from "@/server/auth";
 
 export const metadata = { title: "Create your account" };
@@ -11,16 +11,17 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
   const { role } = await searchParams;
   const picked = role === "client" || role === "freelancer" ? role : null;
   return (
-    <main id="main" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-4)", padding: "var(--space-12) var(--space-4)" }}>
-      <Link href="/" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--navy-900)", textDecoration: "none" }}>
-        TrustLock
-      </Link>
-      {picked && (
-        <p className="muted" style={{ textAlign: "center" }}>
-          Creating your <strong>{picked}</strong> account.
-        </p>
-      )}
+    <AuthShell
+      title="Create your TrustLock account"
+      note={
+        picked && (
+          <p className="auth-role">
+            Creating your <strong>{picked}</strong> account
+          </p>
+        )
+      }
+    >
       <SignUp forceRedirectUrl={picked ? `/onboarding?role=${picked}` : "/onboarding"} signInUrl="/sign-in" />
-    </main>
+    </AuthShell>
   );
 }

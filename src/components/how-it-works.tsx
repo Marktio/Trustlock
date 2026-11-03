@@ -6,7 +6,7 @@ import { HOW_STEPS, HOW_VIDEO, RAIL_LABELS } from "./how-steps";
 const sc = (n: number) => `${n.toLocaleString("en-GB")} SC`;
 
 /** One "How it works" button. It opens a popup with a Text tab (opens first) and a Video tab (never autoplays). */
-export function HowItWorks() {
+export function HowItWorks({ className = "btn" }: { className?: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const [tab, setTab] = useState<"text" | "video">("text");
@@ -26,7 +26,7 @@ export function HowItWorks() {
 
   return (
     <>
-      <button type="button" className="btn" onClick={open} aria-haspopup="dialog">
+      <button type="button" className={className} onClick={open} aria-haspopup="dialog">
         How it works
       </button>
       <dialog

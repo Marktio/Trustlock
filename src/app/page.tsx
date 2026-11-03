@@ -12,10 +12,14 @@ export default async function Landing() {
   return (
     <div className="landing">
       <header className="landing-nav">
-        <span style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", flexGrow: 1, color: "var(--navy-900)" }}>TrustLock</span>
-        <nav aria-label="Page sections" style={{ display: "flex", gap: "var(--space-6)", marginRight: "var(--space-4)" }}>
-          <HowItWorks />
-          <a href="#roles">Roles</a>
+        <Link href="/" className="landing-brand">
+          TrustLock
+        </Link>
+        <nav aria-label="Page sections" className="landing-links">
+          <HowItWorks className="nav-link" />
+          <a href="#roles" className="nav-link">
+            Roles
+          </a>
         </nav>
         {viewer ? (
           <Link className="btn btn-primary" href={viewer.role === "admin" ? "/admin" : viewer.role === "auditor" ? "/audit" : "/dashboard"}>

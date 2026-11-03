@@ -18,7 +18,7 @@ const ROLE_ORDER: User["role"][] = ["admin", "client", "freelancer", "arbitrator
 export function AccountSwitcher({ viewer, users }: { viewer: User; users: User[] }) {
   const sorted = [...users].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.name.localeCompare(b.name));
   return (
-    <details className="switcher">
+    <details className="switcher popper">
       <summary>
         <span className="avatar" aria-hidden="true">
           {viewer.name.slice(0, 1)}

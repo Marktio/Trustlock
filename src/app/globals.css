@@ -63,9 +63,7 @@ a { color: var(--blue-700); }
 .skip-link:focus { top: var(--space-2); }
 
 /* Simulation notice: on every screen (NFR-7.4) */
-.sim { background: var(--amber-100); color: #4a3200; text-align: center; font-size: 0.875rem; padding: var(--space-2) var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); justify-content: center; align-items: center; }
-.region-picker { display: inline-flex; align-items: center; gap: var(--space-2); }
-.region-picker select { font: inherit; font-size: 0.875rem; min-height: 36px; border: 1.5px solid #4a3200; border-radius: var(--radius-sm); background: #fff; color: var(--ink); padding: 0 var(--space-2); }
+.sim { background: var(--amber-100); color: #4a3200; font-size: 0.875rem; padding: 6px var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); border-bottom: 1px solid #ecd9a6; position: relative; z-index: 30; }
 
 /* App shell */
 .app { display: flex; flex-wrap: wrap; min-height: calc(100vh - 56px); }
@@ -299,13 +297,10 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 /* Small screens (phones). Everything below only applies at or under the stated width. */
 @media (max-width: 640px) {
   html { -webkit-text-size-adjust: 100%; }
-  .sim { font-size: 0.75rem; padding: 6px var(--space-3); gap: var(--space-1) var(--space-3); text-align: left; }
-  .region-picker select { min-height: 32px; font-size: 0.8125rem; }
+  .sim { font-size: 0.8125rem; }
 
   .landing { padding: 0 var(--space-4) var(--space-8); }
   .landing-nav { flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
-  .landing-nav > span { flex: 1 1 auto; }
-  .landing-nav nav { order: 3; flex: 1 0 100%; margin-right: 0 !important; gap: var(--space-4) !important; }
   .landing-nav a, .landing-nav button { white-space: nowrap; }
   .hero { gap: var(--space-6); padding: var(--space-4) 0; }
   .hero > .copy { flex-basis: 100%; gap: var(--space-4); }
@@ -333,4 +328,63 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .switcher > summary { padding: var(--space-1) var(--space-2); }
   .switcher .who-role { font-size: 0.75rem; }
   .switcher-menu { bottom: auto; top: calc(100% + 8px); left: auto; right: 0; }
+}
+
+/* ---- Top strip: two buttons, the simulation notice and the region menu (NFR-7.4) ---- */
+.sim-menu { position: relative; }
+.sim-menu > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); min-height: 36px; padding: 0 var(--space-3); border: 1px solid #c9ad63; border-radius: var(--radius-pill); background: rgb(255 255 255 / 0.6); color: #4a3200; font-weight: 600; white-space: nowrap; }
+.sim-menu > summary::-webkit-details-marker { display: none; }
+.sim-menu > summary:hover, .sim-menu[open] > summary { background: #fff; }
+.sim-menu > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sim-menu .chev { width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); flex: none; }
+.sim-menu[open] .chev { transform: rotate(-135deg); }
+.sim-region > summary { font-weight: 500; }
+.sim-pop { position: absolute; top: calc(100% + 8px); left: 0; width: min(360px, 92vw); background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: 0 8px 28px rgb(17 27 51 / 0.22); padding: var(--space-3) var(--space-4); text-align: left; z-index: 60; }
+.sim-pop p { line-height: 1.5; }
+.sim-pop-right { left: auto; right: 0; width: min(280px, 92vw); padding: var(--space-2); max-height: min(70vh, 460px); overflow-y: auto; }
+.sim-pop ul { list-style: none; margin: 0; padding: 0; }
+.sim-pop button { all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); width: 100%; min-height: 44px; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); cursor: pointer; color: var(--ink); }
+.sim-pop button:hover { background: var(--paper); }
+.sim-pop button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.sim-pop button[aria-current="true"] { background: var(--amber-100); font-weight: 600; }
+.sim-pop .cur { color: var(--muted); font-size: 0.8125rem; }
+.sim-pop .here { font-size: 0.75rem; font-weight: 700; color: var(--amber-700); }
+.sim-pop form:first-child button { border-bottom: 1px solid var(--line); border-radius: var(--radius-sm) var(--radius-sm) 0 0; margin-bottom: var(--space-1); }
+
+/* ---- Landing header: brand left, quiet links, one button ---- */
+.landing-brand { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy-900); text-decoration: none; flex-grow: 1; }
+.landing-links { display: flex; align-items: center; gap: var(--space-2); margin-right: var(--space-2); }
+.nav-link { font: inherit; background: none; border: 0; padding: 0 var(--space-3); min-height: 44px; display: inline-flex; align-items: center; color: var(--navy-900); text-decoration: none; cursor: pointer; border-radius: var(--radius-sm); }
+.nav-link:hover { background: rgb(17 27 51 / 0.07); }
+.nav-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---- Sign-in and sign-up: the idea on the left, the form on the right ---- */
+.auth { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: calc(100vh - 53px); }
+.auth-aside { background: radial-gradient(120% 90% at 0% 0%, #243a6b 0%, var(--navy-900) 55%); color: #fff; padding: var(--space-12) var(--space-12) var(--space-8); display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8); }
+.auth-brand { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-size: 1.6rem; color: #fff; text-decoration: none; width: fit-content; }
+.auth-copy { display: flex; flex-direction: column; gap: var(--space-6); max-width: 560px; }
+.auth-lead { font-family: var(--font-display); font-size: clamp(1.7rem, 1.1rem + 1.6vw, 2.5rem); line-height: 1.2; color: #fff; }
+.auth-art { width: 100%; height: auto; }
+.auth-points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.auth-points li { display: flex; gap: var(--space-3); align-items: flex-start; color: #e3e8f6; }
+.auth-points svg { flex: none; margin-top: 3px; }
+.auth-foot { font-size: 0.8125rem; color: var(--navy-300); }
+.auth-main { background: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-6); padding: var(--space-8) var(--space-4); min-width: 0; }
+.auth-brand-mobile { display: none; font-family: var(--font-display); font-size: 1.6rem; color: var(--navy-900); text-decoration: none; }
+.auth-role { color: var(--muted); }
+.auth-back { font-size: 0.9375rem; }
+@media (max-width: 900px) {
+  .auth { grid-template-columns: 1fr; min-height: 0; }
+  .auth-aside { display: none; }
+  .auth-brand-mobile { display: block; }
+  .auth-main { justify-content: flex-start; padding-top: var(--space-6); }
+}
+
+/* ---- Top strip and landing header on phones ---- */
+@media (max-width: 640px) {
+  .sim { padding: 6px var(--space-3); gap: var(--space-2); }
+  .sim-long { display: none; }
+  .sim-region-name { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; }
+  .landing-brand { flex: 1 1 auto; }
+  .landing-links { order: 3; flex: 1 0 100%; margin-right: 0; gap: var(--space-2); }
 }
