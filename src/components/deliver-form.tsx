@@ -16,7 +16,7 @@ export function DeliverForm({ action, contractId, reviewDays }: { action: (formD
   const [busy, setBusy] = useState(false);
 
   return (
-    <form action={action} className="card" style={{ gap: "var(--space-4)" }}>
+    <form action={action} className="card u-gap-4">
       <h2>Deliver your work</h2>
       <input type="hidden" name="id" value={contractId} />
       <div className="field">

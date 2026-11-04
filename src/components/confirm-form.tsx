@@ -38,10 +38,10 @@ export function ConfirmForm({
             <input key={name} type="hidden" name={name} value={value} />
           ))}
           <h2 id={titleId}>{title}</h2>
-          <div className="small" style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          <div className="small u-flex u-col u-gap-3">
             {children}
           </div>
-          <div className="btn-row" style={{ justifyContent: "flex-end" }}>
+          <div className="btn-row u-end">
             <button type="button" className="btn" onClick={() => ref.current?.close()}>
               Go back
             </button>

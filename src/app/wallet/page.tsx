@@ -92,9 +92,9 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
         </div>
       </div>
 
-      <section id="history" aria-labelledby="hist-h" style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+      <section id="history" aria-labelledby="hist-h" className="u-flex u-col u-gap-3">
         <h2 id="hist-h">History</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "var(--space-2)" }}>
+        <div className="u-flex u-wrap u-between u-gap-2">
           <nav aria-label="Filter by type" className="btn-row">
             {FILTERS.map((f) => (
               <Link key={f} href={href(f, range)} className={`chip${type === f ? " on" : ""}`} aria-current={type === f ? "true" : undefined}>

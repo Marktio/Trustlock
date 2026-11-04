@@ -35,7 +35,7 @@ A red job is information, not failure: fix it, or write it down honestly in the 
 - **`npm audit` fails.** Run `npm audit` locally, then `npm audit fix`. If the fix needs a breaking upgrade, note the advisory in the Quality Plan with the reason it is accepted.
 - **gitleaks reports a secret.** Check the finding. If it is a real key, rotate it at the provider, then remove it from history. Test fixtures are not secrets, but add an allow rule instead of ignoring the job.
 - **CodeQL job fails on a private repository.** Make the repository public, or turn the job off and say so.
-- **The e2e job is slow or flaky.** It rebuilds the app and runs 32 tests in about two minutes. A single retry is allowed in CI.
+- **The e2e job is slow or flaky.** It rebuilds the app and runs 35 tests in about two minutes. A single retry is allowed in CI.
 - **ZAP warns about CSP.** The policy still allows inline scripts because Next.js needs them. That is listed as a known limit.
 
 ## 4. Protect the main branch (NFR-6.3)

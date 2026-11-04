@@ -108,7 +108,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       <div className="grid-2">
         <section className="card" aria-labelledby="wallet-h">
           <h2 id="wallet-h">My wallet</h2>
-          <div style={{ display: "flex", gap: "var(--space-8)", flexWrap: "wrap" }}>
+          <div className="u-flex u-gap-8 u-wrap">
             <div>
               <div className="small muted">Available</div>
               <div className="big">{formatSC(wallet.balances.available, false)}</div>
@@ -149,8 +149,8 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         </section>
       </div>
 
-      <section aria-labelledby="contracts-h" style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "var(--space-2)", alignItems: "center" }}>
+      <section aria-labelledby="contracts-h" className="u-flex u-col u-gap-3">
+        <div className="u-flex u-wrap u-between u-gap-2 u-ai-center">
           <h2 id="contracts-h">My contracts</h2>
           <nav aria-label="Filter contracts" className="btn-row">
             {(["all", "active", "disputed", "completed"] as const).map((f) => (

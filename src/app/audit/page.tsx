@@ -32,7 +32,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
       <Notices error={sp.error} ok={sp.ok} />
 
       <section className="card" aria-labelledby="recon-h">
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "var(--space-2)" }}>
+        <div className="u-flex u-between u-wrap u-gap-2">
           <h2 id="recon-h">Ledger reconciliation</h2>
           <span className={`pill tone-${recon.balanced ? "green" : "red"}`}>{recon.balanced ? "Ledger balanced" : "Ledger out of balance"}</span>
         </div>

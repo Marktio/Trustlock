@@ -33,7 +33,9 @@ export async function AuthShell({ title, note, children }: { title: string; note
             ))}
           </ul>
         </div>
-        <p className="auth-foot">Practice credits only. Group 11, SWE3020B.</p>
+        <p className="auth-foot">
+          Practice credits only. © 2026 TrustLock. <Link href="/privacy">Privacy</Link> <Link href="/terms">Terms</Link>
+        </p>
       </aside>
       <section className="auth-main" aria-labelledby="auth-h">
         <Link href="/" className="auth-brand-mobile">

@@ -38,7 +38,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       </div>
       <Notices error={sp.error} ok={sp.ok} />
 
-      <section aria-labelledby="ov-h" style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+      <section aria-labelledby="ov-h" className="u-flex u-col u-gap-4">
         <h2 id="ov-h">Overview</h2>
         <div className="ov-grid">
           <div className="card">
@@ -57,7 +57,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </div>
           <div className="card">
             <span className="small muted">System health</span>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", alignItems: "flex-start" }}>
+            <div className="u-flex u-col u-gap-2 u-ai-start">
               <span className={`pill tone-${o.health.ledgerBalanced ? "green" : "red"}`}>{o.health.ledgerBalanced ? "Ledger balanced" : "Ledger out of balance"}</span>
               <span className={`pill tone-${o.health.chainIntact ? "green" : "red"}`}>{o.health.chainIntact ? "Audit chain intact" : "Audit chain broken"}</span>
               <span className="small muted">{o.health.auditEntries} audit entries · <Link href="/audit">Open audit log</Link></span>
@@ -65,16 +65,16 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </div>
           <div className="card">
             <span className="small muted">Users by role</span>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <ul className="u-nolist u-m0 u-p0">
               {ROLE_ORDER.map((r) => (
-                <li key={r} className="kv"><span style={{ textTransform: "capitalize" }}>{r}</span><strong>{o.usersByRole[r]}</strong></li>
+                <li key={r} className="kv"><span className="u-cap">{r}</span><strong>{o.usersByRole[r]}</strong></li>
               ))}
               <li className="kv"><span>Suspended</span><strong>{o.suspended}</strong></li>
             </ul>
           </div>
           <div className="card">
             <span className="small muted">Contracts by state ({o.contractCount})</span>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <ul className="u-nolist u-m0 u-p0">
               {CONTRACT_STATES.filter((st) => o.contractsByState[st]).map((st) => (
                 <li key={st} className="kv"><span>{STATE_LABEL[st]}</span><strong>{o.contractsByState[st]}</strong></li>
               ))}
@@ -117,7 +117,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                     <td className="num mono">{formatSC(r.contract.amount, false)}</td>
                     <td>{r.assignedTo ? r.assignedTo.name : <span className="pill tone-amber">Unassigned</span>}</td>
                     <td>
-                      <form action={assignArbitratorAction} style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
+                      <form action={assignArbitratorAction} className="u-flex u-gap-2 u-wrap">
                         <input type="hidden" name="id" value={r.contract.id} />
                         <label className="sr-only" htmlFor={`arb-${r.contract.id}`}>Arbitrator for {r.contract.title}</label>
                         <select id={`arb-${r.contract.id}`} name="arbitratorId" defaultValue="auto">
@@ -140,7 +140,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <section id="users" className="card" aria-labelledby="us-h">
         <div className="page-head">
           <h2 id="us-h">Users</h2>
-          <form method="get" action="/admin#users" role="search" style={{ display: "flex", gap: "var(--space-2)" }}>
+          <form method="get" action="/admin#users" role="search" className="u-flex u-gap-2">
             <label className="sr-only" htmlFor="user-q">Search users</label>
             <input id="user-q" name="q" type="text" placeholder="Name, email or role" defaultValue={sp.q ?? ""} />
             <button className="btn" type="submit">Search</button>
@@ -164,7 +164,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                     <strong>{user.name}</strong>
                     <div className="small muted">{user.email}</div>
                   </td>
-                  <td style={{ textTransform: "capitalize" }}>{user.role}</td>
+                  <td className="u-cap">{user.role}</td>
                   <td className="num">{contracts}</td>
                   <td>{suspended ? <span className="pill tone-red">Suspended</span> : <span className="pill tone-green">Active</span>}</td>
                   <td>
@@ -205,7 +205,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             ? "They get an email invitation. The role is set when they sign up. Turn on required two-step verification in the Clerk dashboard so they enrol on first sign-in."
             : "Demo mode: the account is created at once and appears on the sign-in picker."}
         </p>
-        <form action={createStaffAction} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "var(--space-3)", alignItems: "end" }}>
+        <form action={createStaffAction} className="form-grid form-grid-180">
           <div className="field">
             <label htmlFor="staff-name">Full name</label>
             <input type="text" id="staff-name" name="name" required maxLength={120} />
@@ -230,7 +230,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <section id="settings" className="card" aria-labelledby="se-h">
         <h2 id="se-h">Platform settings</h2>
         <p className="small muted">Every change is checked, then written to the audit log with the old and new values. The fee applies to new contracts only. Existing contracts keep the fee they were created with.</p>
-        <form action={updateSettingsAction} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "var(--space-4)" }}>
+        <form action={updateSettingsAction} className="form-grid form-grid-210">
           <div className="field">
             <label htmlFor="s-fee">Platform fee (%)</label>
             <input id="s-fee" name="feePercent" type="number" step="0.01" min={0} max={20} required defaultValue={s.feeBps / 100} />
@@ -271,7 +271,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <label htmlFor="s-day">Daily top-up limit ({unit})</label>
             <input type="text" id="s-day" name="topUpDailyMaxSC" required inputMode="decimal" defaultValue={formatSC(s.topUpDailyMax, false)} />
           </div>
-          <div style={{ gridColumn: "1 / -1" }}>
+          <div className="u-span-all">
             <SubmitButton pendingLabel="Saving…">Save settings</SubmitButton>
           </div>
         </form>

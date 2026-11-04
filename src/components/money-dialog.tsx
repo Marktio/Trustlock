@@ -37,7 +37,7 @@ export function MoneyDialog({
             <input id="amount" name="amount" type="text" inputMode="decimal" required autoComplete="off" />
             <span className="hint">{hint}</span>
           </div>
-          <div className="btn-row" style={{ justifyContent: "flex-end" }}>
+          <div className="btn-row u-end">
             <button type="button" className="btn" onClick={() => ref.current?.close()}>
               Cancel
             </button>

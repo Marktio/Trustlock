@@ -186,7 +186,7 @@ export function NewContractForm({
           <>
             {" · "}
             {draftState === "restored" ? "Your saved draft was restored." : "Draft saved on this device."}{" "}
-            <button type="button" className="linklike" style={{ color: "var(--blue-700)", background: "none", border: 0, padding: 0, font: "inherit", textDecoration: "underline", cursor: "pointer" }} onClick={discardDraft}>
+            <button type="button" className="linklike link-inline" onClick={discardDraft}>
               Discard draft
             </button>
           </>
@@ -227,8 +227,8 @@ export function NewContractForm({
                 </div>
                 <button
                   type="button"
-                  className="btn"
-                  style={{ padding: 0 }}
+                  className="btn u-p0"
+                 
                   aria-label={`Remove deliverable ${i + 1}`}
                   disabled={rows.length === 1}
                   onClick={() => setRows((rs) => rs.filter((x) => x.id !== r.id))}
@@ -249,7 +249,7 @@ export function NewContractForm({
               >
                 Add milestone (up to 10)
               </button>
-              <span className="notice" style={{ padding: "var(--space-2) var(--space-3)" }} aria-live="polite">
+              <span className="notice notice-tight" aria-live="polite">
                 Milestones add up to {money(totalMinor)}. That is the contract total.
               </span>
             </div>
@@ -291,7 +291,7 @@ export function NewContractForm({
             <div className="kv"><span>Title</span><strong>{title}</strong></div>
             <div className="kv"><span>Freelancer</span><span>{email}</span></div>
             <p className="small muted">{description}</p>
-            <ul style={{ margin: 0, paddingLeft: "var(--space-6)" }}>
+            <ul className="u-m0 u-pl6">
               {rows.map((r, i) => (
                 <li key={r.id}>
                   {r.title || `Deliverable ${i + 1}`} · due {r.due || "?"} · <span className="mono">{parseSC(r.amount) === null ? "?" : money(parseSC(r.amount) as number)}</span>

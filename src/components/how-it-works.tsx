@@ -95,7 +95,7 @@ export function HowItWorks({ className = "btn" }: { className?: string }) {
               ))}
             </div>
             <span className={`how-chip ${s.tone}`}>{s.note}</span>
-            <p className="small" style={{ color: "var(--navy-300)", margin: 0 }}>Amounts in this walk-through are practice credits (SC). Inside the app they are shown in your own currency, for example KSh.</p>
+            <p className="small how-note">Amounts in this walk-through are practice credits (SC). Inside the app they are shown in your own currency, for example KSh.</p>
           </div>
         </div>
 

@@ -21,7 +21,7 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
   const [error, setError] = useState("");
 
   return (
-    <form action={action} className="field" style={{ gap: "var(--space-3)" }}>
+    <form action={action} className="field u-gap-3">
       <input type="hidden" name="id" value={contractId} />
       <input type="hidden" name="files" value={JSON.stringify(picked)} />
       <label htmlFor="ev-text">What would you like the arbitrator to know?</label>
@@ -56,7 +56,7 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
       {error && <p className="notice error" role="alert">{error}</p>}
       {busy && <p className="small muted" role="status">Calculating fingerprints…</p>}
       {picked.length > 0 && (
-        <ul className="small" style={{ margin: 0, paddingLeft: "var(--space-6)" }}>
+        <ul className="small u-m0 u-pl6">
           {picked.map((p) => (
             <li key={p.name}>
               {p.name} <span className="mono muted">{p.sha256.slice(0, 12)}…</span>

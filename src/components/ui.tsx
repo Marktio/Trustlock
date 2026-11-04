@@ -33,12 +33,12 @@ export function StateRail({ state, steps, scrollable = true }: { state: Contract
   const onRail = idx >= 0;
   return (
     <div className="rail-wrap" {...(scrollable ? { tabIndex: 0, role: "region", "aria-label": "Contract progress, scrolls sideways on small screens" } : {})}>
-      <ol className="rail" aria-label="Contract progress" style={{ listStyle: "none", margin: 0, padding: 0 }}>
+      <ol className="rail u-nolist u-m0 u-p0" aria-label="Contract progress">
         {rail.map((r, i) => {
           const s = r.state;
           const status = !onRail ? "todo" : i < idx ? "done" : i === idx ? "now" : "todo";
           return (
-            <li key={s} style={{ display: "contents" }}>
+            <li key={s} className="u-contents">
               {i > 0 && <span className={`rail-line ${onRail && i <= idx ? "done" : ""}`} aria-hidden="true" />}
               <span className={`rail-step ${status}`} aria-current={status === "now" ? "step" : undefined}>
                 <span className="rail-dot" aria-hidden="true" />

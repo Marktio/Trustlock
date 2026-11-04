@@ -31,6 +31,10 @@ export function freshFetch(input: RequestInfo | URL, init: RequestInit = {}): Pr
 
 async function build(): Promise<Container> {
   const sb = supabaseSettings();
+  // Real sign in with in-memory data would lose every account and contract on each restart, so refuse to start that way.
+  if (!sb && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY && process.env.NODE_ENV === "production") {
+    throw new Error("Real sign in is on but Supabase is not set up. Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY, or data will vanish on restart.");
+  }
   const repo: EscrowRepository = sb
     ? new SupabaseRepository(createClient(sb.url, sb.key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: freshFetch } }), systemClock)
     : new MemoryRepository(systemClock);

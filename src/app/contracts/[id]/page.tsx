@@ -121,7 +121,7 @@ export default async function ContractPage({
 
             {/* Client answers a counter-proposal */}
             {c.state === "proposed" && latestCounter && terms.awaiting === "client" && (
-              <div className="notice warn" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <div className="notice warn u-flex u-col u-gap-2">
                 <strong>{freelancer.name} proposed new terms (version {latestCounter.version})</strong>
                 {latestCounter.note && <span>“{latestCounter.note}”</span>}
                 <div className="kv"><span>Total</span><span className="mono">{latestCounter.previous ? `${money(latestCounter.previous.amount)} → ` : ""}{money(latestCounter.terms.amount)}</span></div>
@@ -147,7 +147,7 @@ export default async function ContractPage({
             )}
             {can("counter_propose") && (
               <details>
-                <summary className="btn" style={{ listStyle: "none", cursor: "pointer", width: "fit-content" }}>Counter-propose</summary>
+                <summary className="btn u-nolist u-pointer u-fit">Counter-propose</summary>
                 <CounterForm
                   action={counterProposeAction}
                   contractId={c.id}
@@ -173,8 +173,8 @@ export default async function ContractPage({
             )}
             {can("reject") && (
               <details>
-                <summary className="btn" style={{ listStyle: "none", cursor: "pointer", width: "fit-content" }}>Reject with reason</summary>
-                <form action={rejectAction} className="field" style={{ marginTop: "var(--space-3)" }}>
+                <summary className="btn u-nolist u-pointer u-fit">Reject with reason</summary>
+                <form action={rejectAction} className="field u-mt-3">
                   <input type="hidden" name="id" value={c.id} />
                   <label htmlFor="reject-reason">Why are you rejecting it?</label>
                   <textarea id="reject-reason" name="reason" required minLength={3} maxLength={500} />
@@ -272,7 +272,7 @@ export default async function ContractPage({
               </div>
             )}
             {c.state === "disputed" && dispute && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <div className="u-flex u-col u-gap-3">
                 <p className="notice warn">
                   <strong>{nameOf(dispute.raisedBy)}</strong> raised a dispute on {fmtDateTime(dispute.at)}: “{dispute.reason}”
                 </p>
@@ -344,13 +344,13 @@ export default async function ContractPage({
               {caseFile.evidence.length === 0 ? (
                 <p className="muted">No evidence has been submitted yet.</p>
               ) : (
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
                   {caseFile.evidence.map((e) => (
                     <li key={e.seq}>
                       <div className="small muted">
                         <strong>{e.by === "client" ? client.name : freelancer.name}</strong> · {fmtDateTime(e.at)}
                       </div>
-                      {e.text && <div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{e.text}</div>}
+                      {e.text && <div className="u-pre u-pre2">{e.text}</div>}
                       {e.files.map((f) => (
                         <div key={f.sha256 + f.name} className="small">
                           {f.name} <span className="mono muted">SHA-256 {f.sha256.slice(0, 12)}…</span>
@@ -375,7 +375,7 @@ export default async function ContractPage({
             <div className="kv"><span>Review period</span><span>{c.reviewPeriodDays} {c.reviewPeriodDays === 1 ? "day" : "days"}, then auto-approve</span></div>
             <div className="kv"><span>Revisions</span><span>{c.revisionLimit}</span></div>
             <div className="kv"><span>Platform fee</span><span>{c.feeBps / 100}% ({money(fee)}), taken at release</span></div>
-            <ul style={{ margin: 0, paddingLeft: "var(--space-6)" }}>
+            <ul className="u-m0 u-pl6">
               {c.milestones.map((m, i) => (
                 <li key={i}>
                   {m.title} · due {fmtDate(m.dueDate)} · <span className="mono">{money(m.amount)}</span>
@@ -384,8 +384,8 @@ export default async function ContractPage({
             </ul>
             {terms.history.length > 1 && (
               <details>
-                <summary className="small" style={{ cursor: "pointer" }}>Version history ({terms.history.length} versions)</summary>
-                <ol className="small" style={{ margin: "var(--space-2) 0 0", paddingLeft: "var(--space-6)" }}>
+                <summary className="small u-pointer">Version history ({terms.history.length} versions)</summary>
+                <ol className="small u-m0 u-mt-2 u-pl6">
                   {terms.history.map((v) => (
                     <li key={v.version}>
                       Version {v.version} by {v.by === "client" ? client.name : freelancer.name}: <span className="mono">{money(v.terms.amount)}</span>, {v.terms.milestones.length} {v.terms.milestones.length === 1 ? "milestone" : "milestones"}, {v.terms.reviewPeriodDays} review days, {v.terms.revisionLimit} revisions
@@ -404,13 +404,13 @@ export default async function ContractPage({
             {messages.length === 0 ? (
               <p className="muted">No messages yet.</p>
             ) : (
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
                 {messages.map((m) => (
                   <li key={m.seq}>
                     <div className="small muted">
                       <strong>{nameOf(m.actorId)}</strong> · {fmtDateTime(m.at)}
                     </div>
-                    <div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{m.detail}</div>
+                    <div className="u-pre u-pre2">{m.detail}</div>
                   </li>
                 ))}
               </ul>

@@ -4,7 +4,7 @@ import { RateLimiter, limitsFor, readEnvLimit } from "@/server/rate-limit";
 
 const clerkOn = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY);
 
-const isPublic = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)", "/demo(.*)", "/api/health", "/api/cron/(.*)", "/how-it-works/(.*)"]);
+const isPublic = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)", "/demo(.*)", "/privacy", "/terms", "/api/health", "/api/cron/(.*)", "/how-it-works/(.*)"]);
 
 const limiter = new RateLimiter();
 const envLimits = { general: readEnvLimit(process.env.RATE_LIMIT_PER_MINUTE), auth: readEnvLimit(process.env.AUTH_RATE_LIMIT_PER_MINUTE) };

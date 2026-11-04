@@ -11,16 +11,16 @@ export default async function Onboarding({ searchParams }: { searchParams: Promi
   const { error, role } = await searchParams;
   const picked = role === "client" || role === "freelancer" ? role : undefined;
   return (
-    <main id="main" className="landing" style={{ maxWidth: 640, paddingTop: "var(--space-12)", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+    <main id="main" className="landing page-narrow page-onboard">
       <div>
         <h1>How will you use TrustLock?</h1>
-        <p className="muted" style={{ marginTop: "var(--space-2)" }}>{picked ? `We pre-selected ${picked} from what you chose on the home page. Check it is right. ` : ""}You can only choose this once. Arbitrator, auditor and administrator accounts are created by an administrator.</p>
+        <p className="muted u-mt-2">{picked ? `We pre-selected ${picked} from what you chose on the home page. Check it is right. ` : ""}You can only choose this once. Arbitrator, auditor and administrator accounts are created by an administrator.</p>
       </div>
       <Notices error={error} />
       <form action={chooseRole} className="card">
-        <fieldset style={{ border: 0, padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <fieldset className="u-b0 u-p0 u-m0 u-flex u-col u-gap-3">
           <legend className="sr-only">Your role</legend>
-          <label className="card" style={{ flexDirection: "row", alignItems: "center", gap: "var(--space-3)" }}>
+          <label className="card u-dirrow u-ai-center u-gap-3">
             <input type="radio" name="role" value="client" defaultChecked={picked === "client"} required />
             <span>
               <strong>Client</strong>
@@ -28,7 +28,7 @@ export default async function Onboarding({ searchParams }: { searchParams: Promi
               <span className="small muted">I hire and pay for work.</span>
             </span>
           </label>
-          <label className="card" style={{ flexDirection: "row", alignItems: "center", gap: "var(--space-3)" }}>
+          <label className="card u-dirrow u-ai-center u-gap-3">
             <input type="radio" name="role" value="freelancer" defaultChecked={picked === "freelancer"} required />
             <span>
               <strong>Freelancer</strong>

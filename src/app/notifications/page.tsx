@@ -33,7 +33,7 @@ export default async function Notifications() {
           <p>Nothing yet. Updates about your contracts will show here.</p>
         </div>
       ) : (
-        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
           {items.map((n) => (
             <li key={n.id} className={`card note-item${n.unread ? " unread" : ""}`}>
               <strong>

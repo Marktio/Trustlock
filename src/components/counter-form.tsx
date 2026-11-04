@@ -29,16 +29,16 @@ export function CounterForm({
   const set = (id: number, patch: Partial<Row>) => setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
 
   return (
-    <form action={action} className="field" style={{ marginTop: "var(--space-3)", gap: "var(--space-3)" }}>
+    <form action={action} className="field u-mt-3 u-gap-3">
       <input type="hidden" name="id" value={contractId} />
       <div className="field">
         <label htmlFor="ct-total">Total ({unit})</label>
         <input type="text" id="ct-total" name="totalSC" required inputMode="decimal" defaultValue={initial.total} />
       </div>
-      <fieldset style={{ border: 0, margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-        <legend className="small" style={{ fontWeight: 600 }}>Milestones (must add up to the total)</legend>
+      <fieldset className="u-b0 u-m0 u-p0 u-flex u-col u-gap-2">
+        <legend className="small u-fw6">Milestones (must add up to the total)</legend>
         {rows.map((r, i) => (
-          <div key={r.id} style={{ display: "grid", gridTemplateColumns: "minmax(0,2fr) 9rem 7rem auto", gap: "var(--space-2)", alignItems: "end" }}>
+          <div key={r.id} className="cf-row">
             <div className="field">
               <label htmlFor={`ct-t-${r.id}`}>Milestone {i + 1}</label>
               <input type="text" id={`ct-t-${r.id}`} name="m_title" required maxLength={120} value={r.title} onChange={(e) => set(r.id, { title: e.target.value })} />
@@ -71,7 +71,7 @@ export function CounterForm({
           </div>
         )}
       </fieldset>
-      <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}>
+      <div className="u-flex u-gap-4 u-wrap">
         <div className="field">
           <label htmlFor="ct-review">Review period (days)</label>
           <input id="ct-review" name="reviewPeriodDays" type="number" min={1} max={14} required defaultValue={initial.reviewPeriodDays} />

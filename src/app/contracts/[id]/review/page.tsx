@@ -65,19 +65,19 @@ export default async function ReviewPage({
 
       <div className="split">
         <div className="col-main">
-          <div className="card" style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
+          <div className="card u-dirrow u-wrap u-between u-ai-center">
             <div>
               <div className="small muted">Review time left</div>
               <div className="big">{c.reviewEndsAt ? timeLeftLong(c.reviewEndsAt) : "Not started"}</div>
             </div>
-            <p className="small muted" style={{ maxWidth: 260 }}>
+            <p className="small muted u-max-260">
               The fingerprint below was recorded when {first} uploaded the file. If you do nothing, payment is released when the time runs out.
             </p>
           </div>
 
           <section className="card" aria-labelledby="deliv-h">
             <h2 id="deliv-h">Deliverable</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "var(--space-3)" }}>
+            <div className="u-flex u-wrap u-between u-ai-center u-gap-3">
               <div>
                 <div>
                   <strong>{d.name}</strong>
@@ -117,10 +117,10 @@ export default async function ReviewPage({
               )}
               {actions.includes("request_revision") ? (
                 <details>
-                  <summary className="btn" style={{ listStyle: "none", cursor: "pointer", width: "fit-content" }}>
+                  <summary className="btn u-nolist u-pointer u-fit">
                     Request revision ({c.revisionsUsed} of {c.revisionLimit} used)
                   </summary>
-                  <form action={revisionAction} className="field" style={{ marginTop: "var(--space-3)" }}>
+                  <form action={revisionAction} className="field u-mt-3">
                     <input type="hidden" name="id" value={c.id} />
                     <label htmlFor="rev-reason">What needs to change?</label>
                     <textarea id="rev-reason" name="reason" required minLength={3} maxLength={500} />

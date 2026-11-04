@@ -78,13 +78,13 @@ export default async function CasePage({
             {messages.length === 0 ? (
               <p className="muted">They sent no messages.</p>
             ) : (
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
                 {messages.map((m) => (
                   <li key={m.seq}>
                     <div className="small muted">
                       <strong>{nameOf(m.actorId)}</strong> · {fmtDateTime(m.at)}
                     </div>
-                    <div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{m.detail}</div>
+                    <div className="u-pre u-pre2">{m.detail}</div>
                   </li>
                 ))}
               </ul>
@@ -101,13 +101,13 @@ export default async function CasePage({
             {caseFile.evidence.length === 0 ? (
               <p className="muted">Neither side has submitted evidence.</p>
             ) : (
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
                 {caseFile.evidence.map((e) => (
                   <li key={e.seq}>
                     <div className="small muted">
                       <strong>{e.by === "client" ? client.name : freelancer.name}</strong> ({e.by}) · {fmtDateTime(e.at)}
                     </div>
-                    {e.text && <div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{e.text}</div>}
+                    {e.text && <div className="u-pre u-pre2">{e.text}</div>}
                     {e.files.map((f) => (
                       <div key={f.sha256 + f.name} className="small">
                         {f.name} <span className="mono muted">SHA-256 {f.sha256}</span>
@@ -121,7 +121,7 @@ export default async function CasePage({
             {caseFile.requests.length > 0 && (
               <div>
                 <h3>Your questions</h3>
-                <ul style={{ margin: 0, paddingLeft: "var(--space-6)" }}>
+                <ul className="u-m0 u-pl6">
                   {caseFile.requests.map((r) => (
                     <li key={r.seq}>
                       To {r.to === "client" ? client.name : freelancer.name}: “{r.question}” <span className="small muted">{r.answered ? "Answered" : "Waiting"}</span>
@@ -157,8 +157,8 @@ export default async function CasePage({
               title="Record your ruling"
               confirmLabel="Record ruling"
             >
-              <fieldset style={{ border: 0, margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                <legend className="small" style={{ fontWeight: 600 }}>Decision</legend>
+              <fieldset className="u-b0 u-m0 u-p0 u-flex u-col u-gap-2">
+                <legend className="small u-fw6">Decision</legend>
                 <label className="check">
                   <input type="radio" name="decision" value="release" required />
                   <span>Pay the freelancer: {money(c.amount - fee)} after the {money(fee)} fee</span>

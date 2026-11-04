@@ -118,7 +118,11 @@ export default async function Landing() {
       </main>
 
       <footer className="lp-footer caption-2">
-        <p>Practice credits only. No real money is used. Built by Group 11 for SWE3020B.</p>
+        <p>Practice credits only. No real money is used. © 2026 TrustLock.</p>
+        <nav className="lp-legal" aria-label="Legal">
+          <Link href="/privacy">Privacy policy</Link>
+          <Link href="/terms">Terms of use</Link>
+        </nav>
       </footer>
     </div>
   );

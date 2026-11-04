@@ -25,7 +25,7 @@ export default async function MailCatcher() {
           <p>No emails yet.</p>
         </div>
       ) : (
-        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <ul className="u-nolist u-m0 u-p0 u-flex u-col u-gap-3">
           {mails.slice(0, 100).map((m) => (
             <li key={m.id} className="card">
               <strong>{m.subject}</strong>

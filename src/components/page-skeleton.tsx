@@ -14,7 +14,7 @@ export function PageSkeleton() {
           <div className="skel skel-block" />
           <div className="skel skel-block" />
         </div>
-        <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <div aria-hidden="true" className="u-flex u-col u-gap-3">
           <div className="skel skel-line" />
           <div className="skel skel-line" />
           <div className="skel skel-line" />

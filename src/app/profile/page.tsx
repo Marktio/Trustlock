@@ -16,7 +16,7 @@ export default async function Profile() {
         <h2 id="acct-h">Account</h2>
         <div className="kv"><span>Name</span><strong>{viewer.name}</strong></div>
         <div className="kv"><span>Email</span><span>{viewer.email}</span></div>
-        <div className="kv"><span>Role</span><span style={{ textTransform: "capitalize" }}>{viewer.role}</span></div>
+        <div className="kv"><span>Role</span><span className="u-cap">{viewer.role}</span></div>
       </section>
       <section className="card" aria-labelledby="sec-h">
         <h2 id="sec-h">Security</h2>

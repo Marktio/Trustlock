@@ -1,6 +1,6 @@
 # TrustLock: Secure Escrow Payment Simulator
 
-Group 11 · Software Quality Assurance and Security. A practice escrow for client/freelancer work.
+TrustLock · A practice escrow for client/freelancer work.
 **No real money is used.** Amounts are shown in KSh but are practice credits, stored as integer minor units (100 per KSh).
 
 ## Run it
@@ -12,6 +12,8 @@ npm run dev          # http://localhost:3000
 
 With no keys set, TrustLock runs in **demo mode**: open `/demo` and pick a seeded user
 (Amina client; Brian, Sheila, Kevin freelancers; Grace arbitrator; Daniel admin; Faith auditor).
+To go live with real accounts, follow `docs/GO-LIVE.md`.
+
 Without Supabase keys, data is **in memory and resets when the server restarts**. With them, see `docs/SETUP.md`.
 
 To use real login, copy `.env.example` to `.env.local` and set the Clerk keys. Roles live in
