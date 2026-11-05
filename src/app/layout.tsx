@@ -7,6 +7,7 @@ import { PopoverDismiss } from "@/components/popover-dismiss";
 import { SimBar } from "@/components/sim-bar";
 import { clerkEnabled } from "@/server/auth";
 import { PICKER_COUNTRIES, getRegion } from "@/server/region";
+import { getTheme } from "@/server/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,14 +26,15 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const region = await getRegion();
+  const theme = await getTheme();
   const countries = PICKER_COUNTRIES.includes(region.country) ? PICKER_COUNTRIES : [region.country, ...PICKER_COUNTRIES];
   const page = (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en" data-theme={theme === "system" ? undefined : theme} className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <SimBar region={region} countries={countries} />
+        <SimBar region={region} countries={countries} theme={theme} />
         <PopoverDismiss />
         {children}
       </body>

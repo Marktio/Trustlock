@@ -1,14 +1,18 @@
-import { setRegion } from "@/app/actions";
+import { setRegion, setTheme } from "@/app/actions";
 import { currencyLabel } from "@/domain/money";
 import { countryName, currencyForCountry, type Region } from "@/server/region";
+import type { Theme } from "@/server/theme";
+
+const THEME_LABEL: Record<Theme, string> = { system: "Match my device", light: "Light", dark: "Dark" };
 
 /**
- * The strip at the top of every page (NFR-7.4). Two buttons:
+ * The strip at the top of every page (NFR-7.4). Three buttons:
  * 1. "Simulation only" always shows the notice and opens the full explanation.
  * 2. The region menu shows the current country and currency and lists the others.
- * Both are plain details and forms, so they work without scripts. PopoverDismiss closes them on an outside click.
+ * A third, icon only menu lets people pick light, dark or their device setting.
+ * All are plain details and forms, so they work without scripts. PopoverDismiss closes them on an outside click.
  */
-export function SimBar({ region, countries }: { region: Region; countries: string[] }) {
+export function SimBar({ region, countries, theme }: { region: Region; countries: string[]; theme: Theme }) {
   return (
     <div className="sim" role="note">
       <details className="popper sim-menu">
@@ -29,6 +33,7 @@ export function SimBar({ region, countries }: { region: Region; countries: strin
         </div>
       </details>
 
+      <div className="sim-right">
       <details className="popper sim-menu sim-region">
         <summary>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -62,6 +67,30 @@ export function SimBar({ region, countries }: { region: Region; countries: strin
           </form>
         </div>
       </details>
+      <details className="popper sim-menu sim-theme">
+        <summary aria-label={`Theme: ${THEME_LABEL[theme]}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" />
+          </svg>
+          <span className="chev" aria-hidden="true" />
+        </summary>
+        <div className="sim-pop sim-pop-right" role="group" aria-label="Choose theme">
+          <form action={setTheme}>
+            <ul>
+              {(["system", "light", "dark"] as const).map((t) => (
+                <li key={t}>
+                  <button type="submit" name="theme" value={t} aria-current={theme === t ? "true" : undefined}>
+                    <span>{THEME_LABEL[t]}</span>
+                    {theme === t && <span className="here">Current</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </form>
+        </div>
+      </details>
+      </div>
     </div>
   );
 }

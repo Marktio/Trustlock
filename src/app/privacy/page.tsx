@@ -46,6 +46,7 @@ export default function PrivacyPage() {
         <ul>
           <li>A session cookie from Clerk keeps you signed in.</li>
           <li>A cookie named tl_region remembers your country and currency for one year.</li>
+          <li>A cookie named tl_theme remembers if you chose light or dark, for one year.</li>
           <li>In demo mode, a cookie named tl_demo_user remembers which demo account you picked.</li>
         </ul>
         <p>We do not use advertising or tracking cookies.</p>

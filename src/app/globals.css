@@ -65,9 +65,11 @@
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
-/* Dark mode follows the system setting. The navy surfaces (sidebar, sign in panel, walk through stage) stay navy in both modes. */
+/* Dark mode. It follows the device setting unless the visitor picked a theme in the top bar, which sets data-theme on <html>.
+   The navy surfaces (sidebar, sign in panel, walk through stage) stay navy in both modes.
+   The token list appears twice because CSS cannot share one block between a media query and an attribute selector. Keep them identical. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --ink: #e6eaf5;
     --muted: #a6b1cb;
@@ -106,13 +108,58 @@
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 24px 48px -24px rgb(0 0 0 / 0.6);
   }
   /* The example contract sits on a navy panel, so it keeps the light palette to stay readable against it. */
-  .auth-aside .lp-contract {
+  :root:not([data-theme="light"]) .auth-aside .lp-contract {
     --ink: #171c2e; --muted: #4d556a; --card: #ffffff; --surface: #ffffff; --line: #d3d8e4;
     --strong: #111b33; --on-strong: #ffffff; --ink-soft: #2e3550;
     --amber-700: #8f5a00; --amber-100: #fff1cf; --amber-text: #4a3200; --amber-line: #ecd9a6;
     --green-700: #15664a; --green-100: #dcf2e6; --blue-700: #234c98; --blue-100: #e2ebfb;
     --outline-soft: #8a92a8; --rail-line: #b4bbcc; --grey-bg: #eef0f5;
   }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e6eaf5;
+  --muted: #a6b1cb;
+  --paper: #0b1124;
+  --card: #131b34;
+  --surface: #131b34;
+  --line: #2b3556;
+  --strong: #eef1fa;
+  --strong-hover: #cdd6ee;
+  --on-strong: #0b1124;
+  --ink-soft: #c8d0e6;
+  --ink-dim: #8590ad;
+  --amber-700: #f0c05a;
+  --amber-100: #33260a;
+  --amber-text: #fbe3a8;
+  --amber-line: #5a4416;
+  --amber-edge: #7a5f22;
+  --green-700: #62d3a2;
+  --green-100: #11342a;
+  --go: #1f7a57;
+  --go-hover: #17614a;
+  --red-700: #ff9d9d;
+  --red-100: #3b1a20;
+  --blue-700: #93b4ff;
+  --blue-100: #182a52;
+  --focus: #8fb0ff;
+  --outline: #7b86a5;
+  --outline-soft: #6a7494;
+  --rail-line: #3a4568;
+  --grey-bg: #1d2742;
+  --skel: #1d2742;
+  --tint: rgb(255 255 255 / 0.08);
+  --glass: rgb(11 17 36 / 0.82);
+  --glass-amber: rgb(255 255 255 / 0.08);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 24px 48px -24px rgb(0 0 0 / 0.6);
+}
+:root[data-theme="dark"] .auth-aside .lp-contract {
+  --ink: #171c2e; --muted: #4d556a; --card: #ffffff; --surface: #ffffff; --line: #d3d8e4;
+  --strong: #111b33; --on-strong: #ffffff; --ink-soft: #2e3550;
+  --amber-700: #8f5a00; --amber-100: #fff1cf; --amber-text: #4a3200; --amber-line: #ecd9a6;
+  --green-700: #15664a; --green-100: #dcf2e6; --blue-700: #234c98; --blue-100: #e2ebfb;
+  --outline-soft: #8a92a8; --rail-line: #b4bbcc; --grey-bg: #eef0f5;
 }
 
 * { box-sizing: border-box; }
@@ -379,6 +426,8 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 
 /* ---- Top strip: two buttons, the simulation notice and the region menu (NFR-7.4) ---- */
 .sim-menu { position: relative; }
+.sim-right { display: flex; align-items: center; gap: var(--space-2); }
+.sim-theme > summary { padding: 0 var(--space-2); }
 .sim-menu > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); min-height: 36px; padding: 0 var(--space-3); border: 1px solid var(--amber-edge); border-radius: var(--radius-md); background: var(--glass-amber); color: var(--amber-text); font-weight: 600; white-space: nowrap; }
 .sim-menu > summary::-webkit-details-marker { display: none; }
 .sim-menu > summary:hover, .sim-menu[open] > summary { background: var(--surface); }
@@ -521,7 +570,8 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .lp-rail li:nth-child(6) .rail-line.done { animation-delay: 680ms; }
   .lp-rail li:nth-child(8) .rail-line.done { animation-delay: 840ms; }
   .lp-held { animation: lp-rise 600ms var(--ease-out) 1000ms both; }
-  @keyframes lp-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  /* Movement only, no fade: text that starts transparent fails contrast checks while it animates in. */
+  @keyframes lp-rise { from { transform: translateY(24px); } to { transform: none; } }
   @keyframes lp-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 }
 
@@ -684,3 +734,27 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .form-grid-210 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
 .page-narrow { display: flex; flex-direction: column; gap: var(--space-4); max-width: 40rem; padding-top: var(--space-8); }
 .page-onboard { max-width: 640px; gap: var(--space-6); padding-top: var(--space-12); }
+
+/* Product preview on the landing page. The image that matches the theme is shown, the other is hidden (and so never fetched). */
+.lp-shots { padding-block: var(--space-12); }
+.lp-shot-list { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-12); }
+.lp-shot { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-8); align-items: center; }
+.lp-shot:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.lp-shot:nth-child(even) .lp-shot-copy { order: 2; }
+.lp-shot-copy { display: flex; flex-direction: column; gap: var(--space-3); max-width: 28rem; }
+.landing .lp-shot-copy p { color: var(--muted); }
+.lp-shot-frame { border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--card); box-shadow: var(--shadow-card); }
+.lp-shot-frame img { display: block; width: 100%; height: auto; }
+.lp-shot-dark { display: none !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lp-shot-light { display: none !important; }
+  :root:not([data-theme="light"]) .lp-shot-dark { display: block !important; }
+}
+:root[data-theme="dark"] .lp-shot-light { display: none !important; }
+:root[data-theme="dark"] .lp-shot-dark { display: block !important; }
+@media (max-width: 900px) {
+  .lp-shots { padding-block: var(--space-8); }
+  .lp-shot, .lp-shot:nth-child(even) { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .lp-shot:nth-child(even) .lp-shot-copy { order: 0; }
+  .lp-shot-list { gap: var(--space-8); }
+}

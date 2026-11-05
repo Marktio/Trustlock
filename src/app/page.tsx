@@ -4,6 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { HowItWorks } from "@/components/how-it-works";
 import { ExampleContract } from "@/components/example-contract";
 import { TaglineReveal } from "@/components/tagline-reveal";
+import { ProductPreview } from "@/components/product-preview";
 import { Pill } from "@/components/ui";
 import { getViewer, clerkEnabled } from "@/server/auth";
 import { getRegion } from "@/server/region";
@@ -62,6 +63,8 @@ export default async function Landing() {
 
           <ExampleContract currency={currency} />
         </section>
+
+        <ProductPreview />
 
         <section id="how" className="lp-how" aria-labelledby="how-h">
           <h2 id="how-h" className="heading-4 lp-section-title">

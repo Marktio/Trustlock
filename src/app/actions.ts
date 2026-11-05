@@ -9,6 +9,7 @@ import type { Actor, Role } from "@/domain/types";
 import { DEMO_COOKIE, SELF_SERVE_ROLES, clerkEnabled, requireViewer, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
 import { REGION_COOKIE } from "@/server/region";
+import { THEME_COOKIE } from "@/server/theme";
 
 const text = (f: FormData, name: string) => String(f.get(name) ?? "");
 
@@ -197,12 +198,8 @@ export async function verifyChainAction() {
   });
 }
 
-/** Region override from the picker. Goes back to the page the visitor was on (path only, never another site). */
-export async function setRegion(formData: FormData) {
-  const country = text(formData, "country").toUpperCase();
-  const jar = await cookies();
-  if (/^[A-Z]{2}$/.test(country)) jar.set(REGION_COOKIE, country, { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
-  else jar.delete(REGION_COOKIE);
+/** Back to the page the visitor was on (path only, never another site). */
+async function backToReferer(): Promise<never> {
   let to = "/";
   try {
     const ref = (await headers()).get("referer");
@@ -214,6 +211,24 @@ export async function setRegion(formData: FormData) {
     /* keep "/" */
   }
   redirect(to);
+}
+
+/** Region override from the picker. */
+export async function setRegion(formData: FormData) {
+  const country = text(formData, "country").toUpperCase();
+  const jar = await cookies();
+  if (/^[A-Z]{2}$/.test(country)) jar.set(REGION_COOKIE, country, { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  else jar.delete(REGION_COOKIE);
+  return backToReferer();
+}
+
+/** Light or dark override from the theme menu. "system" removes the choice so the device setting applies. */
+export async function setTheme(formData: FormData) {
+  const theme = text(formData, "theme");
+  const jar = await cookies();
+  if (theme === "light" || theme === "dark") jar.set(THEME_COOKIE, theme, { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  else jar.delete(THEME_COOKIE);
+  return backToReferer();
 }
 
 // ---------- Disputes and messages ----------
