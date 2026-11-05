@@ -570,8 +570,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .lp-rail li:nth-child(6) .rail-line.done { animation-delay: 680ms; }
   .lp-rail li:nth-child(8) .rail-line.done { animation-delay: 840ms; }
   .lp-held { animation: lp-rise 600ms var(--ease-out) 1000ms both; }
-  /* Movement only, no fade: text that starts transparent fails contrast checks while it animates in. */
-  @keyframes lp-rise { from { transform: translateY(24px); } to { transform: none; } }
+  @keyframes lp-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
   @keyframes lp-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 }
 
@@ -734,27 +733,3 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .form-grid-210 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
 .page-narrow { display: flex; flex-direction: column; gap: var(--space-4); max-width: 40rem; padding-top: var(--space-8); }
 .page-onboard { max-width: 640px; gap: var(--space-6); padding-top: var(--space-12); }
-
-/* Product preview on the landing page. The image that matches the theme is shown, the other is hidden (and so never fetched). */
-.lp-shots { padding-block: var(--space-12); }
-.lp-shot-list { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-12); }
-.lp-shot { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-8); align-items: center; }
-.lp-shot:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-.lp-shot:nth-child(even) .lp-shot-copy { order: 2; }
-.lp-shot-copy { display: flex; flex-direction: column; gap: var(--space-3); max-width: 28rem; }
-.landing .lp-shot-copy p { color: var(--muted); }
-.lp-shot-frame { border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--card); box-shadow: var(--shadow-card); }
-.lp-shot-frame img { display: block; width: 100%; height: auto; }
-.lp-shot-dark { display: none !important; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .lp-shot-light { display: none !important; }
-  :root:not([data-theme="light"]) .lp-shot-dark { display: block !important; }
-}
-:root[data-theme="dark"] .lp-shot-light { display: none !important; }
-:root[data-theme="dark"] .lp-shot-dark { display: block !important; }
-@media (max-width: 900px) {
-  .lp-shots { padding-block: var(--space-8); }
-  .lp-shot, .lp-shot:nth-child(even) { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
-  .lp-shot:nth-child(even) .lp-shot-copy { order: 0; }
-  .lp-shot-list { gap: var(--space-8); }
-}
