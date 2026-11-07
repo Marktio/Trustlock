@@ -2,6 +2,7 @@
 
 import { useId, useRef } from "react";
 import { SubmitButton } from "./submit-button";
+import { useT } from "@/i18n/client";
 
 /** Opens the simulated top-up / withdraw form in a dialog (S13). Errors come back as a notice on the page. */
 export function MoneyDialog({
@@ -21,6 +22,7 @@ export function MoneyDialog({
   hint: string;
   unit: string;
 }) {
+  const t = useT();
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   return (
@@ -33,15 +35,15 @@ export function MoneyDialog({
           <input type="hidden" name="key" value={idemKey} />
           <h2 id={titleId}>{title}</h2>
           <div className="field">
-            <label htmlFor="amount">Amount ({unit})</label>
+            <label htmlFor="amount">{t("Amount (")}{unit})</label>
             <input id="amount" name="amount" type="text" inputMode="decimal" required autoComplete="off" />
             <span className="hint">{hint}</span>
           </div>
           <div className="btn-row u-end">
             <button type="button" className="btn" onClick={() => ref.current?.close()}>
-              Cancel
+              {t("Cancel")}
             </button>
-            <SubmitButton pendingLabel="Processing…">{submitLabel}</SubmitButton>
+            <SubmitButton pendingLabel={t("Processing…")}>{submitLabel}</SubmitButton>
           </div>
         </form>
       </dialog>

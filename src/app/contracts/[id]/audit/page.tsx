@@ -5,11 +5,16 @@ import { Shell } from "@/components/shell";
 import { DomainError } from "@/domain/errors";
 import { requireViewer, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Contract audit trail" };
+export async function generateMetadata() {
+  const t = await getT();
+  return { title: t("Contract audit trail") };
+}
 
 /** The audit entries behind one contract's timeline. Only the two parties can open it; anyone else gets a 404. */
 export default async function ContractAudit({ params }: { params: Promise<{ id: string }> }) {
+  const t = await getT();
   const viewer = await requireViewer(["client", "freelancer"]);
   const { id } = await params;
   const { svc } = await getContainer();
@@ -28,29 +33,29 @@ export default async function ContractAudit({ params }: { params: Promise<{ id: 
     <Shell viewer={viewer} active="/contracts">
       <div>
         <p className="crumb">
-          <Link href="/contracts">Contracts</Link> / <Link href={`/contracts/${c.id}`}>{c.ref}</Link> / Audit trail
+          <Link href="/contracts">{t("Contracts")}</Link> / <Link href={`/contracts/${c.id}`}>{c.ref}</Link> {t("/ Audit trail")}
         </p>
-        <h1>Audit trail</h1>
-        <p className="muted">Every entry holds the fingerprint of the one before it, so a change anywhere would break the chain.</p>
+        <h1>{t("Audit trail")}</h1>
+        <p className="muted">{t("Every entry holds the fingerprint of the one before it, so a change anywhere would break the chain.")}</p>
       </div>
       <div className="table-wrap">
         <table className="table">
           <thead>
             <tr>
               <th scope="col" className="num">#</th>
-              <th scope="col">Time (UTC)</th>
-              <th scope="col">Who</th>
-              <th scope="col">What</th>
-              <th scope="col">Fingerprint</th>
+              <th scope="col">{t("Time (UTC)")}</th>
+              <th scope="col">{t("Who")}</th>
+              <th scope="col">{t("What")}</th>
+              <th scope="col">{t("Fingerprint")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((e) => (
               <tr key={e.seq} id={`audit-${e.seq}`}>
                 <td className="num">{e.seq}</td>
-                <td>{fmtDateTime(e.at)}</td>
+                <td>{fmtDateTime(e.at, t)}</td>
                 <td>{nameOf(e.actorId)}</td>
-                <td>{e.action === "message.sent" ? "Message sent" : (ACTION_LABEL[e.action] ?? e.action)}</td>
+                <td>{e.action === "message.sent" ? t("Message sent") : t(ACTION_LABEL[e.action] ?? e.action)}</td>
                 <td className="mono">{e.hash.slice(0, 6)}..{e.hash.slice(-4)}</td>
               </tr>
             ))}

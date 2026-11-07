@@ -1,19 +1,29 @@
 import type { ContractState } from "@/domain/states";
+import type { T } from "@/i18n/core";
+
+const SW_MONTHS = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ago", "Sep", "Okt", "Nov", "Des"];
+const swDay = (d: Date) => `${d.getUTCDate()} ${SW_MONTHS[d.getUTCMonth()]}`;
+const pad = (n: number) => String(n).padStart(2, "0");
 
 const dateTime = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "UTC", hour12: false });
 const dateOnly = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 
 /** All times are shown in UTC and labelled as such (FR-3.9). */
-export const fmtDateTime = (iso: string) => `${dateTime.format(new Date(iso))} UTC`;
-export const fmtDate = (iso: string) => dateOnly.format(new Date(iso));
+export const fmtDateTime = (iso: string, t?: T) => {
+  const d = new Date(iso);
+  return t?.lang === "sw" ? `${swDay(d)}, ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC` : `${dateTime.format(d)} UTC`;
+};
+export const fmtDate = (iso: string, t?: T) => (t?.lang === "sw" ? swDay(new Date(iso)) : dateOnly.format(new Date(iso)));
+const units = (t: T | undefined) => (t?.lang === "sw" ? { d: "siku", h: "saa", m: "dak" } : { d: "d", h: "h", m: "m" });
 
-export function timeLeft(iso: string, now = new Date()): string {
+export function timeLeft(iso: string, t?: T, now = new Date()): string {
+  const u = units(t);
   const ms = new Date(iso).getTime() - now.getTime();
-  if (ms <= 0) return "Ended";
+  if (ms <= 0) return t ? t("Ended") : "Ended";
   const days = Math.floor(ms / 86_400_000);
   const hours = Math.floor((ms % 86_400_000) / 3_600_000);
   const minutes = Math.floor((ms % 3_600_000) / 60_000);
-  return days > 0 ? `${days}d ${hours}h` : `${hours}h ${minutes}m`;
+  return days > 0 ? `${days}${u.d} ${hours}${u.h}` : `${hours}${u.h} ${minutes}${u.m}`;
 }
 
 export type Tone = "grey" | "blue" | "amber" | "green" | "red";
@@ -68,11 +78,12 @@ export const ACTION_LABEL: Record<string, string> = {
 };
 
 /** Long countdown for the review screen, e.g. "2d 14h 08m". Computed on the server from the server clock. */
-export function timeLeftLong(iso: string, now = new Date()): string {
+export function timeLeftLong(iso: string, t?: T, now = new Date()): string {
+  const u = units(t);
   const ms = new Date(iso).getTime() - now.getTime();
-  if (ms <= 0) return "Ended";
+  if (ms <= 0) return t ? t("Ended") : "Ended";
   const days = Math.floor(ms / 86_400_000);
   const hours = Math.floor((ms % 86_400_000) / 3_600_000);
   const minutes = String(Math.floor((ms % 3_600_000) / 60_000)).padStart(2, "0");
-  return days > 0 ? `${days}d ${hours}h ${minutes}m` : `${hours}h ${minutes}m`;
+  return days > 0 ? `${days}${u.d} ${hours}${u.h} ${minutes}${u.m}` : `${hours}${u.h} ${minutes}${u.m}`;
 }

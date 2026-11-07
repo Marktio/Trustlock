@@ -8,8 +8,12 @@ import { Notices } from "@/components/ui";
 import { currencyLabel, formatSC } from "@/domain/money";
 import { requireViewer, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Wallet" };
+export async function generateMetadata() {
+  const t = await getT();
+  return { title: t("Wallet") };
+}
 
 function kindOf(memo: string, delta: number, isClient = false): { label: string; tone: string; filter: "locked" | "credits" | "refunds" | "other" } {
   if (memo.startsWith("Top-up")) return { label: "Credit", tone: "green", filter: "credits" };
@@ -28,6 +32,7 @@ const clock = () => {
 };
 
 export default async function WalletPage({ searchParams }: { searchParams: Promise<{ error?: string; ok?: string; type?: string; range?: string }> }) {
+  const t = await getT();
   const viewer = await requireViewer(["client", "freelancer"]);
   const sp = await searchParams;
   const { svc } = await getContainer();
@@ -57,21 +62,21 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
     <Shell viewer={viewer} active="/wallet">
       <div className="page-head">
         <div>
-          <h1>Wallet</h1>
-          <p className="muted">Every movement has a matching debit and credit, so balances always add up.</p>
+          <h1>{t("Wallet")}</h1>
+          <p className="muted">{t("Every movement has a matching debit and credit, so balances always add up.")}</p>
         </div>
         <div className="btn-row" id="money-form">
           <MoneyDialog
             action={isClient ? topUpAction : withdrawAction}
             idemKey={randomUUID()}
-            triggerLabel={isClient ? "Top up (simulated)" : "Withdraw (simulated)"}
+            triggerLabel={isClient ? t("Top up (simulated)") : t("Withdraw (simulated)")}
             unit={unit}
-            title={isClient ? "Top up (simulated)" : "Withdraw (simulated)"}
-            submitLabel={isClient ? "Top up wallet" : "Withdraw"}
-            hint={isClient ? `From ${money(cfg.topUpMin)} to ${money(cfg.topUpMax)} at a time, up to ${money(cfg.topUpDailyMax)} a day.` : "Moves your available balance to a simulated destination."}
+            title={isClient ? t("Top up (simulated)") : t("Withdraw (simulated)")}
+            submitLabel={isClient ? t("Top up wallet") : t("Withdraw")}
+            hint={isClient ? t("From {min} to {max} at a time, up to {day} a day.", { min: money(cfg.topUpMin), max: money(cfg.topUpMax), day: money(cfg.topUpDailyMax) }) : t("Moves your available balance to a simulated destination.")}
           />
           <a className="btn" href="/wallet/export" download>
-            Export CSV
+            {t("Export CSV")}
           </a>
         </div>
       </div>
@@ -79,39 +84,39 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
 
       <div className="grid-3">
         <div className="card">
-          <div className="small muted">Available</div>
+          <div className="small muted">{t("Available")}</div>
           <div className="big">{money(balances.available)}</div>
         </div>
         <div className="card held">
-          <div className="small muted">Held in escrow</div>
+          <div className="small muted">{t("Held in escrow")}</div>
           <div className="big held">{money(balances.held)}</div>
         </div>
         <div className="card">
-          <div className="small muted">Received this month</div>
+          <div className="small muted">{t("Received this month")}</div>
           <div className="big">{money(receivedMinor)}</div>
         </div>
       </div>
 
       <section id="history" aria-labelledby="hist-h" className="u-flex u-col u-gap-3">
-        <h2 id="hist-h">History</h2>
+        <h2 id="hist-h">{t("History")}</h2>
         <div className="u-flex u-wrap u-between u-gap-2">
-          <nav aria-label="Filter by type" className="btn-row">
+          <nav aria-label={t("Filter by type")} className="btn-row">
             {FILTERS.map((f) => (
               <Link key={f} href={href(f, range)} className={`chip${type === f ? " on" : ""}`} aria-current={type === f ? "true" : undefined}>
-                {f[0].toUpperCase() + f.slice(1)}
+                {t(f[0].toUpperCase() + f.slice(1))}
               </Link>
             ))}
           </nav>
-          <Link href={href(type, range === "30" ? "all" : "30")} className="chip" aria-label={range === "30" ? "Showing last 30 days. Show all time" : "Showing all time. Show last 30 days"}>
-            {range === "30" ? "Last 30 days" : "All time"}
+          <Link href={href(type, range === "30" ? "all" : "30")} className="chip" aria-label={range === "30" ? t("Showing last 30 days. Show all time") : t("Showing all time. Show last 30 days")}>
+            {range === "30" ? t("Last 30 days") : t("All time")}
           </Link>
         </div>
         {shown.length === 0 ? (
           <div className="card">
             <p>
               {mine.length === 0
-                ? `No transactions yet. ${isClient ? "Top up your wallet to fund a contract." : "You will see payments here after a client approves your work."}`
-                : "No transactions match this filter."}
+                ? `${t("No transactions yet.")} ${isClient ? t("Top up your wallet to fund a contract.") : t("You will see payments here after a client approves your work.")}`
+                : t("No transactions match this filter.")}
             </p>
           </div>
         ) : (
@@ -119,10 +124,10 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">Date (UTC)</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Type</th>
-                  <th scope="col" className="num">Amount ({unit})</th>
+                  <th scope="col">{t("Date (UTC)")}</th>
+                  <th scope="col">{t("Description")}</th>
+                  <th scope="col">{t("Type")}</th>
+                  <th scope="col" className="num">{t("Amount (")}{unit})</th>
                 </tr>
               </thead>
               <tbody>
@@ -132,15 +137,15 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
                   const desc = m ? e.memo.slice(0, m.index) : e.memo || "Transaction";
                   return (
                     <tr key={`${e.txId}-${i}`}>
-                      <td>{fmtDateTime(e.createdAt)}</td>
+                      <td>{fmtDateTime(e.createdAt, t)}</td>
                       <td>
-                        {desc}
+                        {t(desc)}
                         {m && (
                           <div className="small muted mono">{m[1]}</div>
                         )}
                       </td>
                       <td>
-                        <span className={`pill tone-${k.tone}`}>{k.label}</span>
+                        <span className={`pill tone-${k.tone}`}>{t(k.label)}</span>
                       </td>
                       <td className="num">
                         {e.delta >= 0 ? "+ " : "- "}

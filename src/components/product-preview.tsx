@@ -3,54 +3,55 @@ import contractLight from "@/assets/shots/contract-light.webp";
 import contractDark from "@/assets/shots/contract-dark.webp";
 import reviewLight from "@/assets/shots/review-light.webp";
 import reviewDark from "@/assets/shots/review-dark.webp";
+import disputeLight from "@/assets/shots/dispute-light.webp";
+import disputeDark from "@/assets/shots/dispute-dark.webp";
 import auditLight from "@/assets/shots/audit-light.webp";
 import auditDark from "@/assets/shots/audit-dark.webp";
+import type { Copy } from "@/i18n/landing";
 
-const SHOTS = [
-  {
-    title: "Funds are held, not spent",
-    body: "Once the client funds a contract, the money sits in escrow. Neither side can spend it until the work is approved.",
-    light: contractLight,
-    dark: contractDark,
-    alt: "A TrustLock contract page for a brand identity project. It shows KSh 45,000 held in escrow, the steps from draft to completed, and a timeline of what has happened.",
-  },
-  {
-    title: "One clear next step",
-    body: "Each person sees what they need to do now. When work is delivered, the client reviews it. If they say nothing, approval happens by itself after the review period.",
-    light: reviewLight,
-    dark: reviewDark,
-    alt: "A TrustLock contract page for website copywriting. The work is delivered, and the client is shown a Review delivery button with the time left before automatic approval.",
-  },
-  {
-    title: "A record nobody can quietly edit",
-    body: "Every action is added to an audit log. Each entry carries the fingerprint of the one before it, so a change anywhere breaks the chain.",
-    light: auditLight,
-    dark: auditDark,
-    alt: "The TrustLock audit log. A ledger reconciliation card shows the ledger is balanced, above a table of actions with the actor, result and fingerprint of each entry.",
-  },
+const IMAGES = [
+  { light: contractLight, dark: contractDark },
+  { light: reviewLight, dark: reviewDark },
+  { light: disputeLight, dark: disputeDark },
+  { light: auditLight, dark: auditDark },
 ];
 
 /** Real screens from the demo, in the visitor's own theme. Both versions are in the page, and CSS shows the one that matches. */
-export function ProductPreview() {
+export function ProductPreview({ copy }: { copy: Copy }) {
   return (
-    <section className="lp-shots" aria-labelledby="shots-h">
-      <h2 id="shots-h" className="heading-4 lp-section-title">
-        See it in use
-      </h2>
+    <section id="examples" className="lp-shots" aria-labelledby="shots-h">
+      <SectionHead num="01" id="shots-h" title={copy.previewTitle} />
       <ol className="lp-shot-list">
-        {SHOTS.map((s) => (
-          <li key={s.title} className="lp-shot">
+        {copy.examples.map((s, i) => (
+          <li key={s.contract} className="lp-shot">
             <div className="lp-shot-copy">
+              <p className="lp-case caption-3">
+                {copy.exampleWord} {i + 1} <span aria-hidden="true">/</span> <span lang="en">{s.contract}</span>
+              </p>
               <h3 className="title-3">{s.title}</h3>
               <p className="body-2">{s.body}</p>
             </div>
-            <div className="lp-shot-frame">
-              <Image className="lp-shot-light" src={s.light} alt={s.alt} sizes="(min-width: 960px) 700px, 100vw" />
-              <Image className="lp-shot-dark" src={s.dark} alt={s.alt} sizes="(min-width: 960px) 700px, 100vw" />
+            <div className="lp-shot-frame" lang="en">
+              <Image className="lp-shot-light" src={IMAGES[i].light} alt={s.alt} sizes="(min-width: 960px) 700px, 100vw" />
+              <Image className="lp-shot-dark" src={IMAGES[i].dark} alt={s.alt} sizes="(min-width: 960px) 700px, 100vw" />
             </div>
           </li>
         ))}
       </ol>
     </section>
+  );
+}
+
+/** A section title with its number above it. The number is decoration, so screen readers skip it. */
+export function SectionHead({ num, id, title }: { num: string; id: string; title: string }) {
+  return (
+    <div className="lp-head">
+      <p className="lp-num caption-3" aria-hidden="true">
+        {num}
+      </p>
+      <h2 id={id} className="heading-4 lp-section-title">
+        {title}
+      </h2>
+    </div>
   );
 }

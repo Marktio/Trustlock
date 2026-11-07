@@ -9,6 +9,10 @@ import { clerkEnabled } from "@/server/auth";
 import { PICKER_COUNTRIES, getRegion } from "@/server/region";
 import { getTheme } from "@/server/theme";
 import "./globals.css";
+import { getT } from "@/i18n/server";
+import { I18nProvider } from "@/i18n/client";
+import { SW } from "@/i18n/sw";
+import { getLang } from "@/server/lang";
 
 export const metadata: Metadata = {
   title: { default: "TrustLock", template: "%s · TrustLock" },
@@ -25,18 +29,22 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const t = await getT();
+  const lang = await getLang();
   const region = await getRegion();
   const theme = await getTheme();
   const countries = PICKER_COUNTRIES.includes(region.country) ? PICKER_COUNTRIES : [region.country, ...PICKER_COUNTRIES];
   const page = (
-    <html lang="en" data-theme={theme === "system" ? undefined : theme} className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang={lang} data-theme={theme === "system" ? undefined : theme} className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
         <a href="#main" className="skip-link">
-          Skip to main content
+          {t("Skip to main content")}
         </a>
-        <SimBar region={region} countries={countries} theme={theme} />
-        <PopoverDismiss />
-        {children}
+        <I18nProvider lang={lang} dict={lang === "sw" ? SW : undefined}>
+          <SimBar region={region} countries={countries} theme={theme} lang={lang} />
+          <PopoverDismiss />
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );

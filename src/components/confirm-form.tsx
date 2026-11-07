@@ -2,6 +2,7 @@
 
 import { useId, useRef } from "react";
 import { SubmitButton } from "./submit-button";
+import { useT } from "@/i18n/client";
 
 /**
  * A button that opens a confirmation dialog before an irreversible action (NFR-5.4).
@@ -24,6 +25,7 @@ export function ConfirmForm({
   tone?: "primary" | "go" | "danger";
   children: React.ReactNode;
 }) {
+  const t = useT();
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const cls = tone === "go" ? "btn btn-go" : tone === "danger" ? "btn btn-danger" : "btn btn-primary";
@@ -43,7 +45,7 @@ export function ConfirmForm({
           </div>
           <div className="btn-row u-end">
             <button type="button" className="btn" onClick={() => ref.current?.close()}>
-              Go back
+              {t("Go back")}
             </button>
             <SubmitButton className={cls}>{confirmLabel}</SubmitButton>
           </div>

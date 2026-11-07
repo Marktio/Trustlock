@@ -10,12 +10,14 @@ import { DEMO_COOKIE, SELF_SERVE_ROLES, clerkEnabled, requireViewer, toActor } f
 import { getContainer } from "@/server/container";
 import { REGION_COOKIE } from "@/server/region";
 import { THEME_COOKIE } from "@/server/theme";
+import { LANG_COOKIE } from "@/server/lang";
+import { getT } from "@/i18n/server";
 
 const text = (f: FormData, name: string) => String(f.get(name) ?? "");
 
 function withParam(path: string, key: "error" | "ok", value: string) {
   const url = new URL(path, "http://x");
-  url.searchParams.set(key, value.slice(0, 240));
+  url.searchParams.set(key, value.slice(0, 320));
   return url.pathname + url.search;
 }
 
@@ -29,13 +31,14 @@ async function perform(
 ): Promise<never> {
   const viewer = await requireViewer();
   const { svc } = await getContainer();
+  const t = await getT();
   let target: string;
   try {
     const done = (await run(svc, toActor(viewer))) ?? {};
-    target = done.ok ? withParam(done.to ?? back, "ok", done.ok) : (done.to ?? back);
+    target = done.ok ? withParam(done.to ?? back, "ok", t(done.ok)) : (done.to ?? back);
   } catch (e) {
-    if (e instanceof DomainError) target = withParam(back, "error", e.message);
-    else if (e instanceof MoneyError) target = withParam(back, "error", e.message);
+    if (e instanceof DomainError) target = withParam(back, "error", t(e.message));
+    else if (e instanceof MoneyError) target = withParam(back, "error", t(e.message));
     else throw e;
   }
   redirect(target);
@@ -61,7 +64,7 @@ export async function chooseRole(formData: FormData) {
   if (!clerkEnabled) redirect("/demo");
   const role = text(formData, "role") as Role;
   // Only client and freelancer can be self-selected. Anything else is rejected on the server (FR-1.1, FR-1.13).
-  if (!SELF_SERVE_ROLES.includes(role)) redirect("/onboarding?error=" + encodeURIComponent("Choose client or freelancer."));
+  if (!SELF_SERVE_ROLES.includes(role)) redirect("/onboarding?error=" + encodeURIComponent((await getT())("Choose client or freelancer.")));
   const { auth, clerkClient } = await import("@clerk/nextjs/server");
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
@@ -228,6 +231,15 @@ export async function setTheme(formData: FormData) {
   const jar = await cookies();
   if (theme === "light" || theme === "dark") jar.set(THEME_COOKIE, theme, { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
   else jar.delete(THEME_COOKIE);
+  return backToReferer();
+}
+
+/** Home page language from the EN and SW buttons. Kept for a year. */
+export async function setLang(formData: FormData) {
+  const lang = text(formData, "lang");
+  const jar = await cookies();
+  if (lang === "sw") jar.set(LANG_COOKIE, "sw", { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  else jar.delete(LANG_COOKIE);
   return backToReferer();
 }
 

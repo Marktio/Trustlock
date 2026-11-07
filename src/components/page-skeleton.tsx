@@ -1,13 +1,15 @@
+import { getT } from "@/i18n/server";
 /** Shown while a signed in page loads: the same sidebar and a page head, a pair of blocks and a few rows. */
-export function PageSkeleton() {
+export async function PageSkeleton() {
+  const t = await getT();
   return (
     <div className="app" aria-busy="true">
       <aside className="side" aria-hidden="true">
-        <span className="brand">TrustLock</span>
+        <span className="brand">{t("TrustLock")}</span>
       </aside>
       <main id="main" className="main">
         <p className="sr-only" role="status">
-          Loading
+          {t("Loading")}
         </p>
         <div className="skel skel-title" />
         <div className="grid-2" aria-hidden="true">

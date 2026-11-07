@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useT } from "@/i18n/client";
 
 export interface RegionOption {
   country: string;
@@ -18,12 +19,13 @@ export function RegionPicker({
   /** "auto" when nothing has been chosen yet. */
   value: string;
 }) {
+  const t = useT();
   const form = useRef<HTMLFormElement>(null);
   return (
     <form ref={form} action={action} className="region-picker">
-      <label htmlFor="region-select">Region</label>
+      <label htmlFor="region-select">{t("Region")}</label>
       <select id="region-select" name="country" defaultValue={value} onChange={() => form.current?.requestSubmit()}>
-        <option value="auto">Detect automatically</option>
+        <option value="auto">{t("Detect automatically")}</option>
         {options.map((o) => (
           <option key={o.country} value={o.country}>
             {o.label}
@@ -31,7 +33,7 @@ export function RegionPicker({
         ))}
       </select>
       <noscript>
-        <button type="submit">Set</button>
+        <button type="submit">{t("Set")}</button>
       </noscript>
     </form>
   );

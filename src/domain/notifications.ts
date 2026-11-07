@@ -31,18 +31,22 @@ export interface SimulatedEmail {
   contractId: string | null;
 }
 
+/** Optional translator for the fixed template text. Names and titles are filled in after translating. */
+export type Tr = (text: string) => string;
+const same: Tr = (s) => s;
+
 type To = "other" | "both" | "arbitrator";
 interface Template {
   to: To;
-  title: (c: string, who: string) => string;
-  body: (c: string, who: string) => string;
+  title: (c: string, who: string, tr?: Tr) => string;
+  body: (c: string, who: string, tr?: Tr) => string;
   email?: boolean;
 }
 
 const T = (to: To, title: string, body: string, email = false): Template => ({
   to,
-  title: (c, who) => title.replace("{c}", c).replace("{who}", who),
-  body: (c, who) => body.replace("{c}", c).replace("{who}", who),
+  title: (c, who, tr = same) => tr(title).replace("{c}", c).replace("{who}", who),
+  body: (c, who, tr = same) => tr(body).replace("{c}", c).replace("{who}", who),
   email,
 });
 
@@ -101,23 +105,23 @@ function recipients(t: Template, c: Contract, e: ParsedAudit): string[] {
   return parties.filter((id) => id !== e.actorId);
 }
 
-function securityEvent(e: ParsedAudit): Event | null {
+function securityEvent(e: ParsedAudit, tr: Tr): Event | null {
   const suspended = e.action === "admin.suspend_user";
   if (e.targetType !== "user" || (!suspended && e.action !== "admin.reactivate_user")) return null;
   return {
     seq: e.seq, at: e.at, contractId: null, recipientId: e.targetId, email: true,
-    title: suspended ? "Security alert: account suspended" : "Security alert: account reactivated",
-    body: suspended ? "An administrator suspended your account. You cannot act on contracts until it is reactivated." : "An administrator reactivated your account.",
+    title: tr(suspended ? "Security alert: account suspended" : "Security alert: account reactivated"),
+    body: tr(suspended ? "An administrator suspended your account. You cannot act on contracts until it is reactivated." : "An administrator reactivated your account."),
   };
 }
 
-function contractEvents(e: ParsedAudit, { contracts, users }: NotificationInput): Event[] {
+function contractEvents(e: ParsedAudit, { contracts, users }: NotificationInput, tr: Tr): Event[] {
   const contract = e.targetType === "contract" ? contracts.get(e.targetId) : undefined;
   const t = TEMPLATES[e.action];
   if (!contract || !t) return [];
-  const who = e.actorId ? (users.get(e.actorId)?.name ?? "Someone") : "TrustLock";
+  const who = e.actorId ? (users.get(e.actorId)?.name ?? tr("Someone")) : "TrustLock";
   const make = (recipientId: string, tpl: Template): Event => ({
-    seq: e.seq, at: e.at, contractId: contract.id, recipientId, email: !!tpl.email, title: tpl.title(contract.title, who), body: tpl.body(contract.title, who),
+    seq: e.seq, at: e.at, contractId: contract.id, recipientId, email: !!tpl.email, title: tpl.title(contract.title, who, tr), body: tpl.body(contract.title, who, tr),
   });
   const out = recipients(t, contract, e).map((id) => make(id, t));
   const arb = e.action === "dispute.assigned" ? (e.after as { arbitratorId?: string } | null)?.arbitratorId : undefined;
@@ -126,22 +130,22 @@ function contractEvents(e: ParsedAudit, { contracts, users }: NotificationInput)
 }
 
 /** Everything that was said to everyone, oldest first. Filtering to one person happens after. */
-function events(input: NotificationInput): Event[] {
+function events(input: NotificationInput, tr: Tr): Event[] {
   const out: Event[] = [];
   for (const e of input.entries) {
     if (e.result !== "ok") continue;
-    const security = securityEvent(e);
+    const security = securityEvent(e, tr);
     if (security) out.push(security);
-    else out.push(...contractEvents(e, input));
+    else out.push(...contractEvents(e, input, tr));
   }
   return out;
 }
 
-export function notificationsFor(input: NotificationInput, userId: string): { items: Notification[]; unread: number } {
+export function notificationsFor(input: NotificationInput, userId: string, tr: Tr = same): { items: Notification[]; unread: number } {
   const lastRead = input.entries
     .filter((e) => e.action === READ_ACTION && e.actorId === userId && e.result === "ok")
     .reduce((max, e) => Math.max(max, (e.after as { upToSeq?: number } | null)?.upToSeq ?? 0), 0);
-  const items = events(input)
+  const items = events(input, tr)
     .filter((n) => n.recipientId === userId)
     .map((n): Notification => ({ id: n.seq, at: n.at, contractId: n.contractId, title: n.title, body: n.body, unread: n.seq > lastRead, emailed: n.email }))
     .sort((a, b) => b.id - a.id);
@@ -149,12 +153,12 @@ export function notificationsFor(input: NotificationInput, userId: string): { it
 }
 
 /** The mail catcher: every simulated email that was "sent", newest first. Only available in development and demo mode. */
-export function simulatedEmails(input: NotificationInput): SimulatedEmail[] {
-  return events(input)
+export function simulatedEmails(input: NotificationInput, tr: Tr = same): SimulatedEmail[] {
+  return events(input, tr)
     .filter((n) => n.email)
     .flatMap((n) => {
       const u = input.users.get(n.recipientId);
-      return u ? [{ id: n.seq, at: n.at, to: u.email, toName: u.name, subject: `[TrustLock] ${n.title}`, body: `Hello ${u.name},\n\n${n.body}\n\nThis is a simulation. No real money is involved.`, contractId: n.contractId }] : [];
+      return u ? [{ id: n.seq, at: n.at, to: u.email, toName: u.name, subject: `[TrustLock] ${n.title}`, body: `${tr("Hello")} ${u.name},\n\n${n.body}\n\n${tr("This is a simulation. No real money is involved.")}`, contractId: n.contractId }] : [];
     })
     .sort((a, b) => b.id - a.id);
 }

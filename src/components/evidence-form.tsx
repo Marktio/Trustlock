@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SubmitButton } from "./submit-button";
+import { useT } from "@/i18n/client";
 
 interface Picked {
   name: string;
@@ -16,6 +17,7 @@ async function sha256Hex(file: File): Promise<string> {
 
 /** Text and up to the remaining number of files. Each file's SHA-256 fingerprint is calculated in the browser (FR-6.3). */
 export function EvidenceForm({ action, contractId, filesLeft }: { action: (formData: FormData) => void | Promise<void>; contractId: string; filesLeft: number }) {
+  const t = useT();
   const [picked, setPicked] = useState<Picked[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -24,11 +26,11 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
     <form action={action} className="field u-gap-3">
       <input type="hidden" name="id" value={contractId} />
       <input type="hidden" name="files" value={JSON.stringify(picked)} />
-      <label htmlFor="ev-text">What would you like the arbitrator to know?</label>
+      <label htmlFor="ev-text">{t("What would you like the arbitrator to know?")}</label>
       <textarea id="ev-text" name="text" maxLength={1000} />
       {filesLeft > 0 && (
         <>
-          <label htmlFor="ev-files">Attach files (optional, {filesLeft} left)</label>
+          <label htmlFor="ev-files">{t("Attach files (optional,")} {filesLeft} {t("left)")}</label>
           <input
             id="ev-files"
             type="file"
@@ -38,7 +40,7 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
               const list = Array.from(e.target.files ?? []);
               setError("");
               if (list.length > filesLeft) {
-                setError(`You can attach ${filesLeft} more ${filesLeft === 1 ? "file" : "files"}.`);
+                setError(t(filesLeft === 1 ? "You can attach 1 more file." : "You can attach {n} more files.", { n: filesLeft }));
                 e.target.value = "";
                 return setPicked([]);
               }
@@ -50,11 +52,11 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
               }
             }}
           />
-          <span className="hint">Allowed: zip, pdf, png, jpg, docx, txt. Up to 25 MB each. Files are recorded by their fingerprint.</span>
+          <span className="hint">{t("Allowed: zip, pdf, png, jpg, docx, txt. Up to 25 MB each. Files are recorded by their fingerprint.")}</span>
         </>
       )}
       {error && <p className="notice error" role="alert">{error}</p>}
-      {busy && <p className="small muted" role="status">Calculating fingerprints…</p>}
+      {busy && <p className="small muted" role="status">{t("Calculating fingerprints…")}</p>}
       {picked.length > 0 && (
         <ul className="small u-m0 u-pl6">
           {picked.map((p) => (
@@ -64,9 +66,9 @@ export function EvidenceForm({ action, contractId, filesLeft }: { action: (formD
           ))}
         </ul>
       )}
-      <p className="small muted">Once submitted, evidence cannot be edited or deleted.</p>
+      <p className="small muted">{t("Once submitted, evidence cannot be edited or deleted.")}</p>
       <div>
-        <SubmitButton pendingLabel="Submitting…">Submit evidence</SubmitButton>
+        <SubmitButton pendingLabel={t("Submitting…")}>{t("Submit evidence")}</SubmitButton>
       </div>
     </form>
   );

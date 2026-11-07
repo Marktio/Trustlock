@@ -1,4 +1,5 @@
 import type { Contract } from "@/domain/types";
+import type { T } from "@/i18n/core";
 import { fmtDate, timeLeft } from "./format";
 
 type Kind = "client" | "freelancer";
@@ -27,19 +28,20 @@ function proposedStep(kind: Kind, who: string, awaiting: Kind): string {
   return client ? `Waiting for ${who} to reply` : "Accept, counter or reject this proposal";
 }
 
-function deliveredStep(c: Contract, kind: Kind): string {
-  const left = c.reviewEndsAt ? ` Auto-approves in ${timeLeft(c.reviewEndsAt)}` : "";
+function deliveredStep(c: Contract, kind: Kind, t?: T): string {
+  const left = c.reviewEndsAt ? ` Auto-approves in ${timeLeft(c.reviewEndsAt, t)}` : "";
   if (kind === "client") return c.reviewEndsAt ? `Review now.${left}` : "Review the delivery";
   return c.reviewEndsAt ? `Waiting for review.${left}` : "Waiting for review";
 }
 
 /** One plain sentence saying what happens next for this person (NFR-5.2). */
-export function nextStep(c: Contract, kind: Kind, counterpart: string, awaiting: Kind = "freelancer"): string {
-  if (c.state === "proposed") return proposedStep(kind, counterpart, awaiting);
-  if (c.state === "delivered") return deliveredStep(c, kind);
-  if (c.state === "completed") return `Paid ${fmtDate(c.updatedAt)}`;
+export function nextStep(c: Contract, kind: Kind, counterpart: string, awaiting: Kind = "freelancer", t?: T): string {
+  if (c.state === "proposed") return t ? t(proposedStep(kind, counterpart, awaiting)) : proposedStep(kind, counterpart, awaiting);
+  if (c.state === "delivered") return t ? t(deliveredStep(c, kind, t)) : deliveredStep(c, kind, t);
+  if (c.state === "completed") { const p = `Paid ${fmtDate(c.updatedAt, t)}`; return t ? t(p) : p; }
   const pair = BY_KIND[c.state]?.(counterpart);
-  return pair ? pair[kind] : (SAME[c.state] ?? "");
+  const out = pair ? pair[kind] : (SAME[c.state] ?? "");
+  return t ? t(out) : out;
 }
 
 /** Does this contract need the viewer to do something right now? */

@@ -44,7 +44,7 @@ import {
   type ContractState,
   type EscrowEvent,
 } from "./states";
-import { notificationsFor, simulatedEmails, READ_ACTION as NOTIFICATIONS_READ, type NotificationInput } from "./notifications";
+import { notificationsFor, simulatedEmails, READ_ACTION as NOTIFICATIONS_READ, type NotificationInput, type Tr } from "./notifications";
 import { parseAudit, verifyChain, type ChainResult, type ParsedAudit } from "./audit";
 import type { Actor, Balances, Clock, Contract, ContractPatch, LedgerRecord, Milestone, Posting, Role, User } from "./types";
 
@@ -847,8 +847,8 @@ export class EscrowService {
   }
 
   /** The viewer's own notifications, newest first. Nobody can read anyone else's. */
-  async listNotifications(actor: Actor) {
-    return notificationsFor(await this.notificationInput(), actor.id);
+  async listNotifications(actor: Actor, tr?: Tr) {
+    return notificationsFor(await this.notificationInput(), actor.id, tr);
   }
 
   async unreadCount(actor: Actor): Promise<number> {
@@ -865,9 +865,9 @@ export class EscrowService {
   }
 
   /** The development mail catcher (FR-7.2): the simulated emails that were "sent". Administrators only. */
-  async mailCatcher(actor: Actor) {
+  async mailCatcher(actor: Actor, tr?: Tr) {
     this.requireRole(actor, ["admin"]);
-    return simulatedEmails(await this.notificationInput());
+    return simulatedEmails(await this.notificationInput(), tr);
   }
 
   // ---------- Administration (FR-9) ----------

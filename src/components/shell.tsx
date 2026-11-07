@@ -6,6 +6,7 @@ import { AccountSwitcher } from "@/components/account-switcher";
 import { clerkEnabled, toActor } from "@/server/auth";
 import { getContainer } from "@/server/container";
 import brandMark from "@/app/icon.svg";
+import { getT } from "@/i18n/server";
 
 const ROLE_LABEL: Record<User["role"], string> = {
   client: "Client",
@@ -31,6 +32,7 @@ function navFor(role: User["role"]) {
 }
 
 export async function Shell({ viewer, active, children }: { viewer: User; active: string; children: React.ReactNode }) {
+  const t = await getT();
   const wantsBell = viewer.role === "client" || viewer.role === "freelancer" || viewer.role === "arbitrator";
   const unread = wantsBell ? await (await getContainer()).svc.unreadCount(toActor(viewer)) : 0;
   return (
@@ -38,14 +40,14 @@ export async function Shell({ viewer, active, children }: { viewer: User; active
       <aside className="side">
         <Link href="/" className="brand">
           <Image src={brandMark} alt="" width={24} height={24} />
-          TrustLock
+          {t("TrustLock")}
         </Link>
-        <nav aria-label="Main">
+        <nav aria-label={t("Main")}>
           {navFor(viewer.role).map((item) => (
             <Link key={item.href} href={item.href} aria-current={active === item.href ? "page" : undefined}>
-              {item.label}
+              {t(item.label)}
               {item.href === "/notifications" && unread > 0 && (
-                <span className="count" aria-label={`${unread} unread`}>
+                <span className="count" aria-label={t("{count} unread", { count: unread })}>
                   {unread}
                 </span>
               )}
@@ -57,7 +59,7 @@ export async function Shell({ viewer, active, children }: { viewer: User; active
             <span>
               <strong>{viewer.name}</strong>
               <br />
-              {ROLE_LABEL[viewer.role]}
+              {t(ROLE_LABEL[viewer.role])}
             </span>
             <UserButton afterSwitchSessionUrl="/dashboard" />
           </div>

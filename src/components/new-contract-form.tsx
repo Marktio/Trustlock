@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { currencyLabel, feeFor, formatSC, scToMinor } from "@/domain/money";
 import { SubmitButton } from "./submit-button";
+import { useT } from "@/i18n/client";
 
 interface Row {
   id: number;
@@ -37,6 +38,7 @@ export function NewContractForm({
   defaultReviewDays?: number;
   defaultRevisionLimit?: number;
 }) {
+  const t = useT();
   const money = (v: number) => formatSC(v, true, currency);
   const [step, setStep] = useState(0);
   const [title, setTitle] = useState("");
@@ -171,7 +173,7 @@ export function NewContractForm({
         }
       }}
     >
-      <ol className="stepper" aria-label="Create contract steps">
+      <ol className="stepper" aria-label={t("Create contract steps")}>
         {STEPS.map((label, i) => (
           <li key={label}>
             <span className={`chip${i === step ? " on" : ""}`} aria-current={i === step ? "step" : undefined}>
@@ -181,13 +183,13 @@ export function NewContractForm({
         ))}
       </ol>
       <p className="small muted" aria-live="polite">
-        Step {step + 1} of {STEPS.length}: {STEPS[step]}
+        {t("Step")} {step + 1} {t("of")} {STEPS.length}: {STEPS[step]}
         {draftState !== "none" && (
           <>
             {" · "}
-            {draftState === "restored" ? "Your saved draft was restored." : "Draft saved on this device."}{" "}
+            {draftState === "restored" ? t("Your saved draft was restored.") : t("Draft saved on this device.")}{" "}
             <button type="button" className="linklike link-inline" onClick={discardDraft}>
-              Discard draft
+              {t("Discard draft")}
             </button>
           </>
         )}
@@ -197,39 +199,39 @@ export function NewContractForm({
         <div className="col-main">
           {/* Step 1 */}
           <section className="card" aria-labelledby="details-h" hidden={step !== 0} ref={(el) => { panels.current[0] = el as unknown as HTMLDivElement; }}>
-            <h2 id="details-h">Details</h2>
+            <h2 id="details-h">{t("Details")}</h2>
             <div className="field">
-              <label htmlFor="title">Contract title</label>
+              <label htmlFor="title">{t("Contract title")}</label>
               <input id="title" name="title" type="text" required minLength={3} maxLength={120} autoComplete="off" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
             <div className="field">
-              <label htmlFor="description">What needs to be done</label>
+              <label htmlFor="description">{t("What needs to be done")}</label>
               <textarea id="description" name="description" required maxLength={2000} value={description} onChange={(e) => setDescription(e.target.value)} />
             </div>
           </section>
 
           {/* Step 2 */}
           <section className="card" aria-labelledby="ms-h" hidden={step !== 1} ref={(el) => { panels.current[1] = el as unknown as HTMLDivElement; }}>
-            <h2 id="ms-h">Milestones</h2>
+            <h2 id="ms-h">{t("Milestones")}</h2>
             {rows.map((r, i) => (
               <div className="ms-row" key={r.id}>
                 <div className="field">
-                  <label htmlFor={`mt-${r.id}`}>Deliverable {i + 1}</label>
+                  <label htmlFor={`mt-${r.id}`}>{t("Deliverable")} {i + 1}</label>
                   <input id={`mt-${r.id}`} name="m_title" type="text" required maxLength={120} value={r.title} onChange={(e) => update(r.id, { title: e.target.value })} />
                 </div>
                 <div className="field">
-                  <label htmlFor={`md-${r.id}`}>Due date</label>
+                  <label htmlFor={`md-${r.id}`}>{t("Due date")}</label>
                   <input id={`md-${r.id}`} name="m_due" type="date" required value={r.due} onChange={(e) => update(r.id, { due: e.target.value })} />
                 </div>
                 <div className="field">
-                  <label htmlFor={`ma-${r.id}`}>Amount ({currencyLabel(currency)})</label>
+                  <label htmlFor={`ma-${r.id}`}>{t("Amount (")}{currencyLabel(currency)})</label>
                   <input id={`ma-${r.id}`} name="m_amount" type="text" inputMode="decimal" required value={r.amount} onChange={(e) => update(r.id, { amount: e.target.value })} />
                 </div>
                 <button
                   type="button"
                   className="btn u-p0"
                  
-                  aria-label={`Remove deliverable ${i + 1}`}
+                  aria-label={t("Remove deliverable {n}", { n: i + 1 })}
                   disabled={rows.length === 1}
                   onClick={() => setRows((rs) => rs.filter((x) => x.id !== r.id))}
                 >
@@ -247,59 +249,59 @@ export function NewContractForm({
                   setNextId((n) => n + 1);
                 }}
               >
-                Add milestone (up to 10)
+                {t("Add milestone (up to 10)")}
               </button>
               <span className="notice notice-tight" aria-live="polite">
-                Milestones add up to {money(totalMinor)}. That is the contract total.
+                {t("Milestones add up to")} {money(totalMinor)}{t(". That is the contract total.")}
               </span>
             </div>
             <div className="form-grid">
               <div className="field">
-                <label htmlFor="reviewPeriodDays">Review period (days)</label>
+                <label htmlFor="reviewPeriodDays">{t("Review period (days)")}</label>
                 <input id="reviewPeriodDays" name="reviewPeriodDays" type="number" min={1} max={14} required value={reviewDays} onChange={(e) => setReviewDays(e.target.value)} />
-                <span className="hint">If you do nothing, payment is released when this ends.</span>
+                <span className="hint">{t("If you do nothing, payment is released when this ends.")}</span>
               </div>
               <div className="field">
-                <label htmlFor="revisionLimit">Revisions allowed</label>
+                <label htmlFor="revisionLimit">{t("Revisions allowed")}</label>
                 <input id="revisionLimit" name="revisionLimit" type="number" min={0} max={5} required value={revisions} onChange={(e) => setRevisions(e.target.value)} />
               </div>
               <div className="field">
-                <label htmlFor="freelancerEmail">Freelancer email</label>
+                <label htmlFor="freelancerEmail">{t("Freelancer email")}</label>
                 <input id="freelancerEmail" name="freelancerEmail" type="email" required autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <span className="hint">They need a TrustLock account as a freelancer.</span>
+                <span className="hint">{t("They need a TrustLock account as a freelancer.")}</span>
               </div>
             </div>
           </section>
 
           {/* Step 3 */}
           <section className="card" aria-labelledby="terms-h" hidden={step !== 2} ref={(el) => { panels.current[2] = el as unknown as HTMLDivElement; }}>
-            <h2 id="terms-h">Terms</h2>
-            <div className="kv"><span>Contract total</span><strong className="mono">{money(totalMinor)}</strong></div>
-            <div className="kv"><span>Review period</span><span>{reviewDays || "?"} days, then auto-approve</span></div>
-            <div className="kv"><span>Revisions allowed</span><span>{revisions || "0"}</span></div>
-            <div className="kv"><span>Platform fee</span><span>{feeBps / 100}% ({money(fee)}), taken at release</span></div>
-            <p className="small muted">Terms lock once you fund escrow. Later changes need both parties to agree. The freelancer sees the fee before they accept.</p>
+            <h2 id="terms-h">{t("Terms")}</h2>
+            <div className="kv"><span>{t("Contract total")}</span><strong className="mono">{money(totalMinor)}</strong></div>
+            <div className="kv"><span>{t("Review period")}</span><span>{reviewDays || "?"} {t("days, then auto-approve")}</span></div>
+            <div className="kv"><span>{t("Revisions allowed")}</span><span>{revisions || "0"}</span></div>
+            <div className="kv"><span>{t("Platform fee")}</span><span>{feeBps / 100}% ({money(fee)}{t("), taken at release")}</span></div>
+            <p className="small muted">{t("Terms lock once you fund escrow. Later changes need both parties to agree. The freelancer sees the fee before they accept.")}</p>
             <label className="check">
               <input type="checkbox" required checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-              <span>I understand the terms lock when I fund the escrow.</span>
+              <span>{t("I understand the terms lock when I fund the escrow.")}</span>
             </label>
           </section>
 
           {/* Step 4 */}
           <section className="card" aria-labelledby="review-h" hidden={step !== 3}>
-            <h2 id="review-h">Review</h2>
-            <div className="kv"><span>Title</span><strong>{title}</strong></div>
-            <div className="kv"><span>Freelancer</span><span>{email}</span></div>
+            <h2 id="review-h">{t("Review")}</h2>
+            <div className="kv"><span>{t("Title")}</span><strong>{title}</strong></div>
+            <div className="kv"><span>{t("Freelancer")}</span><span>{email}</span></div>
             <p className="small muted">{description}</p>
             <ul className="u-m0 u-pl6">
               {rows.map((r, i) => (
                 <li key={r.id}>
-                  {r.title || `Deliverable ${i + 1}`} · due {r.due || "?"} · <span className="mono">{parseSC(r.amount) === null ? "?" : money(parseSC(r.amount) as number)}</span>
+                  {r.title || `Deliverable ${i + 1}`} {t("· due")} {r.due || "?"} · <span className="mono">{parseSC(r.amount) === null ? "?" : money(parseSC(r.amount) as number)}</span>
                 </li>
               ))}
             </ul>
             <p className="small muted">
-              Review period {reviewDays} days · {revisions} revisions · platform fee {feeBps / 100}%
+              {t("Review period")} {reviewDays} {t("days ·")} {revisions} {t("revisions · platform fee")} {feeBps / 100}%
             </p>
           </section>
 
@@ -310,24 +312,24 @@ export function NewContractForm({
           )}
         </div>
 
-        <aside className="col-side" aria-label="Cost preview">
+        <aside className="col-side" aria-label={t("Cost preview")}>
           <div className="card">
-            <h2>Cost preview</h2>
-            <div className="kv"><span>Contract total</span><span className="mono">{money(totalMinor)}</span></div>
-            <div className="kv"><span>Platform fee ({feeBps / 100}%)</span><span className="mono">{money(fee)}</span></div>
-            <div className="kv total"><span>Freelancer receives</span><span className="mono">{money(totalMinor - fee)}</span></div>
-            <p className="small muted">Terms lock once you fund escrow. Later changes need both of you to agree.</p>
+            <h2>{t("Cost preview")}</h2>
+            <div className="kv"><span>{t("Contract total")}</span><span className="mono">{money(totalMinor)}</span></div>
+            <div className="kv"><span>{t("Platform fee (")}{feeBps / 100}%)</span><span className="mono">{money(fee)}</span></div>
+            <div className="kv total"><span>{t("Freelancer receives")}</span><span className="mono">{money(totalMinor - fee)}</span></div>
+            <p className="small muted">{t("Terms lock once you fund escrow. Later changes need both of you to agree.")}</p>
             <input type="hidden" name="totalSC" value={(totalMinor / 100).toFixed(2)} />
             {last ? (
-              <SubmitButton pendingLabel="Sending…">Send proposal</SubmitButton>
+              <SubmitButton pendingLabel={t("Sending…")}>{t("Send proposal")}</SubmitButton>
             ) : (
               <button type="submit" className="btn btn-primary">
-                Continue to {STEPS[step + 1].toLowerCase()}
+                {t("Continue to")} {STEPS[step + 1].toLowerCase()}
               </button>
             )}
             {step > 0 && (
               <button type="button" className="btn" onClick={() => go(step - 1)}>
-                Back to {STEPS[step - 1].toLowerCase()}
+                {t("Back to")} {STEPS[step - 1].toLowerCase()}
               </button>
             )}
           </div>

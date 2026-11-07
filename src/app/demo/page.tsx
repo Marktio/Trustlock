@@ -3,8 +3,12 @@ import { demoLogin } from "@/app/actions";
 import { SubmitButton } from "@/components/submit-button";
 import { clerkEnabled } from "@/server/auth";
 import { getContainer } from "@/server/container";
+import { getT } from "@/i18n/server";
 
-export const metadata = { title: "Choose a demo account" };
+export async function generateMetadata() {
+  const t = await getT();
+  return { title: t("Choose a demo account") };
+}
 
 const BLURB: Record<string, string> = {
   client: "Creates contracts, funds escrow, approves delivery.",
@@ -16,6 +20,7 @@ const BLURB: Record<string, string> = {
 const ROLE_LABEL: Record<string, string> = { client: "Client", freelancer: "Freelancer", arbitrator: "Arbitrator", admin: "Administrator", auditor: "Auditor" };
 
 export default async function DemoPage({ searchParams }: { searchParams: Promise<{ role?: string }> }) {
+  const t = await getT();
   if (clerkEnabled) notFound();
   const { role } = await searchParams;
   const { repo } = await getContainer();
@@ -26,13 +31,13 @@ export default async function DemoPage({ searchParams }: { searchParams: Promise
   return (
     <main id="main" className="landing demo">
       <div className="demo-head">
-        <h1>Choose a demo account</h1>
+        <h1>{t("Choose a demo account")}</h1>
         <p className="muted">
-          Clerk keys are not set, so TrustLock is running in demo mode. Data lives in memory and resets when the server restarts. Switch accounts any time from the sidebar.
+          {t("Clerk keys are not set, so TrustLock is running in demo mode. Data lives in memory and resets when the server restarts. Switch accounts any time from the sidebar.")}
         </p>
         {wanted && (
           <p>
-            You chose to register as a <strong>{wanted}</strong>. In demo mode there is no sign up, so use the highlighted {wanted} account below. With Clerk keys this button opens real sign up.
+            {t("You chose to register as a")} <strong>{wanted}</strong>{t(". In demo mode there is no sign up, so use the highlighted")} {wanted} {t("account below. With Clerk keys this button opens real sign up.")}
           </p>
         )}
       </div>
@@ -44,12 +49,12 @@ export default async function DemoPage({ searchParams }: { searchParams: Promise
               <div>
                 <p>
                   <span className="demo-name">{u.name}</span>
-                  <span className="demo-role">{ROLE_LABEL[u.role] ?? u.role}</span>
+                  <span className="demo-role">{t(ROLE_LABEL[u.role] ?? u.role)}</span>
                 </p>
                 <p className="demo-blurb">{BLURB[u.role]}</p>
               </div>
-              <SubmitButton pendingLabel="Opening…" className={u.id === suggested ? "btn btn-primary" : "btn"}>
-                Continue as {u.name.split(" ")[0]}
+              <SubmitButton pendingLabel={t("Opening…")} className={u.id === suggested ? "btn btn-primary" : "btn"}>
+                {t("Continue as")} {u.name.split(" ")[0]}
               </SubmitButton>
             </form>
           </li>

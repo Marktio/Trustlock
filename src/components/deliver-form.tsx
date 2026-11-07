@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SubmitButton } from "./submit-button";
+import { useT } from "@/i18n/client";
 
 const ALLOWED = "zip, pdf, png, jpg, docx, txt";
 
@@ -12,15 +13,16 @@ async function sha256Hex(file: File): Promise<string> {
 
 /** Computes the file's SHA-256 fingerprint in the browser, so it can be shown before delivery (FR-5.2). */
 export function DeliverForm({ action, contractId, reviewDays }: { action: (formData: FormData) => void | Promise<void>; contractId: string; reviewDays: number }) {
+  const t = useT();
   const [file, setFile] = useState<{ name: string; size: number; hash: string } | null>(null);
   const [busy, setBusy] = useState(false);
 
   return (
     <form action={action} className="card u-gap-4">
-      <h2>Deliver your work</h2>
+      <h2>{t("Deliver your work")}</h2>
       <input type="hidden" name="id" value={contractId} />
       <div className="field">
-        <label htmlFor="file">Choose a file</label>
+        <label htmlFor="file">{t("Choose a file")}</label>
         <input
           id="file"
           type="file"
@@ -37,12 +39,12 @@ export function DeliverForm({ action, contractId, reviewDays }: { action: (formD
             }
           }}
         />
-        <span className="hint">Allowed: {ALLOWED}. Up to 25 MB.</span>
+        <span className="hint">{t("Allowed:")} {ALLOWED}{t(". Up to 25 MB.")}</span>
       </div>
-      {busy && <p className="small muted" role="status">Calculating the file fingerprint…</p>}
+      {busy && <p className="small muted" role="status">{t("Calculating the file fingerprint…")}</p>}
       {file && (
         <div>
-          <p className="small muted">SHA-256 fingerprint, calculated on your device</p>
+          <p className="small muted">{t("SHA-256 fingerprint, calculated on your device")}</p>
           <p className="hash">{file.hash}</p>
           <input type="hidden" name="fileName" value={file.name} />
           <input type="hidden" name="sizeBytes" value={file.size} />
@@ -50,14 +52,14 @@ export function DeliverForm({ action, contractId, reviewDays }: { action: (formD
         </div>
       )}
       <div className="field">
-        <label htmlFor="note">Note to client (optional)</label>
+        <label htmlFor="note">{t("Note to client (optional)")}</label>
         <textarea id="note" name="note" maxLength={500} />
       </div>
       <p className="small muted">
-        The contract moves to Delivered. The client gets {reviewDays} {reviewDays === 1 ? "day" : "days"} to approve, ask for changes, or let it auto-approve.
+        {t("The contract moves to Delivered. The client gets")} {reviewDays} {reviewDays === 1 ? "day" : "days"} {t("to approve, ask for changes, or let it auto-approve.")}
       </p>
       <div>
-        <SubmitButton pendingLabel="Delivering…">Submit delivery</SubmitButton>
+        <SubmitButton pendingLabel={t("Delivering…")}>{t("Submit delivery")}</SubmitButton>
       </div>
     </form>
   );

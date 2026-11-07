@@ -1,0 +1,453 @@
+{
+ "dict": {
+  "This contract changed while you were working. Reload the page and try again.": "Mkataba huu ulibadilika ulipokuwa ukifanya kazi. Pakia ukurasa upya kisha ujaribu tena.",
+  "Your available balance is too low for this. Top up your wallet and try again.": "Salio lako lililopo halitoshi kwa hili. Weka pesa kwenye pochi yako kisha ujaribu tena.",
+  "Enter an amount like 15000 or 15000.50.": "Weka kiasi kama 15000 au 15000.50.",
+  "That amount is too large.": "Kiasi hicho ni kikubwa mno.",
+  "Fee must be between 0 and 10000 basis points.": "Ada lazima iwe kati ya 0 na 10000 basis points.",
+  "A split must give the freelancer between 1% and 99%.": "Mgawanyo lazima umpe mfanyakazi huru kati ya 1% na 99%.",
+  "Give the contract a title of at least 3 characters.": "Weka kichwa cha mkataba chenye angalau herufi 3.",
+  "Keep the title under 120 characters.": "Kichwa kisizidi herufi 120.",
+  "Describe the work.": "Eleza kazi hiyo.",
+  "Keep the description under 2,000 characters.": "Maelezo yasizidi herufi 2,000.",
+  "Enter the freelancer's email address.": "Weka barua pepe ya mfanyakazi huru.",
+  "Enter the contract total.": "Weka jumla ya mkataba.",
+  "Use whole days.": "Tumia siku kamili.",
+  "Review period is at least 1 day.": "Kipindi cha mapitio ni angalau siku 1.",
+  "Review period is at most 14 days.": "Kipindi cha mapitio ni siku 14 kwa kiwango cha juu.",
+  "Use a whole number.": "Tumia nambari kamili.",
+  "Revisions cannot be negative.": "Marekebisho hayawezi kuwa chini ya sifuri.",
+  "Allow at most 5 revisions.": "Ruhusu marekebisho yasiyozidi 5.",
+  "Name each milestone.": "Taja kila hatua ya kazi.",
+  "Keep milestone names under 120 characters.": "Majina ya hatua za kazi yasizidi herufi 120.",
+  "Pick a due date for each milestone.": "Chagua tarehe ya mwisho ya kila hatua ya kazi.",
+  "Enter an amount for each milestone.": "Weka kiasi cha kila hatua ya kazi.",
+  "Add at least one milestone.": "Ongeza angalau hatua moja ya kazi.",
+  "A contract can have up to 10 milestones.": "Mkataba unaweza kuwa na hatua za kazi hadi 10.",
+  "Tell the client why you are changing the terms.": "Mweleze mteja kwa nini unabadilisha masharti.",
+  "Keep the note under 500 characters.": "Maelezo yasizidi herufi 500.",
+  "Choose a file to deliver.": "Chagua faili ya kuwasilisha.",
+  "That file name is too long.": "Jina la faili hilo ni refu mno.",
+  "That file name is not allowed.": "Jina la faili hilo haliruhusiwi.",
+  "That file is empty.": "Faili hiyo ni tupu.",
+  "Files can be up to 25 MB.": "Faili zinaweza kuwa hadi MB 25.",
+  "The file fingerprint is missing.": "Alama ya kidijitali ya faili haipo.",
+  "Keep the text under 1,000 characters.": "Maandishi yasizidi herufi 1,000.",
+  "Write something or attach a file.": "Andika kitu au ambatisha faili.",
+  "Choose who you are asking.": "Chagua unayemuuliza.",
+  "Write your question in at least 3 characters.": "Andika swali lako kwa angalau herufi 3.",
+  "Keep the question under 500 characters.": "Swali lisizidi herufi 500.",
+  "Enter a name.": "Weka jina.",
+  "Keep the name under 120 characters.": "Jina lisizidi herufi 120.",
+  "Enter a valid email address.": "Weka barua pepe halali.",
+  "Choose arbitrator or auditor.": "Chagua msuluhishi au mkaguzi.",
+  "The fee cannot be negative.": "Ada haiwezi kuwa chini ya sifuri.",
+  "The fee can be at most 20%.": "Ada inaweza kuwa 20% kwa kiwango cha juu.",
+  "Proposals last at least 1 day.": "Mapendekezo hudumu angalau siku 1.",
+  "Proposals last at most 30 days.": "Mapendekezo hudumu siku 30 kwa kiwango cha juu.",
+  "Funding window is at least 1 day.": "Muda wa kufadhili ni angalau siku 1.",
+  "Funding window is at most 30 days.": "Muda wa kufadhili ni siku 30 kwa kiwango cha juu.",
+  "Evidence window is at least 1 day.": "Muda wa ushahidi ni angalau siku 1.",
+  "Evidence window is at most 14 days.": "Muda wa ushahidi ni siku 14 kwa kiwango cha juu.",
+  "Arbitrators get at least 1 day.": "Wasuluhishi hupewa angalau siku 1.",
+  "Arbitrators get at most 30 days.": "Wasuluhishi hupewa siku 30 kwa kiwango cha juu.",
+  "Enter the smallest top-up.": "Weka kiasi kidogo zaidi cha kuweka pesa.",
+  "Enter the largest top-up.": "Weka kiasi kikubwa zaidi cha kuweka pesa.",
+  "Enter the daily top-up limit.": "Weka kikomo cha kila siku cha kuweka pesa.",
+  "Say why, in at least 3 characters.": "Eleza sababu, kwa angalau herufi 3.",
+  "Keep the reason under 500 characters.": "Sababu isizidi herufi 500.",
+  "Write a message first.": "Andika ujumbe kwanza.",
+  "Keep messages under 1,000 characters.": "Ujumbe usizidi herufi 1,000.",
+  "Choose a ruling.": "Chagua uamuzi.",
+  "Use a whole percentage.": "Tumia asilimia kamili.",
+  "A split gives the freelancer 1% to 99%.": "Mgawanyo humpa mfanyakazi huru 1% hadi 99%.",
+  "Check the form and try again.": "Kagua fomu kisha ujaribu tena.",
+  "The state before the dispute is unknown.": "Hali kabla ya mgogoro haijulikani.",
+  "In progress": "Inaendelea",
+  "An entry is missing from the sequence.": "Kuna ingizo linalokosekana kwenye mfuatano.",
+  "This entry does not link to the one before it.": "Ingizo hili halijaunganishwa na lile lililotangulia.",
+  "This entry's content no longer matches its fingerprint.": "Maudhui ya ingizo hili hayalingani tena na alama yake ya kidijitali.",
+  "Entries at the end of the log are missing.": "Maingizo ya mwishoni mwa kumbukumbu yanakosekana.",
+  "A money movement needs at least two entries.": "Uhamishaji wa pesa unahitaji angalau maingizo mawili.",
+  "Ledger entry": "Ingizo la leja",
+  "A ledger entry cannot be zero.": "Ingizo la leja haliwezi kuwa sifuri.",
+  "Ledger entries must add up to zero.": "Maingizo ya leja lazima yajumlishe sifuri.",
+  "Releasing payment": "Malipo yanatolewa",
+  "Funds returned to the client": "Pesa zimerudishwa kwa mteja",
+  "Waiting for an arbitrator": "Inasubiri msuluhishi",
+  "Split decided by an arbitrator": "Mgawanyo umeamuliwa na msuluhishi",
+  "Fund the escrow to start the work": "Fadhili escrow ili kazi ianze",
+  "Funds locked. Waiting for work to start": "Pesa zimefungwa. Inasubiri kazi ianze",
+  "Start work": "Anza kazi",
+  "Work in progress": "Kazi inaendelea",
+  "Deliver your work": "Wasilisha kazi yako",
+  "Accept, counter or reject this proposal": "Kubali, toa pendekezo mbadala au kataa pendekezo hili",
+  "Review the delivery": "Pitia kazi iliyowasilishwa",
+  "Waiting for review": "Inasubiri mapitio",
+  "Lock the funds": "Funga pesa",
+  "Amina (the client) funds the contract. 45,000 SC moves from Available to Held. Nobody can spend it, not even Amina.": "Amina (mteja) anafadhili mkataba. SC 45,000 zinahama kutoka Zilizopo hadi Zilizoshikiliwa. Hakuna anayeweza kuzitumia, hata Amina.",
+  "Funds locked in escrow": "Pesa zimefungwa kwenye escrow",
+  "Deliver the work": "Wasilisha kazi",
+  "Brian (the freelancer) uploads the file. Its SHA-256 fingerprint is recorded, so everyone can prove what was delivered.": "Brian (mfanyakazi huru) anapakia faili. Alama yake ya kidijitali ya SHA-256 inarekodiwa, ili kila mtu athibitishe kilichowasilishwa.",
+  "Approve and release": "Kubali na toa malipo",
+  "Amina approves, or the 3-day review ends. A 2% fee (900 SC) is taken and 44,100 SC reaches Brian, exactly once.": "Amina anakubali, au kipindi cha mapitio cha siku 3 kinaisha. Ada ya 2% (SC 900) inakatwa na SC 44,100 zinamfikia Brian, mara moja tu.",
+  "Released once · fee 900 SC": "Zimetolewa mara moja · ada SC 900",
+  "If you disagree": "Usipokubaliana",
+  "Either side can raise a dispute. The funds freeze, both add evidence, and an independent arbitrator decides: release, refund or split.": "Upande wowote unaweza kuanzisha mgogoro. Pesa zinagandishwa, pande zote zinaongeza ushahidi, na msuluhishi huru anaamua: kutoa malipo, kurejesha pesa au kugawa.",
+  "Frozen · arbitrator assigned": "Zimegandishwa · msuluhishi amepangiwa",
+  "Contract created": "Mkataba umeundwa",
+  "Proposal sent": "Pendekezo limetumwa",
+  "Contract accepted": "Mkataba umekubaliwa",
+  "Counter-proposal sent": "Pendekezo mbadala limetumwa",
+  "Counter-proposal accepted": "Pendekezo mbadala limekubaliwa",
+  "Counter-proposal declined": "Pendekezo mbadala limekataliwa",
+  "Evidence submitted": "Ushahidi umewasilishwa",
+  "Arbitrator asked for more information": "Msuluhishi ameomba maelezo zaidi",
+  "Arbitrator assigned": "Msuluhishi amepangiwa",
+  "Contract rejected": "Mkataba umekataliwa",
+  "Contract cancelled": "Mkataba umeghairiwa",
+  "Asked to cancel the funded contract": "Ombi la kughairi mkataba uliofadhiliwa limetumwa",
+  "Request to cancel turned down": "Ombi la kughairi limekataliwa",
+  "Cancelled by agreement, money returned": "Umeghairiwa kwa makubaliano, pesa zimerudishwa",
+  "Asked to withdraw the dispute": "Ombi la kuondoa mgogoro limetumwa",
+  "Escrow funded": "Escrow imefadhiliwa",
+  "Work started": "Kazi imeanza",
+  "Work delivered": "Kazi imewasilishwa",
+  "Revision requested": "Marekebisho yameombwa",
+  "Client approved": "Mteja amekubali",
+  "Review period ended, auto-approved": "Kipindi cha mapitio kimeisha, imekubaliwa kiotomatiki",
+  "Proposal expired": "Pendekezo limeisha muda",
+  "Funding deadline passed": "Muda wa kufadhili umepita",
+  "Payment released": "Malipo yametolewa",
+  "Dispute raised": "Mgogoro umeanzishwa",
+  "Dispute withdrawn": "Mgogoro umeondolewa",
+  "Ruling: paid to freelancer": "Uamuzi: amelipwa mfanyakazi huru",
+  "Ruling: refunded to client": "Uamuzi: amerejeshewa mteja",
+  "unknown error": "hitilafu isiyojulikana",
+  "The scheduler run failed. See the server log.": "Uendeshaji wa kipanga ratiba umeshindwa. Angalia kumbukumbu za seva.",
+  "TrustLock user": "Mtumiaji wa TrustLock",
+  "Too many requests. Wait a moment and try again.": "Maombi ni mengi mno. Subiri kidogo kisha ujaribu tena.",
+  "Choose client or freelancer.": "Chagua mteja au mfanyakazi huru.",
+  "Proposal sent. You will be told when the freelancer replies.": "Pendekezo limetumwa. Utaarifiwa mfanyakazi huru atakapojibu.",
+  "Contract accepted. The client can now fund it.": "Mkataba umekubaliwa. Mteja sasa anaweza kuufadhili.",
+  "Contract rejected.": "Mkataba umekataliwa.",
+  "Contract cancelled.": "Mkataba umeghairiwa.",
+  "Contract cancelled by agreement. The held money is back in the client's wallet.": "Mkataba umeghairiwa kwa makubaliano. Pesa zilizoshikiliwa zimerudi kwenye pochi ya mteja.",
+  "Your request to cancel is recorded. The contract is cancelled when the other person agrees too.": "Ombi lako la kughairi limerekodiwa. Mkataba utaghairiwa mtu mwingine naye akikubali.",
+  "Request turned down. The contract carries on.": "Ombi limekataliwa. Mkataba unaendelea.",
+  "Funds are locked in escrow. The freelancer can start work.": "Pesa zimefungwa kwenye escrow. Mfanyakazi huru anaweza kuanza kazi.",
+  "Work started.": "Kazi imeanza.",
+  "Delivered. The client now has the review period to respond.": "Imewasilishwa. Mteja sasa ana kipindi cha mapitio cha kujibu.",
+  "Approved. Payment was released to the freelancer.": "Imekubaliwa. Malipo yametolewa kwa mfanyakazi huru.",
+  "Revision requested. The freelancer has been asked to resubmit.": "Marekebisho yameombwa. Mfanyakazi huru ameombwa kuwasilisha tena.",
+  "Top-up complete.": "Umeweka pesa kikamilifu.",
+  "Withdrawal complete.": "Umetoa pesa kikamilifu.",
+  "Dispute raised. An arbitrator will review the contract and its messages.": "Mgogoro umeanzishwa. Msuluhishi atapitia mkataba na ujumbe wake.",
+  "Your request to withdraw is recorded. The dispute ends when the other person agrees too.": "Ombi lako la kuondoa limerekodiwa. Mgogoro utaisha mtu mwingine naye akikubali.",
+  "Dispute withdrawn. The contract is back where it was.": "Mgogoro umeondolewa. Mkataba umerudi ulipokuwa.",
+  "Message sent.": "Ujumbe umetumwa.",
+  "Ruling recorded. The money has been moved and both sides can see the outcome.": "Uamuzi umerekodiwa. Pesa zimehamishwa na pande zote zinaweza kuona matokeo.",
+  "Counter-proposal sent. The client has to accept it before you can go on.": "Pendekezo mbadala limetumwa. Mteja lazima akubali kabla uendelee.",
+  "You accepted the new terms. You can fund the contract now.": "Umekubali masharti mapya. Sasa unaweza kufadhili mkataba.",
+  "Counter-proposal declined. The contract is cancelled.": "Pendekezo mbadala limekataliwa. Mkataba umeghairiwa.",
+  "Evidence submitted. It cannot be edited or removed.": "Ushahidi umewasilishwa. Hauwezi kuhaririwa wala kuondolewa.",
+  "Question sent. That side can answer even if the evidence window has closed.": "Swali limetumwa. Upande huo unaweza kujibu hata kama muda wa ushahidi umeisha.",
+  "User suspended. They can no longer sign in or act, and their live contracts are flagged.": "Mtumiaji amesimamishwa. Hawezi tena kuingia wala kufanya chochote, na mikataba yake inayoendelea imewekewa alama.",
+  "User reactivated.": "Mtumiaji amewashwa tena.",
+  "Settings saved. New contracts and limits use them from now on, and the change is in the audit log.": "Mipangilio imehifadhiwa. Mikataba mipya na vikomo vitaitumia kuanzia sasa, na mabadiliko yako kwenye kumbukumbu ya ukaguzi.",
+  "We could not find that contract.": "Hatukuweza kupata mkataba huo.",
+  "We could not find an open dispute with that id.": "Hatukuweza kupata mgogoro wazi wenye ID hiyo.",
+  "Only clients can create contracts.": "Wateja pekee ndio wanaweza kuunda mikataba.",
+  "No freelancer has signed up with that email. Ask them to sign up first.": "Hakuna mfanyakazi huru aliyejisajili kwa barua pepe hiyo. Mwombe ajisajili kwanza.",
+  "You cannot hire yourself.": "Huwezi kujiajiri mwenyewe.",
+  "Contract was not created.": "Mkataba haukuundwa.",
+  "Change at least one term before sending a counter-proposal.": "Badilisha angalau sharti moja kabla ya kutuma pendekezo mbadala.",
+  "Send the proposal before messaging.": "Tuma pendekezo kabla ya kutuma ujumbe.",
+  "You are sending messages too fast. Wait a minute and try again.": "Unatuma ujumbe kwa haraka mno. Subiri dakika moja kisha ujaribu tena.",
+  "There is no cancel request from the other party to turn down.": "Hakuna ombi la kughairi kutoka upande mwingine la kukataa.",
+  "Say what percentage the freelancer receives.": "Eleza mfanyakazi huru anapokea asilimia ngapi.",
+  "Only clients can top up a wallet.": "Wateja pekee ndio wanaweza kuweka pesa kwenye pochi.",
+  "The simulated payment did not go through. Nothing was added to your wallet. Try again.": "Malipo ya mazoezi hayakukamilika. Hakuna kilichoongezwa kwenye pochi yako. Jaribu tena.",
+  "Only freelancers can withdraw earnings.": "Wafanyakazi huru pekee ndio wanaweza kutoa mapato.",
+  "Enter an amount above zero.": "Weka kiasi kinachozidi sifuri.",
+  "The simulated withdrawal did not go through. Your balance is unchanged. Try again.": "Utoaji wa pesa wa mazoezi haukukamilika. Salio lako halijabadilika. Jaribu tena.",
+  "You have used all revisions. You can approve the work or raise a dispute.": "Umetumia marekebisho yote. Unaweza kukubali kazi au kuanzisha mgogoro.",
+  "Evidence can only be added while a dispute is open.": "Ushahidi unaweza kuongezwa tu wakati mgogoro uko wazi.",
+  "We could not find an open dispute for this contract.": "Hatukuweza kupata mgogoro wazi wa mkataba huu.",
+  "The evidence window has closed. You can still answer a question from the arbitrator.": "Muda wa ushahidi umeisha. Bado unaweza kujibu swali kutoka kwa msuluhishi.",
+  "We could not find that user.": "Hatukuweza kumpata mtumiaji huyo.",
+  "You cannot suspend your own account.": "Huwezi kusimamisha akaunti yako mwenyewe.",
+  "Someone already has an account with that email.": "Tayari kuna mtu mwenye akaunti kwa barua pepe hiyo.",
+  "The smallest top-up must be above zero.": "Kiasi kidogo zaidi cha kuweka pesa lazima kizidi sifuri.",
+  "The largest top-up cannot be below the smallest.": "Kiasi kikubwa zaidi cha kuweka pesa hakiwezi kuwa chini ya kidogo zaidi.",
+  "The daily limit cannot be below the largest single top-up.": "Kikomo cha kila siku hakiwezi kuwa chini ya kiasi kikubwa zaidi cha mara moja.",
+  "Nothing changed.": "Hakuna kilichobadilika.",
+  "Choose an arbitrator.": "Chagua msuluhishi.",
+  "An arbitrator cannot rule on their own contract.": "Msuluhishi hawezi kuamua kuhusu mkataba wake mwenyewe.",
+  "There is no other arbitrator available. Create one first.": "Hakuna msuluhishi mwingine anayepatikana. Unda mmoja kwanza.",
+  "Your account is suspended. Contact an administrator.": "Akaunti yako imesimamishwa. Wasiliana na msimamizi.",
+  "The freelancer made a counter-proposal. The client has to answer it first.": "Mfanyakazi huru ametoa pendekezo mbadala. Mteja lazima ajibu kwanza.",
+  "The client has not answered yet. Wait for their reply.": "Mteja hajajibu bado. Subiri jibu lake.",
+  "The contract total must be more than zero.": "Jumla ya mkataba lazima izidi sifuri.",
+  "Something went wrong with this request. Reload the page and try again.": "Kuna hitilafu imetokea kwenye ombi hili. Pakia ukurasa upya kisha ujaribu tena.",
+  "You do not have access to this.": "Huna ruhusa ya kufikia hili.",
+  "New contract proposal": "Pendekezo jipya la mkataba",
+  "{who} proposed “{c}”. Open it to accept, counter-propose or reject.": "{who} amependekeza “{c}”. Ufungue ili ukubali, utoe pendekezo mbadala au ukatae.",
+  "Proposal accepted": "Pendekezo limekubaliwa",
+  "{who} accepted “{c}”. The next step is funding the escrow.": "{who} amekubali “{c}”. Hatua inayofuata ni kufadhili escrow.",
+  "New terms proposed": "Masharti mapya yamependekezwa",
+  "{who} proposed new terms for “{c}”. Review and answer them.": "{who} amependekeza masharti mapya ya “{c}”. Yapitie na uyajibu.",
+  "New terms accepted": "Masharti mapya yamekubaliwa",
+  "{who} accepted your new terms for “{c}”.": "{who} amekubali masharti yako mapya ya “{c}”.",
+  "New terms declined": "Masharti mapya yamekataliwa",
+  "{who} declined the new terms for “{c}”. The contract is cancelled.": "{who} amekataa masharti mapya ya “{c}”. Mkataba umeghairiwa.",
+  "Proposal rejected": "Pendekezo limekataliwa",
+  "{who} cancelled “{c}”. No money had moved.": "{who} ameghairi “{c}”. Hakuna pesa zilizokuwa zimehamishwa.",
+  "Request to cancel": "Ombi la kughairi",
+  "{who} asked to cancel the funded contract “{c}”. It ends only if you agree.": "{who} ameomba kughairi mkataba uliofadhiliwa “{c}”. Utaisha tu ukikubali.",
+  "{who} wants to keep “{c}” going.": "{who} anataka “{c}” uendelee.",
+  "Cancelled by agreement": "Umeghairiwa kwa makubaliano",
+  "“{c}” was cancelled by agreement. The held money went back to the client.": "“{c}” ulighairiwa kwa makubaliano. Pesa zilizoshikiliwa zilirudi kwa mteja.",
+  "{who} funded the escrow for “{c}”. You can start work.": "{who} amefadhili escrow ya “{c}”. Unaweza kuanza kazi.",
+  "{who} started work on “{c}”.": "{who} ameanza kazi ya “{c}”.",
+  "{who} delivered “{c}”. Review it before the review period ends.": "{who} amewasilisha “{c}”. Ipitie kabla kipindi cha mapitio hakijaisha.",
+  "{who} asked for a revision on “{c}”.": "{who} ameomba marekebisho kwenye “{c}”.",
+  "Delivery approved": "Uwasilishaji umekubaliwa",
+  "{who} approved “{c}”. Payment is being released.": "{who} amekubali “{c}”. Malipo yanatolewa.",
+  "Review period ended": "Kipindi cha mapitio kimeisha",
+  "The review period for “{c}” ended, so it was approved automatically.": "Kipindi cha mapitio cha “{c}” kimeisha, kwa hivyo ilikubaliwa kiotomatiki.",
+  "The payment for “{c}” was released from escrow.": "Malipo ya “{c}” yametolewa kutoka escrow.",
+  "The proposal for “{c}” expired without an answer.": "Pendekezo la “{c}” liliisha muda bila kujibiwa.",
+  "“{c}” expired because it was not funded in time.": "“{c}” uliisha muda kwa sababu haukufadhiliwa kwa wakati.",
+  "{who} raised a dispute on “{c}”. The money stays held until an arbitrator rules.": "{who} ameanzisha mgogoro kuhusu “{c}”. Pesa zitaendelea kushikiliwa hadi msuluhishi atoe uamuzi.",
+  "An arbitrator was assigned to the dispute on “{c}”.": "Msuluhishi amepangiwa mgogoro wa “{c}”.",
+  "Request to withdraw the dispute": "Ombi la kuondoa mgogoro",
+  "{who} asked to withdraw the dispute on “{c}”. It ends only if you agree.": "{who} ameomba kuondoa mgogoro wa “{c}”. Utaisha tu ukikubali.",
+  "The dispute on “{c}” was withdrawn by agreement.": "Mgogoro wa “{c}” uliondolewa kwa makubaliano.",
+  "Evidence added": "Ushahidi umeongezwa",
+  "{who} added evidence to the dispute on “{c}”.": "{who} ameongeza ushahidi kwenye mgogoro wa “{c}”.",
+  "Dispute resolved": "Mgogoro umetatuliwa",
+  "The arbitrator ruled that the payment for “{c}” goes to the freelancer.": "Msuluhishi ameamua malipo ya “{c}” yaende kwa mfanyakazi huru.",
+  "The arbitrator ruled that the money for “{c}” goes back to the client.": "Msuluhishi ameamua pesa za “{c}” zirudi kwa mteja.",
+  "The arbitrator split the money for “{c}” between both sides.": "Msuluhishi amegawa pesa za “{c}” kati ya pande zote mbili.",
+  "New message": "Ujumbe mpya",
+  "{who} sent a message on “{c}”.": "{who} ametuma ujumbe kuhusu “{c}”.",
+  "New case assigned": "Kesi mpya imepangiwa",
+  "You were assigned the dispute on “{c}”.": "Umepangiwa mgogoro wa “{c}”.",
+  "Security alert: account suspended": "Tahadhari ya usalama: akaunti imesimamishwa",
+  "Security alert: account reactivated": "Tahadhari ya usalama: akaunti imewashwa tena",
+  "An administrator suspended your account. You cannot act on contracts until it is reactivated.": "Msimamizi amesimamisha akaunti yako. Huwezi kufanya chochote kwenye mikataba hadi iwashwe tena.",
+  "An administrator reactivated your account.": "Msimamizi ameiwasha tena akaunti yako.",
+  "Ended": "Imeisha",
+  "{who} rejected “{c}”.": "{who} amekataa “{c}”.",
+  "Someone": "Mtu fulani",
+  "Hello": "Habari",
+  "This is a simulation. No real money is involved.": "Huu ni mfano wa mazoezi. Hakuna pesa halisi zinazohusika."
+ },
+ "patterns": [
+  [
+   "^(.*) must be a whole number of minor units\\.$",
+   "$1 lazima iwe nambari kamili ya vipimo vidogo zaidi vya sarafu."
+  ],
+  [
+   "^Use one of these file types: (.*)\\.$",
+   "Tumia mojawapo ya aina hizi za faili: $1."
+  ],
+  [
+   "^You can attach up to (\\d+) files\\.$",
+   "Unaweza kuambatisha hadi faili $1."
+  ],
+  [
+   "^A (.+) contract cannot do \\\"(.+)\\\"\\.$",
+   "Mkataba ulio katika hali ya \\\"$1\\\" hauwezi kufanya \\\"$2\\\"."
+  ],
+  [
+   "^A (.+?) cannot do \\\"(.+?)\\\" on a (.+) contract\\.$",
+   "$1 hawezi kufanya \\\"$2\\\" kwenye mkataba ulio katika hali ya \\\"$3\\\"."
+  ],
+  [
+   "^Waiting for (.+) to fund$",
+   "Inasubiri $1 afadhili"
+  ],
+  [
+   "^(.+) sent new terms\\. Accept or decline them$",
+   "$1 ametuma masharti mapya. Yakubali au uyakatae"
+  ],
+  [
+   "^Waiting for (.+) to answer your counter-proposal$",
+   "Inasubiri $1 ajibu pendekezo lako mbadala"
+  ],
+  [
+   "^Waiting for (.+) to reply$",
+   "Inasubiri $1 ajibu"
+  ],
+  [
+   "^ Auto-approves in (.*)$",
+   " Itakubaliwa kiotomatiki baada ya $1"
+  ],
+  [
+   "^Review now\\. Auto-approves in (.*)$",
+   "Pitia sasa. Itakubaliwa kiotomatiki baada ya $1"
+  ],
+  [
+   "^Review now\\.$",
+   "Pitia sasa."
+  ],
+  [
+   "^Waiting for review\\. Auto-approves in (.*)$",
+   "Inasubiri mapitio. Itakubaliwa kiotomatiki baada ya $1"
+  ],
+  [
+   "^Waiting for review\\.$",
+   "Inasubiri mapitio."
+  ],
+  [
+   "^Chain intact\\. (\\d+) entries checked\\.$",
+   "Mnyororo uko salama. Maingizo $1 yamekaguliwa."
+  ],
+  [
+   "^Chain broken at entry (\\d+)\\. (.*)$",
+   "Mnyororo umevunjika kwenye ingizo $1. $2"
+  ],
+  [
+   "^Invitation sent to (.+?)\\. They get the arbitrator role when they sign up\\.$",
+   "Mwaliko umetumwa kwa $1. Atapata jukumu la msuluhishi atakapojisajili."
+  ],
+  [
+   "^(.+) was added as arbitrator\\. In demo mode they appear on the sign-in picker\\.$",
+   "$1 ameongezwa kama msuluhishi. Katika hali ya onyesho anaonekana kwenye orodha ya kuingia."
+  ],
+  [
+   "^Invitation sent to (.+?)\\. They get the auditor role when they sign up\\.$",
+   "Mwaliko umetumwa kwa $1. Atapata jukumu la mkaguzi atakapojisajili."
+  ],
+  [
+   "^(.+) was added as auditor\\. In demo mode they appear on the sign-in picker\\.$",
+   "$1 ameongezwa kama mkaguzi. Katika hali ya onyesho anaonekana kwenye orodha ya kuingia."
+  ],
+  [
+   "^Invitation sent to (.+?)\\. They get the (.+) role when they sign up\\.$",
+   "Mwaliko umetumwa kwa $1. Atapata jukumu la $2 atakapojisajili."
+  ],
+  [
+   "^(.+) was added as (.+)\\. In demo mode they appear on the sign-in picker\\.$",
+   "$1 ameongezwa kama $2. Katika hali ya onyesho anaonekana kwenye orodha ya kuingia."
+  ],
+  [
+   "^(.+) is now assigned to the case\\.$",
+   "$1 sasa amepangiwa kesi hii."
+  ],
+  [
+   "^Cancelled by agreement: (.*)$",
+   "Imeghairiwa kwa makubaliano: $1"
+  ],
+  [
+   "^Dispute ruling \\(release\\): (.*)$",
+   "Uamuzi wa mgogoro (toa malipo): $1"
+  ],
+  [
+   "^Dispute ruling \\(refund\\): (.*)$",
+   "Uamuzi wa mgogoro (rejesha pesa): $1"
+  ],
+  [
+   "^Dispute ruling \\(split\\): (.*)$",
+   "Uamuzi wa mgogoro (gawa pesa): $1"
+  ],
+  [
+   "^Dispute ruling \\((.+?)\\): (.*)$",
+   "Uamuzi wa mgogoro ($1): $2"
+  ],
+  [
+   "^Top up between (.+?) and (.+?) at a time\\.$",
+   "Weka pesa kati ya $1 na $2 kwa mara moja."
+  ],
+  [
+   "^The daily top-up limit is (.+?)\\. You can add (.+?) more today\\.$",
+   "Kikomo cha kila siku cha kuweka pesa ni $1. Unaweza kuongeza $2 zaidi leo."
+  ],
+  [
+   "^You asked for (.+?) but have (.+?) available\\.$",
+   "Uliomba $1 lakini una $2 zilizopo."
+  ],
+  [
+   "^You need (.+?) but have (.+?) available\\. Top up (.+?) and try again\\.$",
+   "Unahitaji $1 lakini una $2 zilizopo. Weka $3 kisha ujaribu tena."
+  ],
+  [
+   "^Escrow funded: (.*)$",
+   "Escrow imefadhiliwa: $1"
+  ],
+  [
+   "^Each side can attach (\\d+) files in total\\. You have (\\d+) left\\.$",
+   "Kila upande unaweza kuambatisha jumla ya faili $1. Umebakiza $2."
+  ],
+  [
+   "^(.+) is already suspended\\.$",
+   "$1 amesimamishwa tayari."
+  ],
+  [
+   "^(.+) is not suspended\\.$",
+   "$1 hajasimamishwa."
+  ],
+  [
+   "^(.+) is suspended\\.$",
+   "$1 amesimamishwa."
+  ],
+  [
+   "^(.+) already has this case\\.$",
+   "$1 tayari ana kesi hii."
+  ],
+  [
+   "^(\\d+) entries intact$",
+   "Maingizo $1 ni salama"
+  ],
+  [
+   "^Broken at entry (\\d+)$",
+   "Imevunjika kwenye ingizo $1"
+  ],
+  [
+   "^\\\"(.*?)\\\" is due in the past\\. Pick a later date\\.$",
+   "\\\"$1\\\" ina tarehe ya mwisho iliyopita. Chagua tarehe ya baadaye."
+  ],
+  [
+   "^\\\"(.*?)\\\" needs an amount above zero\\.$",
+   "\\\"$1\\\" inahitaji kiasi kinachozidi sifuri."
+  ],
+  [
+   "^Milestones add up to (.+?)\\. Add (.+?) or lower the total\\.$",
+   "Hatua za kazi zinajumlisha $1. Ongeza $2 au punguza jumla."
+  ],
+  [
+   "^Milestones add up to (.+?), which is (.+?) over the total\\. Reduce a milestone or raise the total\\.$",
+   "Hatua za kazi zinajumlisha $1, ambazo ni $2 zaidi ya jumla. Punguza hatua ya kazi au ongeza jumla."
+  ],
+  [
+   "^Hello (.*?),\\n\\n(.*)\\n\\nThis is a simulation\\. No real money is involved\\.$",
+   "Habari $1,\n\n$2\n\nHuu ni mfano wa mazoezi. Hakuna pesa halisi zinazohusika."
+  ],
+  [
+   "^Top-up \\(simulated (.+?)\\)(?: (.+))?$",
+   "Kuweka pesa (mazoezi, $1)"
+  ],
+  [
+   "^Withdrawal \\(simulated (.+?)\\)(?: (.+))?$",
+   "Kutoa pesa (mazoezi, $1)"
+  ],
+  [
+   "^Escrow funded: (.*)$",
+   "Escrow imefadhiliwa: $1"
+  ],
+  [
+   "^Release: (.*)$",
+   "Malipo yametolewa: $1"
+  ],
+  [
+   "^Cancelled by agreement: (.*)$",
+   "Imeghairiwa kwa makubaliano: $1"
+  ],
+  [
+   "^Dispute ruling \\((.+)\\): (.*)$",
+   "Uamuzi wa mgogoro ($1): $2"
+  ]
+ ]
+}
