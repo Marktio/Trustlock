@@ -27,7 +27,7 @@ function navFor(role: User["role"]) {
     ];
   }
   if (role === "arbitrator") return [{ href: "/dashboard", label: "My cases" }, { href: "/notifications", label: "Notifications" }];
-  if (role === "admin") return [{ href: "/admin", label: "Admin dashboard" }, { href: "/admin/mail", label: "Mail catcher" }, { href: "/audit", label: "Audit log" }];
+  if (role === "admin") return [{ href: "/admin", label: "Admin dashboard" }, { href: "/admin/mail", label: "Mail catcher" }, { href: "/audit", label: "Audit log" }, { href: "/", label: "Home page" }];
   return [{ href: "/audit", label: "Audit log" }];
 }
 

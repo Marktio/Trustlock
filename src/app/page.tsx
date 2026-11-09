@@ -14,11 +14,6 @@ import { getLang } from "@/server/lang";
 import { getRegion } from "@/server/region";
 import brandMark from "./icon.svg";
 
-const PEOPLE = [
-  { name: "Queen", initials: "Q", photo: null as string | null },
-  { name: "Daniel Nab", initials: "DN", photo: null as string | null },
-];
-
 export default async function Landing() {
   const viewer = await getViewer();
   const { currency } = await getRegion();
@@ -121,29 +116,8 @@ export default async function Landing() {
           </div>
         </section>
 
-        <section className="lp-built" aria-labelledby="built-h">
-          <SectionHead num="04" id="built-h" title={c.builtTitle} />
-          <div className="lp-built-body">
-            <ul className="lp-people">
-              {PEOPLE.map((p) => (
-                <li key={p.name} className="lp-person">
-                  {p.photo ? (
-                    <Image src={p.photo} alt="" width={64} height={64} className="lp-avatar" />
-                  ) : (
-                    <span className="lp-avatar" aria-hidden="true">
-                      {p.initials}
-                    </span>
-                  )}
-                  <span className="title-3">{p.name}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="body-3 lp-muted">{c.builtBody}</p>
-          </div>
-        </section>
-
         <section id="contact" className="lp-talk" aria-labelledby="talk-h">
-          <SectionHead num="05" id="talk-h" title={c.talkTitle} />
+          <SectionHead num="04" id="talk-h" title={c.talkTitle} />
           <div className="lp-talk-body">
             <p className="body-3 lp-muted">{c.talkBody}</p>
             <a className="lp-mail" href={`mailto:${CONTACT_EMAIL}`}>

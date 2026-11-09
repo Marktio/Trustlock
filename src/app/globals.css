@@ -772,11 +772,8 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 @media (min-width: 560px) { .lp-lang-nav { display: block; } }
 .lp-foot-right { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
 .lp-legal-note { flex-basis: 100%; color: var(--muted); }
-.lp-built, .lp-talk { padding-block: var(--space-8); }
-.lp-built-body, .lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
-.lp-people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-6); }
-.lp-person { display: flex; align-items: center; gap: var(--space-3); }
-.lp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 9999px; border: 1px solid var(--line); background: var(--grey-bg); color: var(--strong); font-weight: 600; object-fit: cover; }
+.lp-talk { padding-block: var(--space-8); }
+.lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
 .lp-mail { display: inline-flex; align-items: center; gap: var(--space-2); width: fit-content; min-height: 44px; font-size: 1.5rem; line-height: 2rem; font-weight: 600; letter-spacing: -0.01em; color: var(--strong); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
 .lp-mail:hover { text-decoration-thickness: 2px; }
 @media (prefers-reduced-motion: no-preference) {
