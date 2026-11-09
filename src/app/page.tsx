@@ -21,14 +21,6 @@ export default async function Landing() {
   const c = LANDING[lang];
   const startAs = (role: "client" | "freelancer") => (clerkEnabled ? `/sign-up?role=${role}` : `/demo?role=${role}`);
   const dashboardHref = viewer?.role === "admin" ? "/admin" : viewer?.role === "auditor" ? "/audit" : "/dashboard";
-  const slash = (label: string) => (
-    <>
-      <span className="lp-slash" aria-hidden="true">
-        /
-      </span>
-      {label}
-    </>
-  );
   return (
     <div className="landing" lang={lang}>
       <header className="lp-header">
@@ -38,9 +30,9 @@ export default async function Landing() {
             TrustLock
           </Link>
           <nav aria-label="Page sections" className="lp-links">
-            <HowItWorks className="lp-link" label={slash(c.navHow)} />
+            <HowItWorks className="lp-link" label={c.navHow} />
             <a href="#roles" className="lp-link">
-              {slash(c.navRoles)}
+              {c.navRoles}
             </a>
           </nav>
           <LangSwitch lang={lang} label={c.languageLabel} className="lp-lang-nav" />

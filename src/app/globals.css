@@ -506,7 +506,11 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .lp-brand img { border-radius: 6px; }
 .lp-links { display: flex; align-items: center; gap: var(--space-1); }
 .lp-link { white-space: nowrap; font: inherit; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; background: none; border: 0; padding: 0 var(--space-3); min-height: 44px; display: inline-flex; align-items: center; color: var(--strong); text-decoration: none; cursor: pointer; border-radius: 8px; transition: background-color 300ms var(--ease-out); }
+.lp-link { position: relative; }
+.lp-link::after { content: ""; position: absolute; left: var(--space-3); right: var(--space-3); bottom: 9px; height: 2px; border-radius: 2px; background: var(--amber-400); transform: scaleX(0); transform-origin: left center; transition: transform 300ms var(--ease-out); }
+.lp-link:hover::after, .lp-link:focus-visible::after { transform: scaleX(1); }
 .lp-link:hover { background: var(--tint); }
+@media (min-width: 560px) { .lp-links { padding-right: var(--space-3); margin-right: var(--space-1); border-right: 1px solid var(--line); } }
 
 /* Buttons. 8px by 12px padding as the skill asks, with a 44px minimum height kept for touch targets. */
 .lp-btn { font: inherit; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid transparent; border-radius: 8px; text-decoration: none; white-space: nowrap; cursor: pointer; font-weight: 600; transition: background-color 300ms var(--ease-out), border-color 300ms var(--ease-out), transform 200ms var(--ease-out); }
@@ -588,6 +592,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
   .lp-actions .lp-btn { width: 100%; }
   .lp-contract-head, .lp-parties, .lp-rail, .lp-held { padding-inline: var(--space-200); }
   .lp-link { padding: 0 var(--space-2); }
+  .lp-link::after { left: var(--space-2); right: var(--space-2); }
 }
 @media (max-width: 400px) {
   .lp-brand img { display: none; }
@@ -762,7 +767,6 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 /* Numbered section heads, slash nav, language switch, people and contact blocks on the landing page. */
 .lp-head { display: flex; flex-direction: column; gap: var(--space-1); }
 .lp-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
-.lp-slash { color: var(--muted); margin-right: 1px; }
 .lp-case { font-family: var(--font-mono); color: var(--muted); letter-spacing: 0.02em; }
 .lp-lang { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: var(--radius-md); }
 .lp-lang button { min-width: 36px; min-height: 32px; padding: 0 var(--space-2); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--muted); font: inherit; font-size: 0.8125rem; font-weight: 600; cursor: pointer; }
