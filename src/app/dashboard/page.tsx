@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/count-up";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currencyLabel, formatSC } from "@/domain/money";
@@ -116,11 +117,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <div className="u-flex u-gap-8 u-wrap">
             <div>
               <div className="small muted">{t("Available")}</div>
-              <div className="big">{formatSC(wallet.balances.available, false)}</div>
+              <div className="big"><CountUp text={formatSC(wallet.balances.available, false)} /></div>
             </div>
             <div>
               <div className="small muted">{t("Held in escrow")}</div>
-              <div className="big held">{formatSC(wallet.balances.held, false)}</div>
+              <div className="big held"><CountUp text={formatSC(wallet.balances.held, false)} /></div>
             </div>
           </div>
           <div className="btn-row">

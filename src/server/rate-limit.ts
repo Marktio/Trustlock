@@ -54,9 +54,9 @@ export interface RequestInfo {
   prefetch: boolean;
 }
 
-/** Which limits apply to this request, and under which key. Prefetches and the health check are not counted. */
+/** Which limits apply to this request, and under which key. Prefetches, the health check and /api/v1 are not counted here (the API counts per key itself). */
 export function limitsFor(r: RequestInfo, env: { general?: number; auth?: number } = {}): { limit: Limit; key: string }[] {
-  if (r.prefetch || r.path === "/api/health") return [];
+  if (r.prefetch || r.path === "/api/health" || r.path.startsWith("/api/v1/")) return [];
   const out: { limit: Limit; key: string }[] = [{ limit: { ...GENERAL, max: env.general ?? GENERAL.max }, key: r.userKey ?? `ip:${r.ip}` }];
   if (AUTH_PATHS.test(r.path)) out.push({ limit: { ...AUTH, max: env.auth ?? AUTH.max }, key: `ip:${r.ip}` });
   return out;

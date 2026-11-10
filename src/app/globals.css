@@ -767,6 +767,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 /* Numbered section heads, slash nav, language switch, people and contact blocks on the landing page. */
 .lp-head { display: flex; flex-direction: column; gap: var(--space-1); }
 .lp-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
+.lp-slash { color: var(--muted); margin-right: 1px; }
 .lp-case { font-family: var(--font-mono); color: var(--muted); letter-spacing: 0.02em; }
 .lp-lang { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: var(--radius-md); }
 .lp-lang button { min-width: 36px; min-height: 32px; padding: 0 var(--space-2); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--muted); font: inherit; font-size: 0.8125rem; font-weight: 600; cursor: pointer; }
@@ -776,11 +777,137 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 @media (min-width: 560px) { .lp-lang-nav { display: block; } }
 .lp-foot-right { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
 .lp-legal-note { flex-basis: 100%; color: var(--muted); }
-.lp-talk { padding-block: var(--space-8); }
-.lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+.lp-built, .lp-talk { padding-block: var(--space-8); }
+.lp-built-body, .lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+.lp-people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-6); }
+.lp-person { display: flex; align-items: center; gap: var(--space-3); }
+.lp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 9999px; border: 1px solid var(--line); background: var(--grey-bg); color: var(--strong); font-weight: 600; object-fit: cover; }
 .lp-mail { display: inline-flex; align-items: center; gap: var(--space-2); width: fit-content; min-height: 44px; font-size: 1.5rem; line-height: 2rem; font-weight: 600; letter-spacing: -0.01em; color: var(--strong); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
 .lp-mail:hover { text-decoration-thickness: 2px; }
 @media (prefers-reduced-motion: no-preference) {
   .lp-mail svg { transition: transform 200ms var(--ease-out); }
   .lp-mail:hover svg { transform: translate(2px, -2px); }
+}
+
+/* ===== Depth and gradients =====
+   Gradients here are decoration on surfaces, never behind small text, and every text pair keeps its contrast.
+   They are built from the existing tokens with color-mix, so dark mode follows without a second palette.
+   No gradient text: it cannot be contrast-checked. Movement only on scroll, and none for people who ask for less motion. */
+:root {
+  --navy-800: #16244a;
+  --navy-950: #0c1426;
+  --wash-amber: 20%;
+  --wash-blue: 12%;
+  --grad-wash:
+    radial-gradient(60% 55% at 88% -5%, color-mix(in srgb, var(--amber-400) var(--wash-amber), transparent), transparent 70%),
+    radial-gradient(50% 60% at 4% 4%, color-mix(in srgb, var(--blue-700) var(--wash-blue), transparent), transparent 72%);
+  --grad-strong: linear-gradient(180deg, var(--strong-hover), var(--strong));
+  --grad-strong-hover: linear-gradient(180deg, var(--strong), var(--strong-hover));
+  --grad-go: linear-gradient(180deg, color-mix(in srgb, var(--go) 84%, #fff), var(--go));
+  --grad-go-hover: linear-gradient(180deg, var(--go), var(--go-hover));
+  --grad-card: linear-gradient(180deg, var(--card), color-mix(in srgb, var(--card) 70%, var(--paper)));
+  --grad-held: linear-gradient(135deg, var(--amber-100), color-mix(in srgb, var(--amber-100) 72%, var(--amber-400)));
+  --grad-side: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 40%, var(--navy-950) 100%);
+  --sheen: inset 0 1px 0 rgb(255 255 255 / 0.16);
+  --glow-amber: 0 30px 70px -36px color-mix(in srgb, var(--amber-400) 70%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --wash-amber: 11%; --wash-blue: 18%; --sheen: inset 0 1px 0 rgb(255 255 255 / 0.5); }
+}
+:root[data-theme="dark"] { --wash-amber: 11%; --wash-blue: 18%; --sheen: inset 0 1px 0 rgb(255 255 255 / 0.5); }
+
+/* A soft wash across the top of every page. */
+body { background-image: var(--grad-wash); background-repeat: no-repeat; background-size: 100% 640px; }
+
+/* Sidebar: deeper navy toward the bottom, a warm glow at the brand. */
+.side { background: var(--grad-side); position: relative; isolation: isolate; }
+.side::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 220px; z-index: -1; pointer-events: none; background: radial-gradient(90% 100% at 0% 0%, color-mix(in srgb, var(--amber-400) 22%, transparent), transparent 70%); }
+.side nav a:hover { background: linear-gradient(90deg, var(--navy-700), transparent); }
+.side nav a[aria-current="page"] { box-shadow: 0 8px 20px -10px rgb(0 0 0 / 0.6); }
+
+/* Buttons */
+.btn-primary, .lp-btn-solid { background: var(--grad-strong); box-shadow: var(--sheen), 0 1px 2px rgb(17 27 51 / 0.25); }
+.btn-primary:hover, .lp-btn-solid:hover { background: var(--grad-strong-hover); }
+.btn-go { background: var(--grad-go); box-shadow: var(--sheen), 0 1px 2px rgb(17 27 51 / 0.25); }
+.btn-go:hover { background: var(--grad-go-hover); }
+@media (prefers-reduced-motion: no-preference) {
+  .btn-primary, .btn-go, .lp-btn-solid { transition: transform 200ms var(--ease-out), box-shadow 300ms var(--ease-out), background-color 300ms var(--ease-out); }
+  .btn-primary:hover, .btn-go:hover, .lp-btn-solid:hover { transform: translateY(-1px); box-shadow: var(--sheen), 0 8px 18px -8px rgb(17 27 51 / 0.55); }
+  .btn-primary:active, .btn-go:active, .lp-btn-solid:active { transform: scale(0.98); }
+}
+
+/* Cards: a faint top-to-bottom fade and a touch of depth. Emphasis stays a full border or a tint. */
+.card { background: var(--grad-card); box-shadow: var(--shadow-1); }
+.card.held { background: var(--grad-held); }
+.card.focus { box-shadow: var(--shadow-1), 0 18px 40px -26px color-mix(in srgb, var(--strong) 55%, transparent); }
+
+/* Tables: the row under the pointer is easy to follow. */
+.table tbody tr { transition: background-color 200ms var(--ease-out); }
+.table tbody tr:hover { background: var(--tint); }
+
+/* Landing: a glowing contract card, a warmer escrow panel, a progress line that warms toward the current step. */
+.lp-contract { box-shadow: 0 1px 2px rgb(17 27 51 / 0.06), var(--glow-amber), 0 24px 48px -24px rgb(17 27 51 / 0.28); outline: 1px solid color-mix(in srgb, var(--amber-400) 28%, var(--line)); outline-offset: -1px; }
+.lp-held { background: var(--grad-held); }
+.lp-rail .rail-line.done:last-of-type { background: linear-gradient(90deg, var(--strong), var(--amber-400)); }
+.lp-rail .rail-step.now .rail-dot { box-shadow: 0 0 0 5px color-mix(in srgb, var(--amber-400) 28%, transparent); }
+.lp-nav { box-shadow: 0 10px 30px -22px rgb(17 27 51 / 0.45); }
+.lp-shot-frame { box-shadow: var(--shadow-card), 0 40px 80px -50px color-mix(in srgb, var(--blue-700) 60%, transparent); }
+
+/* Sign in and sign up: the navy panel gets the same depth as the sidebar. */
+.auth-aside { background: radial-gradient(70% 55% at 100% 0%, color-mix(in srgb, var(--amber-400) 20%, transparent), transparent 70%), var(--grad-side); }
+
+/* Landing sections rise a little as they scroll into view (translate only, where the browser supports it). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-shot, .lp-role, .lp-tagline-wrap { animation: lp-scroll-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+    @keyframes lp-scroll-rise { from { transform: translateY(28px); } to { transform: none; } }
+  }
+}
+
+/* ===== Round two: headline accent, status pills, connected steps ===== */
+:root { --lift: #fff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --lift: #000; } }
+:root[data-theme="dark"] { --lift: #000; }
+
+/* Headline accent. Both ends of the gradient are the dark text colours (navy to blue; light to pale blue in dark mode), so the line stays well above AA contrast.
+   The plain colour is the fallback where background-clip: text is not supported. */
+.lp-grad { color: var(--strong); }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .lp-grad { background-image: linear-gradient(100deg, var(--strong) 10%, var(--blue-700) 95%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+}
+@media (forced-colors: active) { .lp-grad { background: none; -webkit-text-fill-color: currentColor; color: inherit; } }
+
+/* Status pills: the tint is lifted a little at the top (lightened in light mode, deepened in dark mode, so the text only gains contrast) with a hairline ring in the pill's own colour. */
+.tone-grey   { background: linear-gradient(180deg, color-mix(in srgb, var(--grey-bg), var(--lift) 45%), var(--grey-bg));   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--muted) 18%, transparent); }
+.tone-blue   { background: linear-gradient(180deg, color-mix(in srgb, var(--blue-100), var(--lift) 45%), var(--blue-100));   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blue-700) 22%, transparent); }
+.tone-amber  { background: linear-gradient(180deg, color-mix(in srgb, var(--amber-100), var(--lift) 45%), var(--amber-100)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--amber-700) 26%, transparent); }
+.tone-green  { background: linear-gradient(180deg, color-mix(in srgb, var(--green-100), var(--lift) 45%), var(--green-100)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--green-700) 24%, transparent); }
+.tone-red    { background: linear-gradient(180deg, color-mix(in srgb, var(--red-100), var(--lift) 45%), var(--red-100));     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--red-700) 24%, transparent); }
+.lp-badge { background: linear-gradient(180deg, color-mix(in srgb, var(--amber-100), var(--lift) 45%), var(--amber-100)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--amber-700) 26%, transparent); }
+
+/* How the money moves: numbered nodes joined by a line that warms from navy to amber. */
+.lp-how-list { counter-reset: step; }
+.lp-how-list li { --pt: var(--space-300); counter-increment: step; position: relative; border-top: 0; padding: var(--pt) 0 var(--pt) var(--space-600); }
+.lp-how-list li:first-child { --pt: 0px; }
+.lp-how-list li::before {
+  content: counter(step); position: absolute; left: 0; top: var(--pt); width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; font-variant-numeric: tabular-nums;
+  color: #fff; background: linear-gradient(160deg, var(--navy-700), var(--navy-950));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber-400) 26%, transparent), 0 6px 16px -4px color-mix(in srgb, var(--amber-400) 70%, transparent);
+}
+.lp-how-list li:not(:last-child)::after {
+  content: ""; position: absolute; left: 15px; width: 2px; top: calc(var(--pt) + 40px); bottom: -32px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--navy-700), var(--amber-400)); transform-origin: top; opacity: 0.9;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-how-list li::before { animation: lp-node-glow 3.2s ease-in-out infinite; }
+  .lp-how-list li:nth-child(2)::before { animation-delay: 0.6s; }
+  .lp-how-list li:nth-child(3)::before { animation-delay: 1.2s; }
+  @keyframes lp-node-glow { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--amber-400) 12%, transparent), 0 6px 22px -4px color-mix(in srgb, var(--amber-400) 85%, transparent); } }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-how-list li:not(:last-child)::after { animation: lp-line-draw linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+    @keyframes lp-line-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  }
 }

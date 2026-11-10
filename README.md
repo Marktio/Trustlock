@@ -88,6 +88,10 @@ GitHub Actions: `ci.yml` (lint, types, tests with coverage gate, traceability, b
 - `POST /api/cron/scheduler` (or GET) runs the timed jobs: auto-approval after the review period and expiry of old proposals and unfunded contracts. It needs `Authorization: Bearer $CRON_SECRET` and stays off (503) until `CRON_SECRET` is set to at least 16 characters. Point a cron service at it every few minutes (Vercel Cron, GitHub Actions schedule or cron-job.org).
 - Withdrawing a dispute and cancelling a funded contract both need the agreement of both parties. The first request is recorded and shown to the other side, who can agree (or, for a cancel, keep the contract).
 
+## Developer API
+
+`/api/v1` lets another app run escrow for its own users, server to server, with an API key. Users are linked by the app's own id, and every call runs with exactly the powers that user has in TrustLock. Same state machine, ledger and audit log as the web app. See `docs/INTEGRATION.md` (typed client in `sdk/trustlock.ts`, copy-paste examples, runnable `examples/marketplace.ts`), `docs/API.md` (reference) or `GET /api/v1/openapi.json`. Also: signed **webhooks** (Upstash QStash delivery with retries), a self-serve **`/developers`** page (keys, webhooks, call log), **test and live** keys with separate data, dispute evidence, and single-file **Python** (`sdk/python/trustlock.py`) and **PHP** (`sdk/php/TrustLock.php`) clients. Keys: the `/developers` page, or `npm run api:key -- --label "Name" --mode test` (needs migrations `0003` and `0004`, applied by `npm run wire:db`).
+
 ## Notifications
 
 In-app notifications and simulated emails are derived from the audit log, so they always match what really happened. Messages use fixed templates with the contract title and a person's name only; text that users type is never copied in. Marking notifications as read is recorded in the audit log. Administrators can see the simulated outbox at `/admin/mail`; nothing is ever delivered to a real mailbox.
@@ -95,7 +99,7 @@ In-app notifications and simulated emails are derived from the audit log, so the
 ## Security hardening
 
 - Every response carries a Content Security Policy, HSTS, `X-Frame-Options: DENY`, `nosniff`, a referrer policy and a permissions policy (`next.config.ts`). Scripts still allow `'unsafe-inline'` because Next.js bootstraps with inline scripts; moving to nonces is the next step.
-- Rate limiting runs in `src/proxy.ts`: 100 requests a minute per signed-in user (or per address when signed out) and 10 a minute on sign-in and sign-up pages, answered with `429` and `Retry-After`. Prefetches and the health check are not counted. Counts are kept in memory per server instance; use a shared store such as Redis if you run several instances. Limits can be changed with `RATE_LIMIT_PER_MINUTE` and `AUTH_RATE_LIMIT_PER_MINUTE`.
+- Rate limiting runs in `src/proxy.ts`: 100 requests a minute per signed-in user (or per address when signed out) and 10 a minute on sign-in and sign-up pages, answered with `429` and `Retry-After`. Prefetches and the health check are not counted. Counts are shared across instances through Upstash Redis when `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set, and kept in memory per instance otherwise. Limits can be changed with `RATE_LIMIT_PER_MINUTE` and `AUTH_RATE_LIMIT_PER_MINUTE`.
 
 ## Wiring Clerk and Supabase
 

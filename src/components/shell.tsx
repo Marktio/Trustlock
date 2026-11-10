@@ -23,11 +23,12 @@ function navFor(role: User["role"]) {
       { href: "/contracts", label: "Contracts" },
       { href: "/wallet", label: "Wallet" },
       { href: "/notifications", label: "Notifications" },
+      { href: "/developers", label: "Developers" },
       { href: "/profile", label: "Profile and security" },
     ];
   }
   if (role === "arbitrator") return [{ href: "/dashboard", label: "My cases" }, { href: "/notifications", label: "Notifications" }];
-  if (role === "admin") return [{ href: "/admin", label: "Admin dashboard" }, { href: "/admin/mail", label: "Mail catcher" }, { href: "/audit", label: "Audit log" }, { href: "/", label: "Home page" }];
+  if (role === "admin") return [{ href: "/admin", label: "Admin dashboard" }, { href: "/admin/mail", label: "Mail catcher" }, { href: "/audit", label: "Audit log" }];
   return [{ href: "/audit", label: "Audit log" }];
 }
 

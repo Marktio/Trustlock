@@ -348,9 +348,19 @@ export class EscrowService {
 
   // ---------- Contract lifecycle ----------
 
-  async createContract(actor: Actor, raw: unknown): Promise<Contract> {
+  /**
+   * With an idempotency key (used by the developer API, where a network retry must not hire twice), repeating the same
+   * call returns the contract the first call made and changes nothing. The web form passes no key and behaves as before.
+   */
+  async createContract(actor: Actor, raw: unknown, idempotencyKey?: string): Promise<Contract> {
     if (actor.role !== "client") throw new DomainError("FORBIDDEN", "Only clients can create contracts.");
     await this.assertActive(actor);
+    const scoped = idempotencyKey === undefined ? undefined : `${actor.id}:create:${this.requireKey(idempotencyKey)}`;
+    if (scoped) {
+      const used = await this.repo.findIdempotent(scoped);
+      const earlier = used?.contractId ? await this.repo.getContract(used.contractId) : null;
+      if (earlier && earlier.clientId === actor.id) return earlier;
+    }
     const input = parse(createContractSchema, raw);
     const cfg = await this.getConfig();
 
@@ -366,6 +376,7 @@ export class EscrowService {
     const state = nextState("draft", "send_proposal", "client");
     const now = this.clock.now();
     const { contract } = await this.repo.commit({
+      idempotencyKey: scoped,
       createContract: {
         title: input.title,
         description: input.description,

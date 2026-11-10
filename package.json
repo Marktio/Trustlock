@@ -19,7 +19,8 @@
     "trace:strict": "node scripts/traceability.mjs --strict",
     "evidence": "node scripts/test-results.mjs",
     "wire:db": "node scripts/wire-db.mjs",
-    "wire:db:check": "node scripts/wire-db.mjs --check"
+    "wire:db:check": "node scripts/wire-db.mjs --check",
+    "api:key": "node --env-file=.env.local scripts/create-api-key.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.21",

@@ -6,6 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import { seedDemo } from "./demo-data";
 import { MemoryRepository } from "./memory-repository";
 import { SupabaseRepository } from "./supabase-repository";
+import { withWebhookTrigger } from "./webhook-trigger";
 
 export interface Container {
   svc: EscrowService;
@@ -35,9 +36,11 @@ async function build(): Promise<Container> {
   if (!sb && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY && process.env.NODE_ENV === "production") {
     throw new Error("Real sign in is on but Supabase is not set up. Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY, or data will vanish on restart.");
   }
-  const repo: EscrowRepository = sb
+  const store: EscrowRepository = sb
     ? new SupabaseRepository(createClient(sb.url, sb.key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: freshFetch } }), systemClock)
     : new MemoryRepository(systemClock);
+  // Every committed change, from any path (web, API, timers), also wakes the webhook engine.
+  const repo = withWebhookTrigger(store);
   const svc = new EscrowService(repo, systemClock, new SimulatedGateway("success"), DEFAULT_CONFIG);
   // Memory mode seeds the demo unless told not to. A real database is seeded only when asked, and only if it is still empty.
   const wantSeed = sb ? process.env.TRUSTLOCK_SEED_DEMO === "true" && (await repo.getAuditHead()).count === 0 : process.env.TRUSTLOCK_SEED_DEMO !== "false";

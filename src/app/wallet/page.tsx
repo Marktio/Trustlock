@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/count-up";
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { topUpAction, withdrawAction } from "@/app/actions";
@@ -85,15 +86,15 @@ export default async function WalletPage({ searchParams }: { searchParams: Promi
       <div className="grid-3">
         <div className="card">
           <div className="small muted">{t("Available")}</div>
-          <div className="big">{money(balances.available)}</div>
+          <div className="big"><CountUp text={money(balances.available)} /></div>
         </div>
         <div className="card held">
           <div className="small muted">{t("Held in escrow")}</div>
-          <div className="big held">{money(balances.held)}</div>
+          <div className="big held"><CountUp text={money(balances.held)} /></div>
         </div>
         <div className="card">
           <div className="small muted">{t("Received this month")}</div>
-          <div className="big">{money(receivedMinor)}</div>
+          <div className="big"><CountUp text={money(receivedMinor)} /></div>
         </div>
       </div>
 

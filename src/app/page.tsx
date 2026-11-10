@@ -14,6 +14,11 @@ import { getLang } from "@/server/lang";
 import { getRegion } from "@/server/region";
 import brandMark from "./icon.svg";
 
+const PEOPLE = [
+  { name: "Queen", initials: "Q", photo: null as string | null },
+  { name: "Daniel Nab", initials: "DN", photo: null as string | null },
+];
+
 export default async function Landing() {
   const viewer = await getViewer();
   const { currency } = await getRegion();
@@ -21,6 +26,14 @@ export default async function Landing() {
   const c = LANDING[lang];
   const startAs = (role: "client" | "freelancer") => (clerkEnabled ? `/sign-up?role=${role}` : `/demo?role=${role}`);
   const dashboardHref = viewer?.role === "admin" ? "/admin" : viewer?.role === "auditor" ? "/audit" : "/dashboard";
+  const slash = (label: string) => (
+    <>
+      <span className="lp-slash" aria-hidden="true">
+        /
+      </span>
+      {label}
+    </>
+  );
   return (
     <div className="landing" lang={lang}>
       <header className="lp-header">
@@ -30,9 +43,9 @@ export default async function Landing() {
             TrustLock
           </Link>
           <nav aria-label="Page sections" className="lp-links">
-            <HowItWorks className="lp-link" label={c.navHow} />
+            <HowItWorks className="lp-link" label={slash(c.navHow)} />
             <a href="#roles" className="lp-link">
-              {c.navRoles}
+              {slash(c.navRoles)}
             </a>
           </nav>
           <LangSwitch lang={lang} label={c.languageLabel} className="lp-lang-nav" />
@@ -53,7 +66,7 @@ export default async function Landing() {
           <div className="lp-copy">
             <p className="caption-1 lp-eyebrow">{c.eyebrow}</p>
             <h1 id="hero-h" className="lp-title">
-              <span>{c.h1a}</span> <span>{c.h1b}</span>
+              <span>{c.h1a}</span> <span className="lp-grad">{c.h1b}</span>
             </h1>
             <p className="body-7 lp-lead">{c.lead}</p>
             <div className="lp-actions">
@@ -108,8 +121,29 @@ export default async function Landing() {
           </div>
         </section>
 
+        <section className="lp-built" aria-labelledby="built-h">
+          <SectionHead num="04" id="built-h" title={c.builtTitle} />
+          <div className="lp-built-body">
+            <ul className="lp-people">
+              {PEOPLE.map((p) => (
+                <li key={p.name} className="lp-person">
+                  {p.photo ? (
+                    <Image src={p.photo} alt="" width={64} height={64} className="lp-avatar" />
+                  ) : (
+                    <span className="lp-avatar" aria-hidden="true">
+                      {p.initials}
+                    </span>
+                  )}
+                  <span className="title-3">{p.name}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="body-3 lp-muted">{c.builtBody}</p>
+          </div>
+        </section>
+
         <section id="contact" className="lp-talk" aria-labelledby="talk-h">
-          <SectionHead num="04" id="talk-h" title={c.talkTitle} />
+          <SectionHead num="05" id="talk-h" title={c.talkTitle} />
           <div className="lp-talk-body">
             <p className="body-3 lp-muted">{c.talkBody}</p>
             <a className="lp-mail" href={`mailto:${CONTACT_EMAIL}`}>

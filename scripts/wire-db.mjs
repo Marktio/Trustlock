@@ -63,17 +63,21 @@ async function main() {
     method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ query: q }),
   }).then(async (r) => { if (!r.ok) throw new Error(`HTTP ${r.status} ${await r.text()}`); return r.json(); });
 
-  let hasSchema = false, has0002 = false;
+  let hasSchema = false, has0002 = false, has0003 = false, has0004 = false;
   if (token && ref) {
     try {
       const [row] = await sql(`select to_regclass('public.profiles') is not null as has_schema,
-        coalesce((select prosrc like '%review_period_days = case%' from pg_proc where proname = 'commit_escrow' limit 1), false) as has_0002`);
-      hasSchema = row.has_schema; has0002 = row.has_0002;
+        coalesce((select prosrc like '%review_period_days = case%' from pg_proc where proname = 'commit_escrow' limit 1), false) as has_0002,
+        to_regclass('public.api_keys') is not null as has_0003,
+        to_regclass('public.api_request_logs') is not null as has_0004`);
+      hasSchema = row.has_schema; has0002 = row.has_0002; has0003 = row.has_0003; has0004 = row.has_0004;
       say(true, `Database reachable through the Management API (schema: ${hasSchema ? "present" : "missing"}, counter-proposals: ${has0002 ? "present" : "missing"})`);
       if (!checkOnly) {
-        if (!hasSchema) { await sql(readFileSync(join(root, "supabase/migrations/0001_init.sql"), "utf8")); say(true, "Applied 0001_init.sql"); has0002 = false; }
+        if (!hasSchema) { await sql(readFileSync(join(root, "supabase/migrations/0001_init.sql"), "utf8")); say(true, "Applied 0001_init.sql"); has0002 = false; has0003 = false; has0004 = false; }
         if (!has0002) { await sql(readFileSync(join(root, "supabase/migrations/0002_counter_proposals.sql"), "utf8")); say(true, "Applied 0002_counter_proposals.sql"); }
-      } else if (!hasSchema || !has0002) say(false, "SQL is missing. Run without --check to apply it.");
+        if (!has0003) { await sql(readFileSync(join(root, "supabase/migrations/0003_api_keys.sql"), "utf8")); say(true, "Applied 0003_api_keys.sql (developer API keys)"); has0004 = false; }
+        if (!has0004) { await sql(readFileSync(join(root, "supabase/migrations/0004_developer_platform.sql"), "utf8")); say(true, "Applied 0004_developer_platform.sql (webhooks, test keys, API log)"); }
+      } else if (!hasSchema || !has0002 || !has0003 || !has0004) say(false, "SQL is missing. Run without --check to apply it.");
     } catch (e) { say(false, `Management API call failed: ${e.message}`); }
   } else say(null, "No SUPABASE_ACCESS_TOKEN (sbp_...) in .env.local, so SQL cannot be applied automatically. Checking tables only.");
 
