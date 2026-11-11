@@ -577,5 +577,7 @@
  "The url is not a valid web address.": "Anwani hii si anwani sahihi ya wavuti.",
  "The url must point to a public address, not to a private or local one.": "Anwani lazima ielekeze kwenye anwani ya umma, si ya faragha au ya ndani.",
  "The url must not contain a username or password.": "Anwani isiwe na jina la mtumiaji wala nenosiri.",
- "The url must be text of at most 500 characters.": "Anwani lazima iwe maandishi ya herufi zisizozidi 500."
+ "The url must be text of at most 500 characters.": "Anwani lazima iwe maandishi ya herufi zisizozidi 500.",
+ "API guide": "Mwongozo wa API",
+ "Integration guide (TypeScript, Python, PHP)": "Mwongozo wa kuunganisha (TypeScript, Python, PHP)"
 }

@@ -766,8 +766,8 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 
 /* Numbered section heads, slash nav, language switch, people and contact blocks on the landing page. */
 .lp-head { display: flex; flex-direction: column; gap: var(--space-1); }
-.lp-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
-.lp-slash { color: var(--muted); margin-right: 1px; }
+.lp-num { display: none; }
+.lp-num-unused { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
 .lp-case { font-family: var(--font-mono); color: var(--muted); letter-spacing: 0.02em; }
 .lp-lang { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: var(--radius-md); }
 .lp-lang button { min-width: 36px; min-height: 32px; padding: 0 var(--space-2); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--muted); font: inherit; font-size: 0.8125rem; font-weight: 600; cursor: pointer; }

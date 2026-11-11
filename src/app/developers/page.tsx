@@ -34,6 +34,10 @@ export default async function Developers({ searchParams }: { searchParams: Promi
         <p className="hash">{`curl -H "Authorization: Bearer tlk_..." -H "TrustLock-User: your-user-id" /api/v1/wallet`}</p>
         <p className="small">
           <a href="/api/v1/openapi.json">{t("API description (OpenAPI)")}</a>
+          {" · "}
+          <a href="https://github.com/Marktio/Trustlock/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">{t("API guide")}</a>
+          {" · "}
+          <a href="https://github.com/Marktio/Trustlock/blob/main/docs/INTEGRATION.md" target="_blank" rel="noopener noreferrer">{t("Integration guide (TypeScript, Python, PHP)")}</a>
         </p>
       </section>
 

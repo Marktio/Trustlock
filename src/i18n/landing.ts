@@ -5,6 +5,7 @@ export type Copy = {
   skip: string;
   navHow: string;
   navRoles: string;
+  navDevelopers: string;
   login: string;
   openDashboard: string;
   eyebrow: string;
@@ -42,6 +43,7 @@ export const LANDING: Record<Lang, Copy> = {
     skip: "Skip to main content",
     navHow: "How it works",
     navRoles: "Roles",
+    navDevelopers: "Developers",
     login: "Log in",
     openDashboard: "Open dashboard",
     eyebrow: "Practice escrow for freelance jobs",
@@ -106,6 +108,7 @@ export const LANDING: Record<Lang, Copy> = {
     skip: "Ruka hadi maudhui makuu",
     navHow: "Mwongozo",
     navRoles: "Majukumu",
+    navDevelopers: "Wasanidi",
     login: "Ingia",
     openDashboard: "Fungua dashibodi",
     eyebrow: "Escrow ya mazoezi kwa kazi za kujitegemea",
