@@ -25,6 +25,7 @@ export type Copy = {
   roles: { title: string; body: string }[];
   builtTitle: string;
   builtBody: string;
+  builtCredit: string;
   talkTitle: string;
   talkBody: string;
   footer: string;
@@ -94,8 +95,9 @@ export const LANDING: Record<Lang, Copy> = {
       { title: "Freelancer", body: "Accepts the contract, does the work, uploads the delivery and receives the payment." },
       { title: "Arbitrator, admin and auditor", body: "Assigned by an administrator. They resolve disputes and verify the audit log." },
     ],
-    builtTitle: "Built by",
-    builtBody: "TrustLock is designed and built by Queen and Daniel Nab.",
+    builtTitle: "Built for you",
+    builtBody: "Work should never wait on trust. Lock the money, deliver the work, and get paid when it is approved.",
+    builtCredit: "Designed and built by Queen and Daniel Nab.",
     talkTitle: "Talk to us",
     talkBody: "A question, some feedback, or something that looks wrong? Send us an email.",
     footer: "Practice credits only. No real money is used. © 2026 TrustLock.",
@@ -159,8 +161,9 @@ export const LANDING: Record<Lang, Copy> = {
       { title: "Mfanyakazi huru", body: "Hukubali mkataba, hufanya kazi, hupakia kazi iliyokamilika na hupokea malipo." },
       { title: "Msuluhishi, msimamizi na mkaguzi", body: "Hupangwa na msimamizi. Hutatua migogoro na kuthibitisha kumbukumbu ya ukaguzi." },
     ],
-    builtTitle: "Imeundwa na",
-    builtBody: "TrustLock imebuniwa na kujengwa na Queen na Daniel Nab.",
+    builtTitle: "Imejengwa kwa ajili yako",
+    builtBody: "Kazi haipaswi kamwe kusubiri uaminifu. Funga pesa, kamilisha kazi, na ulipwe inapokubaliwa.",
+    builtCredit: "Imebuniwa na kujengwa na Queen na Daniel Nab.",
     talkTitle: "Zungumza nasi",
     talkBody: "Una swali, maoni, au kitu kinachoonekana kuwa na hitilafu? Tutumie barua pepe.",
     footer: "Salio za mazoezi tu. Hakuna pesa halisi inayotumika. © 2026 TrustLock.",

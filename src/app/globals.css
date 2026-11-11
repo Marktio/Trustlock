@@ -779,6 +779,9 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 .lp-legal-note { flex-basis: 100%; color: var(--muted); }
 .lp-built, .lp-talk { padding-block: var(--space-8); }
 .lp-built-body, .lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+.lp-quote { margin: var(--space-6) 0 0; display: flex; flex-direction: column; gap: var(--space-3); max-width: 680px; padding-left: var(--space-4); border-left: 2px solid var(--amber-400); }
+.lp-quote blockquote { margin: 0; }
+.lp-quote-text { font-size: 1.5rem; line-height: 2rem; font-weight: 600; letter-spacing: -0.01em; color: var(--strong); text-wrap: balance; }
 .lp-people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-6); }
 .lp-person { display: flex; align-items: center; gap: var(--space-3); }
 .lp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 9999px; border: 1px solid var(--line); background: var(--grey-bg); color: var(--strong); font-weight: 600; object-fit: cover; }

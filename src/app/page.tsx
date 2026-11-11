@@ -14,11 +14,6 @@ import { getLang } from "@/server/lang";
 import { getRegion } from "@/server/region";
 import brandMark from "./icon.svg";
 
-const PEOPLE = [
-  { name: "Queen", initials: "Q", photo: null as string | null },
-  { name: "Daniel Nab", initials: "DN", photo: null as string | null },
-];
-
 export default async function Landing() {
   const viewer = await getViewer();
   const { currency } = await getRegion();
@@ -118,23 +113,12 @@ export default async function Landing() {
 
         <section className="lp-built" aria-labelledby="built-h">
           <SectionHead num="04" id="built-h" title={c.builtTitle} />
-          <div className="lp-built-body">
-            <ul className="lp-people">
-              {PEOPLE.map((p) => (
-                <li key={p.name} className="lp-person">
-                  {p.photo ? (
-                    <Image src={p.photo} alt="" width={64} height={64} className="lp-avatar" />
-                  ) : (
-                    <span className="lp-avatar" aria-hidden="true">
-                      {p.initials}
-                    </span>
-                  )}
-                  <span className="title-3">{p.name}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="body-3 lp-muted">{c.builtBody}</p>
-          </div>
+          <figure className="lp-quote">
+            <blockquote>
+              <p className="lp-quote-text">{c.builtBody}</p>
+            </blockquote>
+            <figcaption className="caption-2 lp-muted">{c.builtCredit}</figcaption>
+          </figure>
         </section>
 
         <section id="contact" className="lp-talk" aria-labelledby="talk-h">
