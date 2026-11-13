@@ -23,6 +23,21 @@ export type Copy = {
   tagline: string;
   rolesTitle: string;
   roles: { title: string; body: string }[];
+  ctaNote: string;
+  trust: string[];
+  calcTitle: string;
+  calcLead: string;
+  calc: {
+    amountLabel: string;
+    hint: string;
+    invalid: string;
+    fundsLabel: string;
+    feeLabel: string;
+    receivesLabel: string;
+    note: string;
+  };
+  faqTitle: string;
+  faq: { q: string; a: string }[];
   builtTitle: string;
   builtBody: string;
   builtCredit: string;
@@ -95,6 +110,27 @@ export const LANDING: Record<Lang, Copy> = {
       { title: "Freelancer", body: "Accepts the contract, does the work, uploads the delivery and receives the payment." },
       { title: "Arbitrator, admin and auditor", body: "Assigned by an administrator. They resolve disputes and verify the audit log." },
     ],
+    ctaNote: "No card needed. Practice money only.",
+    trust: ["Nothing real is ever charged", "The ledger always balances", "The audit log cannot be quietly edited"],
+    calcTitle: "See what a contract costs",
+    calcLead: "Type a job price. The fee and payout below come from the same rules a contract on TrustLock uses.",
+    calc: {
+      amountLabel: "Job price",
+      hint: "Practice money, in your chosen currency.",
+      invalid: "Enter an amount like 15000 or 15000.50.",
+      fundsLabel: "Client funds into escrow",
+      feeLabel: "TrustLock fee ({pct}), from the freelancer's share",
+      receivesLabel: "Freelancer receives",
+      note: "The client pays the job price and nothing extra. The fee is taken only when the work is approved.",
+    },
+    faqTitle: "Questions people ask",
+    faq: [
+      { q: "Is real money used?", a: "No. TrustLock is a simulator. Every balance, payment and fee is practice money, and nothing is ever charged to a card or bank." },
+      { q: "What if the client never approves the work?", a: "After the review period the system approves the delivery automatically and releases the payment, so a freelancer is never left waiting." },
+      { q: "Who decides when there is a dispute?", a: "An arbitrator reads both sides and the delivery, then releases the money to the freelancer, returns it to the client, or splits it." },
+      { q: "How do I know the records were not changed?", a: "Every money move is written to a balanced ledger and to an audit log where each entry is linked to the one before it. An auditor can verify the chain at any time." },
+      { q: "Can I try it without signing up?", a: "Yes, where the demo is switched on you can pick a role on the demo page and walk through a whole contract in a few minutes." },
+    ],
     builtTitle: "Built for you",
     builtBody: "Work should never wait on trust. Lock the money, deliver the work, and get paid when it is approved.",
     builtCredit: "Designed and built by Queen and Daniel Nab.",
@@ -160,6 +196,27 @@ export const LANDING: Record<Lang, Copy> = {
       { title: "Mteja", body: "Huunda mkataba, hufadhili escrow, hupitia kazi iliyowasilishwa na kuidhinisha malipo." },
       { title: "Mfanyakazi huru", body: "Hukubali mkataba, hufanya kazi, hupakia kazi iliyokamilika na hupokea malipo." },
       { title: "Msuluhishi, msimamizi na mkaguzi", body: "Hupangwa na msimamizi. Hutatua migogoro na kuthibitisha kumbukumbu ya ukaguzi." },
+    ],
+    ctaNote: "Huhitaji kadi. Pesa za mazoezi tu.",
+    trust: ["Hakuna pesa halisi inayotozwa", "Leja huwa imesawazishwa kila wakati", "Kumbukumbu ya ukaguzi haibadilishwi kimyakimya"],
+    calcTitle: "Ona mkataba unagharimu kiasi gani",
+    calcLead: "Andika bei ya kazi. Ada na malipo hapa chini yanatokana na kanuni zile zile zinazotumika kwenye mkataba wa TrustLock.",
+    calc: {
+      amountLabel: "Bei ya kazi",
+      hint: "Pesa za mazoezi, kwa sarafu uliyochagua.",
+      invalid: "Weka kiasi kama 15000 au 15000.50.",
+      fundsLabel: "Mteja huweka kwenye escrow",
+      feeLabel: "Ada ya TrustLock ({pct}), kutoka sehemu ya mfanyakazi huru",
+      receivesLabel: "Mfanyakazi huru hupokea",
+      note: "Mteja hulipa bei ya kazi tu, bila ziada. Ada huchukuliwa kazi inapoidhinishwa tu.",
+    },
+    faqTitle: "Maswali yanayoulizwa",
+    faq: [
+      { q: "Je, pesa halisi zinatumika?", a: "Hapana. TrustLock ni kielelezo cha majaribio. Salio, malipo na ada zote ni pesa za mazoezi, na hakuna kinachotozwa kwenye kadi au benki." },
+      { q: "Je, ikiwa mteja hataidhinisha kazi?", a: "Baada ya muda wa mapitio, mfumo huidhinisha kazi kiotomatiki na kutoa malipo, kwa hivyo mfanyakazi huru hasubiri milele." },
+      { q: "Nani huamua kukiwa na mgogoro?", a: "Msuluhishi husoma pande zote mbili na kazi iliyowasilishwa, kisha humpa mfanyakazi pesa, humrudishia mteja, au hugawanya." },
+      { q: "Nitajuaje kuwa rekodi hazikubadilishwa?", a: "Kila uhamisho wa pesa huandikwa kwenye leja iliyosawazishwa na kwenye kumbukumbu ya ukaguzi ambapo kila ingizo limeunganishwa na lililotangulia. Mkaguzi anaweza kuthibitisha mnyororo wakati wowote." },
+      { q: "Je, naweza kujaribu bila kujisajili?", a: "Ndiyo, pale onyesho limewashwa unaweza kuchagua jukumu kwenye ukurasa wa onyesho na kupitia mkataba mzima kwa dakika chache." },
     ],
     builtTitle: "Imejengwa kwa ajili yako",
     builtBody: "Kazi haipaswi kamwe kusubiri uaminifu. Funga pesa, kamilisha kazi, na ulipwe inapokubaliwa.",

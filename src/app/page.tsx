@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowUpRight, Briefcase, CaretDown, CheckCircle, ShieldCheck, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import { HowItWorks } from "@/components/how-it-works";
 import { ExampleContract } from "@/components/example-contract";
 import { TaglineReveal } from "@/components/tagline-reveal";
+import { FeeCalculator } from "@/components/fee-calculator";
+import { DEFAULT_CONFIG } from "@/domain/escrow-service";
 import { LangSwitch } from "@/components/lang-switch";
 import { ProductPreview, SectionHead } from "@/components/product-preview";
 import { CONTACT_EMAIL } from "@/components/legal";
@@ -13,6 +15,8 @@ import { getViewer, clerkEnabled } from "@/server/auth";
 import { getLang } from "@/server/lang";
 import { getRegion } from "@/server/region";
 import brandMark from "./icon.svg";
+
+const ROLE_ICONS = [UserCircle, Briefcase, ShieldCheck];
 
 export default async function Landing() {
   const viewer = await getViewer();
@@ -68,7 +72,16 @@ export default async function Landing() {
                 <ArrowRight size={16} weight="bold" aria-hidden="true" />
               </Link>
             </div>
+            <p className="caption-2 lp-note">{c.ctaNote}</p>
             {!clerkEnabled && <p className="caption-2 lp-note">{c.demoNote}</p>}
+            <ul className="lp-trust" aria-label="Trust">
+              {c.trust.map((t) => (
+                <li key={t}>
+                  <CheckCircle size={18} weight="fill" aria-hidden="true" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div lang="en" className="u-contents">
@@ -95,6 +108,12 @@ export default async function Landing() {
           </ol>
         </section>
 
+        <section className="lp-calc-wrap" aria-labelledby="calc-h">
+          <SectionHead num="03" id="calc-h" title={c.calcTitle} />
+          <p className="body-3 lp-muted lp-calc-lead">{c.calcLead}</p>
+          <FeeCalculator currency={currency} feeBps={DEFAULT_CONFIG.feeBps} copy={c.calc} />
+        </section>
+
         <section className="lp-tagline-wrap" aria-label="In short">
           <TaglineReveal text={c.tagline} />
         </section>
@@ -102,11 +121,32 @@ export default async function Landing() {
         <section id="roles" className="lp-roles" aria-labelledby="roles-h">
           <SectionHead num="03" id="roles-h" title={c.rolesTitle} />
           <div className="lp-roles-body">
-            {c.roles.map((r, i) => (
-              <div key={r.title} className={`lp-role${i === 2 ? " lp-role-wide" : ""}`}>
-                <h3 className="heading-6">{r.title}</h3>
-                <p className="body-3 lp-muted">{r.body}</p>
-              </div>
+            {c.roles.map((r, i) => {
+              const Icon = ROLE_ICONS[i] ?? UserCircle;
+              return (
+                <div key={r.title} className={`lp-role${i === 2 ? " lp-role-wide" : ""}${i === 0 ? " lp-role-main" : ""}`}>
+                  <span className="lp-role-icon" aria-hidden="true">
+                    <Icon size={24} weight="duotone" />
+                  </span>
+                  <h3 className="heading-6">{r.title}</h3>
+                  <p className="body-3 lp-muted">{r.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="lp-faq" aria-labelledby="faq-h">
+          <SectionHead num="04" id="faq-h" title={c.faqTitle} />
+          <div className="lp-faq-list">
+            {c.faq.map((f) => (
+              <details key={f.q} className="lp-faq-item">
+                <summary>
+                  <span>{f.q}</span>
+                  <CaretDown size={18} weight="bold" aria-hidden="true" />
+                </summary>
+                <p className="body-3 lp-muted">{f.a}</p>
+              </details>
             ))}
           </div>
         </section>

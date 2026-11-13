@@ -597,7 +597,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 @media (max-width: 400px) {
   .lp-brand img { display: none; }
 }
-@media (max-width: 380px) {
+@media (max-width: 600px) {
   .lp-links a.lp-link { display: none; } /* "Roles" is a below the fold anchor; "How it works" and "Log in" stay on one line */
 }
 
@@ -621,8 +621,8 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 
 /* Who does what: the two main actors side by side, the staff roles underneath. Plain rules, no cards. */
 .lp-roles { padding: 0 0 var(--space-800); }
-.lp-roles-body { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-400); margin-top: var(--space-400); }
-.lp-role { padding: var(--space-300) 0; border-top: 1px solid var(--line); }
+.lp-roles-body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-400); }
+.lp-role { padding: var(--space-300); background: var(--card); border: 1px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
 .lp-role-wide { grid-column: 1 / -1; }
 .lp-role h3 { color: var(--strong); font-family: var(--font-ui); }
 .lp-role p { margin-top: var(--space-1); max-width: 52ch; }
@@ -777,7 +777,7 @@ dialog.dialog form { display: flex; flex-direction: column; gap: var(--space-4);
 @media (min-width: 560px) { .lp-lang-nav { display: block; } }
 .lp-foot-right { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
 .lp-legal-note { flex-basis: 100%; color: var(--muted); }
-.lp-built, .lp-talk { padding-block: var(--space-8); }
+.lp-built, .lp-talk, .lp-faq { padding-block: var(--space-8); }
 .lp-built-body, .lp-talk-body { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
 .lp-quote { margin: var(--space-6) 0 0; display: flex; flex-direction: column; gap: var(--space-3); max-width: 680px; padding-left: var(--space-4); border-left: 2px solid var(--amber-400); }
 .lp-quote blockquote { margin: 0; }
@@ -914,3 +914,51 @@ body { background-image: var(--grad-wash); background-repeat: no-repeat; backgro
     @keyframes lp-line-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
   }
 }
+
+/* ===== Landing: bento roles and FAQ ===== */
+.lp-role-main { background: var(--amber-100); border-color: var(--amber-line); }
+.lp-role-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--grey-bg); color: var(--strong); margin-bottom: var(--space-2); }
+.lp-role-main .lp-role-icon { background: var(--card); }
+.lp-role-main p { color: var(--amber-text); }
+.lp-role-wide { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: var(--space-4); }
+.lp-role-wide .lp-role-icon { margin-bottom: 0; }
+.lp-role-wide h3 { flex: 1 1 14rem; }
+.lp-role-wide p { flex: 2 1 20rem; margin-top: 0; }
+.lp-faq-list { margin-top: var(--space-6); border-top: 1px solid var(--line); max-width: 760px; }
+.lp-faq-item { border-bottom: 1px solid var(--line); }
+.lp-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 56px; padding: var(--space-3) 0; cursor: pointer; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: var(--strong); border-radius: var(--radius-sm); }
+.lp-faq-item summary::-webkit-details-marker { display: none; }
+.lp-faq-item summary svg { flex: none; transition: transform 300ms var(--ease-out); }
+.lp-faq-item[open] summary svg { transform: rotate(180deg); }
+.lp-faq-item summary:hover { color: var(--strong-hover); }
+.lp-faq-item p { padding: 0 var(--space-8) var(--space-4) 0; max-width: 62ch; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-faq-item, .lp-quote { animation: lp-scroll-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  }
+}
+
+/* Phones: the top strip may wrap so the language and theme buttons never push the page wider than the screen. */
+@media (max-width: 640px) {
+  .sim { flex-wrap: wrap; }
+  .sim-right { margin-left: auto; }
+}
+
+/* ===== Landing: trust strip and fee calculator ===== */
+.lp-trust { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.lp-trust li { display: flex; align-items: center; gap: var(--space-2); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: var(--ink-soft); }
+.lp-trust svg { flex: none; color: var(--green-700); }
+.lp-calc-wrap { padding-block: var(--space-8); }
+.lp-calc-lead { margin-top: var(--space-2); max-width: 56ch; }
+.lp-calc { margin-top: var(--space-6); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-6); align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: var(--space-6); }
+.lp-calc-field { max-width: 320px; }
+.lp-calc-out { margin: 0; display: flex; flex-direction: column; }
+.lp-calc-out > div { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+.lp-calc-out > div:first-child { border-top: 0; padding-top: 0; }
+.lp-calc-out dt { color: var(--muted); font-size: 0.875rem; line-height: 1.25rem; }
+.lp-calc-out dd { margin: 0; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--strong); text-align: right; }
+.lp-calc-total dt { color: var(--strong); font-weight: 600; }
+.lp-calc-total dd { font-size: 1.5rem; line-height: 2rem; letter-spacing: -0.01em; }
+.lp-calc-note { grid-column: 1 / -1; }
+@media (min-width: 640px) { .lp-trust { flex-direction: row; flex-wrap: wrap; gap: var(--space-2) var(--space-4); } }
+@media (max-width: 760px) { .lp-calc { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); } .lp-calc-field { max-width: none; } }
