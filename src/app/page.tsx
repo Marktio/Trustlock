@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Briefcase, CaretDown, CheckCircle, ShieldCheck, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import { HowItWorks } from "@/components/how-it-works";
-import { ExampleContract } from "@/components/example-contract";
+import { HeroImage } from "@/components/hero-image";
 import { TaglineReveal } from "@/components/tagline-reveal";
 import { FeeCalculator } from "@/components/fee-calculator";
 import { DEFAULT_CONFIG } from "@/domain/escrow-service";
@@ -85,7 +85,7 @@ export default async function Landing() {
           </div>
 
           <div lang="en" className="u-contents">
-            <ExampleContract currency={currency} />
+            <HeroImage currency={currency} />
           </div>
         </section>
 

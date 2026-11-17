@@ -579,5 +579,6 @@
  "The url must not contain a username or password.": "Anwani isiwe na jina la mtumiaji wala nenosiri.",
  "The url must be text of at most 500 characters.": "Anwani lazima iwe maandishi ya herufi zisizozidi 500.",
  "API guide": "Mwongozo wa API",
- "Integration guide (TypeScript, Python, PHP)": "Mwongozo wa kuunganisha (TypeScript, Python, PHP)"
+ "Integration guide (TypeScript, Python, PHP)": "Mwongozo wa kuunganisha (TypeScript, Python, PHP)",
+ "Cryptographically verified": "Imethibitishwa kwa kriptografia"
 }
